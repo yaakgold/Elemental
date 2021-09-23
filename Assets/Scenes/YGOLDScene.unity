@@ -226,6 +226,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
+      propertyPath: field of view
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409498, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_Name
       value: MainCamera
@@ -240,7 +244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.825
+      value: 1.375
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -437,10 +441,6 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 8338988565886944679}
-    - target: {fileID: 2382646370320245878, guid: 3735a02010627ad4da28eba53a556256, type: 3}
-      propertyPath: m_LookAt
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2382646370320245879, guid: 3735a02010627ad4da28eba53a556256, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -451,7 +451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2382646370320245879, guid: 3735a02010627ad4da28eba53a556256, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.825
+      value: 1.375
       objectReference: {fileID: 0}
     - target: {fileID: 2382646370320245879, guid: 3735a02010627ad4da28eba53a556256, type: 3}
       propertyPath: m_LocalPosition.z
@@ -488,10 +488,6 @@ PrefabInstance:
     - target: {fileID: 2382646370320246152, guid: 3735a02010627ad4da28eba53a556256, type: 3}
       propertyPath: m_Name
       value: PlayerFollowCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 2382646370951976375, guid: 3735a02010627ad4da28eba53a556256, type: 3}
-      propertyPath: VerticalArmLength
-      value: 2.45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3735a02010627ad4da28eba53a556256, type: 3}
