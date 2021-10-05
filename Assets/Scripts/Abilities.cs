@@ -7,5 +7,6 @@ public class Abilities : MonoBehaviour
     GameObject firstAbility;
     GameObject secondAbility;
     GameObject thirdAbility;
-    
+
+       
 }
