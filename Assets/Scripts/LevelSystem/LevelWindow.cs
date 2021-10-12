@@ -18,7 +18,7 @@ public class LevelWindow : MonoBehaviour
         levelText = transform.Find("Level").GetComponent<TMP_Text>();
         experienceBar = transform.Find("ExperienceBar").Find("Fill").GetComponent<Image>();
 
-        transform.Find("ExpButton").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExp(5);
+        transform.Find("ExpButton").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExp(500);
     }
 
     private void SetExpBarSize(float experienceNormalized)
