@@ -11,11 +11,12 @@ public class LevelWindow : MonoBehaviour
     private Button expButton;
     private Image experienceBar;
     private LevelSystem levelSystem;
+    private LevelAnimation levelAnimation;
 
     private void Awake()
     {
-        levelText = transform.Find("levelText").GetComponent<TMP_Text>();
-        experienceBar = transform.Find("experienceBar").Find("bar").GetComponent<Image>();
+        levelText = transform.Find("Level").GetComponent<TMP_Text>();
+        experienceBar = transform.Find("ExperienceBar").Find("Fill").GetComponent<Image>();
 
         transform.Find("ExpButton").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExp(5);
     }
@@ -30,24 +31,29 @@ public class LevelWindow : MonoBehaviour
         levelText.text = "LEVEL " + (lvlNumber + 1);
     }
 
-    private void SetLevelSystem(LevelSystem levelSystem)
+    public void SetLevel(LevelSystem levelSystem)
     {
         this.levelSystem = levelSystem;
-
-        SetLvlNumber(levelSystem.GetLevelNumber());
-        SetExpBarSize(levelSystem.GetExpNormalized());
-
-        levelSystem.OnExpChange += LevelSystem_OnExpChange;
-        levelSystem.OnLvlChange += LevelSystem_OnLvlChange;
     }
 
-    private void LevelSystem_OnLvlChange(object sender, System.EventArgs e)
+    public void SetLevelSystemAnimated(LevelAnimation levelAnimation)
     {
-        SetLvlNumber(levelSystem.GetLevelNumber());
+        this.levelAnimation = levelAnimation;
+
+        SetLvlNumber(levelAnimation.GetLevelNumber());
+        SetExpBarSize(levelAnimation.GetExpNormalized());
+
+        levelAnimation.OnExpChange += LevelAnimation_OnExpChange;
+        levelAnimation.OnLvlChange += LevelAnimation_OnLvlChange;
     }
 
-    private void LevelSystem_OnExpChange(object sender, System.EventArgs e)
+    private void LevelAnimation_OnLvlChange(object sender, System.EventArgs e)
     {
-        SetExpBarSize(levelSystem.GetExpNormalized());
+        SetLvlNumber(levelAnimation.GetLevelNumber());
+    }
+
+    private void LevelAnimation_OnExpChange(object sender, System.EventArgs e)
+    {
+        SetExpBarSize(levelAnimation.GetExpNormalized());
     }
 }
