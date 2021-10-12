@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Abilities : MonoBehaviour
+public abstract class Abilities : MonoBehaviour
 {
-    GameObject firstAbility;
-    GameObject secondAbility;
-    GameObject thirdAbility;
+    public float coolDown = 1;
+    private bool canUse = true;
 
-       
+    public void TriggerAbility()
+    {
+
+    }
+
+    private void Update()
+    {
+        
+    }
 }
