@@ -32,5 +32,5 @@ public class PlayerMovement : MonoBehaviour
         movement.z = value.Get<Vector2>().y;
     }
     #endregion
-
+    
 }
