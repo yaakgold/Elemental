@@ -1733,6 +1733,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3794948870386775575, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
+      propertyPath: ability1
+      value: 
+      objectReference: {fileID: 11400000, guid: fdcc7d0323eb4f3459182f3bbda31154, type: 2}
+    - target: {fileID: 3794948870386775575, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
+      propertyPath: ability2
+      value: 
+      objectReference: {fileID: 11400000, guid: be7fe2fe27236574c9ffb256f3fbd0e1, type: 2}
+    - target: {fileID: 3794948870386775575, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
+      propertyPath: ability3
+      value: 
+      objectReference: {fileID: 11400000, guid: 5d93e6d8ecf3f854dbdbb013c0d813e2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
 --- !u!1 &1738682956
@@ -1862,7 +1874,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d7b94eacb57246548804073d580e324a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

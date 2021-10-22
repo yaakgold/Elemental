@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b62c87f83243d488ae5ccbb5392232, type: 3}
   m_Name: RockWall
   m_EditorClassIdentifier: 
+  ability: {fileID: 159250494586355408, guid: c8e7335510194f14bb72a4800e4baf0a, type: 3}
   Description: RockWall
   sprite: {fileID: 21300000, guid: 14a0f66a7be165c4ba476e3d7c40e390, type: 3}
   LvlNeeded: 5

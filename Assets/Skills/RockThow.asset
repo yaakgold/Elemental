@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b62c87f83243d488ae5ccbb5392232, type: 3}
   m_Name: RockThow
   m_EditorClassIdentifier: 
+  ability: {fileID: 159250494586355408, guid: c8e7335510194f14bb72a4800e4baf0a, type: 3}
   Description: RickThrow
   sprite: {fileID: 21300000, guid: 406984ac0d0fc2c4bbaf906048f7c43e, type: 3}
-  LvlNeeded: 2
+  LvlNeeded: 1
   fightingStyle: 3
