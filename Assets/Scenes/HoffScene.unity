@@ -1687,7 +1687,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2437566925647697038, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
       propertyPath: m_Name
-      value: PlayerArmature
+      value: EarthBender
       objectReference: {fileID: 0}
     - target: {fileID: 3069249981157772852, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
       propertyPath: m_RootOrder
@@ -1733,18 +1733,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3794948870386775575, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
-      propertyPath: ability1
+    - target: {fileID: 7068573814542982378, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
+      propertyPath: Rock
       value: 
-      objectReference: {fileID: 11400000, guid: fdcc7d0323eb4f3459182f3bbda31154, type: 2}
-    - target: {fileID: 3794948870386775575, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
-      propertyPath: ability2
+      objectReference: {fileID: 925525802920415752, guid: e55736d9b4cbd654b9cdfb241acd07ad, type: 3}
+    - target: {fileID: 7068573814542982378, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
+      propertyPath: WallObj
       value: 
-      objectReference: {fileID: 11400000, guid: be7fe2fe27236574c9ffb256f3fbd0e1, type: 2}
-    - target: {fileID: 3794948870386775575, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
-      propertyPath: ability3
-      value: 
-      objectReference: {fileID: 11400000, guid: 5d93e6d8ecf3f854dbdbb013c0d813e2, type: 2}
+      objectReference: {fileID: 8491487919786297954, guid: fd2ef645d0f5ceb409e59e7b983ebf9e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
 --- !u!1 &1738682956
@@ -1834,9 +1830,10 @@ GameObject:
   - component: {fileID: 1779871193}
   - component: {fileID: 1779871192}
   - component: {fileID: 1779871191}
+  - component: {fileID: 1779871195}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: earthTest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1918,6 +1915,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1779871195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779871190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80dfdb1a8b82eb847a8911f6f238dacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1782807340
 GameObject:
   m_ObjectHideFlags: 0

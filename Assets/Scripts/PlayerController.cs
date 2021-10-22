@@ -22,19 +22,4 @@ public class PlayerController : MonoBehaviour
         //Implement level up ding or particle effect.
         print("Level Up");
     }
-
-    public void OnAbility1(InputValue input)
-    {
-        ability1.DoAbility(transform.position, Quaternion.identity);
-    }
-
-    public void OnAbility2(InputValue input)
-    {
-        ability2.DoAbility(transform.position, Quaternion.identity);
-    }
-
-    public void OnAbility3(InputValue input)
-    {
-        ability3.DoAbility(transform.position, Quaternion.identity);
-    }
 }

@@ -504,13 +504,14 @@ GameObject:
   - component: {fileID: 3069249981157772852}
   - component: {fileID: 8968925581944378446}
   - component: {fileID: 3794948870386775575}
+  - component: {fileID: 7068573814542982378}
   - component: {fileID: 2437566925647697028}
   - component: {fileID: 2437566925647697029}
   - component: {fileID: 5562954258854395518}
   - component: {fileID: 2125036125799975154}
   - component: {fileID: 2437566925647697026}
   m_Layer: 8
-  m_Name: PlayerArmature
+  m_Name: EarthBender
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,6 +565,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8408898351996d48845a4898b3d15ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ability1: {fileID: 11400000, guid: fdcc7d0323eb4f3459182f3bbda31154, type: 2}
+  ability2: {fileID: 11400000, guid: be7fe2fe27236574c9ffb256f3fbd0e1, type: 2}
+  ability3: {fileID: 11400000, guid: 5d93e6d8ecf3f854dbdbb013c0d813e2, type: 2}
+--- !u!114 &7068573814542982378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437566925647697038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26ab72a02b48794399cacb499ae4b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  Rock: {fileID: 925525802920415752, guid: e55736d9b4cbd654b9cdfb241acd07ad, type: 3}
 --- !u!143 &2437566925647697028
 CharacterController:
   m_ObjectHideFlags: 0
