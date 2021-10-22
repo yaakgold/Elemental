@@ -11,6 +11,7 @@ TagManager:
   - Synty Medium Farm
   - Synty Small Farm
   - PW - Nature
+  - Ground
   layers:
   - Default
   - TransparentFX
