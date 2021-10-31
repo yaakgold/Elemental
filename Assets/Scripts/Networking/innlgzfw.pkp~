@@ -1,0 +1,107 @@
+using Mirror;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+
+public class PlayerSelectUI : NetworkBehaviour
+{
+    public TMP_Text userName;
+    public TMP_Dropdown dropdown;
+    public GameObject readyToggleBtn;
+    public Image background;
+    public Button startButton;
+
+    [SyncVar]
+    private bool readyState = false;
+
+    [SyncVar]
+    private ePlayerElement playerElement = ePlayerElement.NONE;
+
+    private void Start()
+    {
+        transform.SetParent(GameObject.FindGameObjectWithTag("LobbyUI").transform);
+
+        NetworkManager.singleton.GetComponent<SteamLobby>().players.Add(this);
+
+        if(!hasAuthority)
+        {
+            dropdown.value = (int)playerElement;
+        }
+    }
+
+    public override void OnStartAuthority()
+    {
+        dropdown.interactable = true;
+
+        readyToggleBtn.SetActive(true);
+
+        if(isServer)
+        {
+            startButton.gameObject.SetActive(true);
+        }
+    }
+
+    public void StartGame()
+    {
+        NetworkManager.singleton.ServerChangeScene("MainScene");
+    }
+
+    #region Toggle Ready State
+    public void ToggleReadyState()
+    {
+        CmdToggleReady();
+    }
+
+    [Command]
+    public void CmdToggleReady()
+    {
+        //Check here to make sure that nobody else is using the currently selected element
+
+        RpcToggleReady();
+    }
+
+    [ClientRpc]
+    public void RpcToggleReady()
+    {
+        readyState = !readyState;
+
+        background.color = readyState ? Color.green : Color.red;
+    }
+    #endregion
+
+    #region Choose Element
+    public void OnElementChange()
+    {
+        if (dropdown.value == (int)playerElement) return;
+
+        CmdElementChange(dropdown.value);
+    }
+
+    [Command]
+    private void CmdElementChange(int newValue)
+    {
+        //Check to make sure the element change is valid
+
+        RpcElementChange(newValue);
+    }
+
+    [ClientRpc]
+    private void RpcElementChange(int newValue)
+    {
+        playerElement = (ePlayerElement)newValue;
+
+        dropdown.value = newValue;
+    }
+    #endregion
+
+    public enum ePlayerElement
+    {
+        NONE,
+        AIR,
+        EARTH,
+        FIRE,
+        WATER
+    }
+}

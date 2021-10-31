@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/YGOLDScene.unity
+    guid: dc1b1b6cca5b53346bf231c323501dc8
+  - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: e9347d8dc06157148ba88ca86ab6b2a4
   m_configObjects:

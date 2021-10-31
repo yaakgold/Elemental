@@ -12,6 +12,11 @@ TagManager:
   - Synty Small Farm
   - PW - Nature
   - Ground
+  - SteamManager
+  - LobbyUI
+  - StartGameBtn
+  - PlayersList
+  - LoadingUI
   layers:
   - Default
   - TransparentFX

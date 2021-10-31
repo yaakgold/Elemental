@@ -1,3 +1,4 @@
+using kcp2k;
 using Mirror;
 using Steamworks;
 using System.Collections;
@@ -6,43 +7,88 @@ using UnityEngine;
 
 public class SteamLobby : MonoBehaviour
 {
-    public GameObject buttons;
+    public bool useKCP = false;
+
+    public GameObject mainMenu;
+    public GameObject lobbyUI;
+
+    public List<PlayerSelectUI> players;
+
+    public GameObject playerUI;
 
     protected Callback<LobbyCreated_t> lobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> lobbyJoinReq;
     protected Callback<LobbyEnter_t> lobbyEntered;
+    protected Callback<LobbyKicked_t> lobbyKicked;
 
-    private NetworkManager networkManager;
+    public NetworkManager networkManager;
     private const string HOST_ADDRESS_KEY = "HostAddress";
+
+    public static CSteamID LobbyID { get; private set; }
 
     private void Start()
     {
-        networkManager = GetComponent<NetworkManager>();
+        if(networkManager == null)
+        {
+            return;
+        }
 
-        if (!SteamManager.Initialized) return;
+        if (!SteamManager.Initialized)
+        {
+            return;
+        }
 
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         lobbyJoinReq = Callback<GameLobbyJoinRequested_t>.Create(OnLobbyJoinRequested);
         lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+        lobbyKicked = Callback<LobbyKicked_t>.Create(OnLobbyKicked);
     }
 
     public void HostLobby()
     {
-        buttons.SetActive(false);
+        players = new List<PlayerSelectUI>();
 
-        SteamMatchmaking.CreateLobby(
-                ELobbyType.k_ELobbyTypeFriendsOnly,
-                networkManager.maxConnections);
+        if (!networkManager)
+        {
+            Debug.LogError("Net Man not set");
+
+            return;
+        }
+
+        mainMenu.SetActive(false);
+
+        if(!useKCP)
+        {
+            SteamMatchmaking.CreateLobby(
+                    ELobbyType.k_ELobbyTypeFriendsOnly,
+                    networkManager.maxConnections);
+        }
+        else
+        {
+            lobbyUI.SetActive(true);
+            networkManager.StartHost();
+        }
+    }
+
+    public void JoinLobby()
+    {
+        networkManager.networkAddress = "localhost";
+        networkManager.StartClient();
+
+        mainMenu.SetActive(false);
+        lobbyUI.SetActive(true);
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback)
     {
         if (callback.m_eResult != EResult.k_EResultOK)
         {
-            buttons.SetActive(true);
-
+            mainMenu.SetActive(true); 
+            lobbyUI.SetActive(false);
             return;
         }
+
+        LobbyID = new CSteamID(callback.m_ulSteamIDLobby);
 
         networkManager.StartHost();
 
@@ -50,6 +96,8 @@ public class SteamLobby : MonoBehaviour
                 new CSteamID(callback.m_ulSteamIDLobby),
                 HOST_ADDRESS_KEY,
                 SteamUser.GetSteamID().ToString());
+
+        lobbyUI.SetActive(true);
     }
 
     private void OnLobbyJoinRequested(GameLobbyJoinRequested_t callback)
@@ -68,6 +116,15 @@ public class SteamLobby : MonoBehaviour
         networkManager.networkAddress = hostAddress;
         networkManager.StartClient();
 
-        buttons.SetActive(false);
+        mainMenu.SetActive(false);
+        lobbyUI.SetActive(true);
+    }
+
+    private void OnLobbyKicked(LobbyKicked_t callback)
+    {
+        networkManager.StopClient();
+
+        mainMenu.SetActive(true);
+        lobbyUI.SetActive(false);
     }
 }
