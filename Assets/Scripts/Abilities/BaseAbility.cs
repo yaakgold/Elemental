@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RockThrow : MonoBehaviour
+public class BaseAbility : MonoBehaviour
 {
     bool isMovingUp = false;
     bool isForward = false;
@@ -33,7 +33,7 @@ public class RockThrow : MonoBehaviour
         }
     }
 
-    public void RockInitial(float speed, Vector3 endPosition)
+    public void AbilityInitial(float speed, Vector3 endPosition)
     {
         this.speed = speed;
         this.endPosition = endPosition;

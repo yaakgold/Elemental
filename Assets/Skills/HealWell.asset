@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3b62c87f83243d488ae5ccbb5392232, type: 3}
-  m_Name: GroundPound
+  m_Name: HealWell
   m_EditorClassIdentifier: 
-  ability: {fileID: 159250494586355408, guid: c8e7335510194f14bb72a4800e4baf0a, type: 3}
-  Description: GroundPound
-  sprite: {fileID: 21300000, guid: d473e35d9c998d443a00d04000f893e5, type: 3}
-  LvlNeeded: 10
-  fightingStyle: 3
+  ability: {fileID: 3841055726419391214, guid: 791ee39bc6b836a459421fc30e7d77e5, type: 3}
+  Description: Heal Well
+  sprite: {fileID: 21300000, guid: c3aab7237df394c4890e647a4ae580ea, type: 3}
+  LvlNeeded: 5
+  fightingStyle: 1

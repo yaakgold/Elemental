@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     private LevelAnimation lvlAnimation;
     public Abilities ability1;
     public Abilities ability2;
-    public Abilities ability3;
 
     public void SetLvlSystemAnim(LevelAnimation lvlAnimation)
     {

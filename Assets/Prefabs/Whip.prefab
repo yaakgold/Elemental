@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 428854708583540068}
   - component: {fileID: 485476694629807359}
   m_Layer: 0
-  m_Name: Rock
+  m_Name: Whip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

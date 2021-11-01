@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3b62c87f83243d488ae5ccbb5392232, type: 3}
-  m_Name: RockThow
+  m_Name: WaterWhip
   m_EditorClassIdentifier: 
-  ability: {fileID: 925525802920415752, guid: e55736d9b4cbd654b9cdfb241acd07ad, type: 3}
+  ability: {fileID: 159250494586355408, guid: c8e7335510194f14bb72a4800e4baf0a, type: 3}
   Description: RickThrow
-  sprite: {fileID: 21300000, guid: 406984ac0d0fc2c4bbaf906048f7c43e, type: 3}
+  sprite: {fileID: 21300000, guid: 51dcbb3542a768b49ac5942bd2a0c8bb, type: 3}
   LvlNeeded: 1
   fightingStyle: 3

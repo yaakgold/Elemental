@@ -75,7 +75,7 @@ public class Earth : MonoBehaviour
 
         speed = Speed;
 
-        transform.LookAt(P);
+        //transform.LookAt(P);
 
         isBending = true;
     }

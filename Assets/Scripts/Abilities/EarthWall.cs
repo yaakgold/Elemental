@@ -14,9 +14,14 @@ public class EarthWall : MonoBehaviour
     float speed;
     float range;
 
+    private void Start()
+    {
+        Destroy(this.gameObject, 10f);
+    }
+
     private void Update()
     {
-        if(isMoving)
+  /*      if(isMoving)
         {
             if(Vector2.Distance(transform.position, endPosition) < range)
             {
@@ -35,7 +40,7 @@ public class EarthWall : MonoBehaviour
                 time += Time.deltaTime * speed;
                 transform.position = Vector3.Lerp(this.gameObject.transform.position, endPosition, Mathf.SmoothStep(0f, 1f, time));
             }
-        }
+        }*/
     }
 
     public void StartWave(float speed, Vector3 startPosition, Vector3 endPosition, float range, Vector3 lookPosition)
