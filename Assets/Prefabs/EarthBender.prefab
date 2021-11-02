@@ -504,13 +504,15 @@ GameObject:
   - component: {fileID: 3069249981157772852}
   - component: {fileID: 8968925581944378446}
   - component: {fileID: 3794948870386775575}
+  - component: {fileID: 7068573814542982378}
   - component: {fileID: 2437566925647697028}
   - component: {fileID: 2437566925647697029}
   - component: {fileID: 5562954258854395518}
   - component: {fileID: 2125036125799975154}
   - component: {fileID: 2437566925647697026}
+  - component: {fileID: -179632905869121296}
   m_Layer: 8
-  m_Name: PlayerArmature
+  m_Name: EarthBender
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,6 +566,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8408898351996d48845a4898b3d15ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ability1: {fileID: 11400000, guid: fdcc7d0323eb4f3459182f3bbda31154, type: 2}
+  ability2: {fileID: 11400000, guid: be7fe2fe27236574c9ffb256f3fbd0e1, type: 2}
+--- !u!114 &7068573814542982378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437566925647697038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26ab72a02b48794399cacb499ae4b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 500
+  range: 1
+  wallSpeed: 2
+  WallObj: {fileID: 8491487919786297954, guid: fd2ef645d0f5ceb409e59e7b983ebf9e, type: 3}
+  speed: 20
+  Rock: {fileID: 925525802920415752, guid: e55736d9b4cbd654b9cdfb241acd07ad, type: 3}
 --- !u!143 &2437566925647697028
 CharacterController:
   m_ObjectHideFlags: 0
@@ -747,6 +769,22 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &-179632905869121296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437566925647697038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3692c61429fc0d44aa6283441ebf184b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 100
 --- !u!1 &2475435671582433490
 GameObject:
   m_ObjectHideFlags: 0
