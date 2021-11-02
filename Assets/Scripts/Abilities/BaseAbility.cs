@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BaseAbility : MonoBehaviour
 {
+    public int damage;
+
     bool isMovingUp = false;
     bool isForward = false;
     float time;
@@ -41,6 +43,15 @@ public class BaseAbility : MonoBehaviour
         isMovingUp = true;
 
         Destroy(this.gameObject, 2f);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.TryGetComponent<Health>(out Health health);
+            health.GetHit(damage);
+        }
     }
 
 }

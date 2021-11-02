@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 428854708583540068}
   - component: {fileID: 485476694629807359}
   m_Layer: 0
-  m_Name: Whip
+  m_Name: Meteor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 925525802920415752}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 6631517831791767452}
   m_Father: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849dbfa5b8ff7a24992687231fdf1885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 8
+  damage: 20
 --- !u!1 &3460601700434375172
 GameObject:
   m_ObjectHideFlags: 0

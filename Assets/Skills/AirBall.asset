@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3b62c87f83243d488ae5ccbb5392232, type: 3}
-  m_Name: WaterWhip
+  m_Name: AirBall
   m_EditorClassIdentifier: 
-  ability: {fileID: 159250494586355408, guid: c8e7335510194f14bb72a4800e4baf0a, type: 3}
-  Description: RickThrow
-  sprite: {fileID: 21300000, guid: 51dcbb3542a768b49ac5942bd2a0c8bb, type: 3}
+  ability: {fileID: 925525802920415752, guid: bff64d66439629b45bb10055ff704fe7, type: 3}
+  Description: AirBall
+  sprite: {fileID: 21300000, guid: 4029a9cfeb86f134c9c5af05993eaac8, type: 3}
   LvlNeeded: 1
-  fightingStyle: 1
+  fightingStyle: 0
