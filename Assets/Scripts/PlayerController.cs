@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     private LevelAnimation lvlAnimation;
-
+    public Abilities ability1;
+    public Abilities ability2;
 
     public void SetLvlSystemAnim(LevelAnimation lvlAnimation)
     {

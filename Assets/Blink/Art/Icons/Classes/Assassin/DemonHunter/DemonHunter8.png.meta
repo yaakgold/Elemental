@@ -23,6 +23,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -31,16 +32,16 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 3
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -54,9 +55,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -86,7 +90,27 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline: []
+    outline:
+    - - {x: 0, y: 128}
+      - {x: -39.554176, y: 121.73524}
+      - {x: -75.23651, y: 103.55418}
+      - {x: -103.55418, y: 75.23651}
+      - {x: -121.73524, y: 39.554173}
+      - {x: -128, y: -0.0000055950577}
+      - {x: -121.73523, y: -39.55418}
+      - {x: -103.55418, y: -75.2365}
+      - {x: -75.2365, y: -103.554184}
+      - {x: -39.55415, y: -121.735245}
+      - {x: 0.000041707695, y: -128}
+      - {x: 39.55423, y: -121.735214}
+      - {x: 75.23657, y: -103.55413}
+      - {x: 103.55423, y: -75.23644}
+      - {x: 121.73527, y: -39.554073}
+      - {x: 128, y: 0.00012359669}
+      - {x: 121.73519, y: 39.55431}
+      - {x: 103.554085, y: 75.23664}
+      - {x: 75.236374, y: 103.554276}
+      - {x: 39.553997, y: 121.73529}
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
