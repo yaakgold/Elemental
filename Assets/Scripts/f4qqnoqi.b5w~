@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class CharacterData
+{
+    public float[] CharPosition { get; set; }
+    public float[] CharRotation { get; set; }
+    public string CharName { get; set; }
+    public string CharElement { get; set; }
+    public int CharLevelValue { get; set; }
+    public int CharHealth { get; set; }
+
+    public CharacterData()
+    {
+
+    }
+}
