@@ -17,25 +17,41 @@ public class PlayerSelectUI : NetworkBehaviour
 
     private SteamLobby steamLobby;
 
+    private GameObject player;
+    [SerializeField]
+    private int spawnChoice;
+
     [SyncVar]
     private bool readyState = false;
 
     [SyncVar]
     private ePlayerElement playerElement = ePlayerElement.NONE;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
         if (SceneManager.GetActiveScene().buildIndex != 0)
-            return;
-
-        transform.SetParent(GameObject.FindGameObjectWithTag("PlayersList").transform);
-
-        NetworkManager.singleton.GetComponent<SteamLobby>().players.Add(this);
-
-        if(!hasAuthority)
         {
-            dropdown.value = (int)playerElement;
+            if (!hasAuthority) return;
+
+            SpawnPlayer();
         }
+        else
+        {
+            transform.SetParent(GameObject.FindGameObjectWithTag("PlayersList").transform);
+
+            NetworkManager.singleton.GetComponent<SteamLobby>().players.Add(this);
+
+            if(!hasAuthority)
+            {
+                dropdown.value = (int)playerElement;
+            }
+        }
+
     }
 
     public override void OnStartAuthority()
@@ -56,6 +72,26 @@ public class PlayerSelectUI : NetworkBehaviour
 
         NetworkManager.singleton.ServerChangeScene("MainScene");
     }
+
+    #region Spawn Player
+    private void SpawnPlayer()
+    {
+        Vector3 spawnPos = GameObject.FindGameObjectsWithTag("SpawnPoint")[connectionToClient.connectionId].transform.position;
+
+        spawnChoice = NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice[connectionToClient.connectionId];
+
+        print(spawnChoice);
+        player = Instantiate(NetworkManager.singleton.spawnPrefabs[spawnChoice], spawnPos, Quaternion.identity);
+
+        CmdSpawnPlayer(connectionToClient.identity.connectionToClient);
+    }
+
+    [Command]
+    private void CmdSpawnPlayer(NetworkConnectionToClient conn = null)
+    {
+        NetworkServer.Spawn(player, conn);
+    }
+    #endregion
 
     #region Toggle Ready State
     public void ToggleReadyState()
@@ -94,27 +130,13 @@ public class PlayerSelectUI : NetworkBehaviour
     public void OnElementChange()
     {
         if (dropdown.value == (int)playerElement) return;
-
+        NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice[connectionToClient.connectionId] = dropdown.value - 1;
         CmdElementChange(dropdown.value);
     }
 
     [Command]
     private void CmdElementChange(int newValue)
     {
-        //TODO: Check here to make sure that nobody else is using the currently selected element
-        //TODO: Change the way the player chooses their element so the server can verify if that element is available
-        //if(steamLobby == null)
-        //    steamLobby = NetworkManager.singleton.GetComponent<SteamLobby>();
-
-        //foreach (PlayerSelectUI player in steamLobby.players)
-        //{
-        //    if (player == this)
-        //        continue;
-
-        //    if (player.playerElement == playerElement)
-        //        return;
-        //}
-
         RpcElementChange(newValue);
     }
 

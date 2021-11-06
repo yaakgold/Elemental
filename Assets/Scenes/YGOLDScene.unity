@@ -2994,7 +2994,11 @@ MonoBehaviour:
   playerPrefab: {fileID: 565549405635455205, guid: d2d2f5acb191bc44fb3151a8b086a5da, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 2437566925647697038, guid: 3a124bddda7b24244a30b30b4e732beb, type: 3}
+  - {fileID: 2437566925647697038, guid: 9295f75c40df07a41989a1931bd6c6aa, type: 3}
+  - {fileID: 2437566925647697038, guid: edd7c505f8b49674e92bede734ff9282, type: 3}
+  - {fileID: 2437566925647697038, guid: c1919103c6d79bf478f37bfeca056991, type: 3}
 --- !u!114 &1542866076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3011,6 +3015,7 @@ MonoBehaviour:
   mainMenu: {fileID: 1740763297}
   lobbyUI: {fileID: 1464352852}
   players: []
+  playerElementChoice: ffffffffffffffffffffffffffffffff
   playerUI: {fileID: 565549405635455205, guid: d2d2f5acb191bc44fb3151a8b086a5da, type: 3}
   networkManager: {fileID: 1542866075}
 --- !u!114 &1542866077
@@ -4227,6 +4232,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2045079942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2045079945}
+  - component: {fileID: 2045079943}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &2045079943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045079942}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Port: 7777
+  DualMode: 1
+  NoDelay: 1
+  Interval: 10
+  Timeout: 10000
+  FastResend: 2
+  CongestionWindow: 0
+  SendWindowSize: 4096
+  ReceiveWindowSize: 4096
+  NonAlloc: 1
+  debugLog: 0
+  statisticsGUI: 0
+  statisticsLog: 0
+--- !u!4 &2045079945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045079942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2058353243
 GameObject:

@@ -13,13 +13,13 @@ public class SteamLobby : MonoBehaviour
     public GameObject lobbyUI;
 
     public List<PlayerSelectUI> players;
+    public List<int> playerElementChoice;
 
     public GameObject playerUI;
 
     protected Callback<LobbyCreated_t> lobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> lobbyJoinReq;
     protected Callback<LobbyEnter_t> lobbyEntered;
-    protected Callback<LobbyKicked_t> lobbyKicked;
 
     public NetworkManager networkManager;
     private const string HOST_ADDRESS_KEY = "HostAddress";
@@ -41,7 +41,6 @@ public class SteamLobby : MonoBehaviour
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         lobbyJoinReq = Callback<GameLobbyJoinRequested_t>.Create(OnLobbyJoinRequested);
         lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
-        lobbyKicked = Callback<LobbyKicked_t>.Create(OnLobbyKicked);
     }
 
     public void HostLobby()
@@ -118,13 +117,5 @@ public class SteamLobby : MonoBehaviour
 
         mainMenu.SetActive(false);
         lobbyUI.SetActive(true);
-    }
-
-    private void OnLobbyKicked(LobbyKicked_t callback)
-    {
-        networkManager.StopClient();
-
-        mainMenu.SetActive(true);
-        lobbyUI.SetActive(false);
     }
 }
