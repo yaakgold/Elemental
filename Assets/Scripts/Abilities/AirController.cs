@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
+using Mirror;
 
-public class AirController : MonoBehaviour
+public class AirController : NetworkBehaviour
 {
     [SerializeField]
     float speed = 1f;
@@ -22,31 +23,72 @@ public class AirController : MonoBehaviour
 
     private void Update()
     {
+        if (!hasAuthority) return;
+
         if (isAbility2)
         {
             timer += Time.deltaTime;
             if (timer >= 5)
             {
-                tpc.MoveSpeed /= moveSpeed;
-                tpc.SprintSpeed /= moveSpeed;
-                timer = 0;
-                isAbility2 = false;
+                CmdDeactivateA2();
             }
         }
     }
 
+    #region Ability1
     public void OnAbility1()
+    {
+        if (!hasAuthority) return;
+
+        CmdAbility1();
+    }
+
+    [Command]
+    private void CmdAbility1()
     {
         GameObject airBall = Instantiate(AirBall, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
 
         airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+
+        NetworkServer.Spawn(airBall);
+    }
+    #endregion
+
+    #region Ability2
+    public void OnAbility2()
+    {
+        if (!isLocalPlayer) return;
+
+        CmdCallAbility2();
     }
 
-    public void OnAbility2()
+    [Command]
+    private void CmdCallAbility2()
+    {
+        RpcCallAbility2();
+    }
+
+    [ClientRpc]
+    private void RpcCallAbility2()
     {
         tpc.MoveSpeed *= moveSpeed;
         tpc.SprintSpeed *= moveSpeed;
         isAbility2 = true;
     }
 
+    [Command]
+    private void CmdDeactivateA2()
+    {
+        RpcDeactivateA2();
+    }
+
+    [ClientRpc]
+    private void RpcDeactivateA2()
+    {
+        tpc.MoveSpeed /= moveSpeed;
+        tpc.SprintSpeed /= moveSpeed;
+        timer = 0;
+        isAbility2 = false;
+    }
+    #endregion
 }

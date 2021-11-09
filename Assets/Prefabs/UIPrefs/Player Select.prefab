@@ -1460,9 +1460,9 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: EARTH
       m_Image: {fileID: 0}
-    - m_Text: WATER
-      m_Image: {fileID: 0}
     - m_Text: FIRE
+      m_Image: {fileID: 0}
+    - m_Text: WATER
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1968,11 +1968,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  userName: {fileID: 1181442124}
+  userName_txt: {fileID: 0}
   dropdown: {fileID: 1448399777}
   readyToggleBtn: {fileID: 1359987820}
   background: {fileID: 1449582505987076814}
   startButton: {fileID: 997015588}
+  spawnChoice: 0
 --- !u!114 &7636092022642861520
 MonoBehaviour:
   m_ObjectHideFlags: 0

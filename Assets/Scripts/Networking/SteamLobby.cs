@@ -13,7 +13,8 @@ public class SteamLobby : MonoBehaviour
     public GameObject lobbyUI;
 
     public List<PlayerSelectUI> players;
-    public List<int> playerElementChoice;
+    public Dictionary<int, int> playerElementChoice;
+    public List<NetworkConnection> playerConnections;
 
     public GameObject playerUI;
 
@@ -28,6 +29,9 @@ public class SteamLobby : MonoBehaviour
 
     private void Start()
     {
+        playerElementChoice = new Dictionary<int, int>();
+        playerConnections = new List<NetworkConnection>();
+
         if(networkManager == null)
         {
             return;
@@ -117,5 +121,15 @@ public class SteamLobby : MonoBehaviour
 
         mainMenu.SetActive(false);
         lobbyUI.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        foreach (PlayerSelectUI player in players)
+        {
+            playerConnections.Add(player.connectionToClient);
+        }
+
+        NetworkManager.singleton.ServerChangeScene("MainScene");
     }
 }

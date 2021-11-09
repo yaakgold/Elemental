@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2889216390011818151}
   - component: {fileID: 8530575968965923857}
+  - component: {fileID: -1473210611166040879}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -44,6 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ed4d39eb61f6d4c9877b28ef981315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1473210611166040879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8491487919786297954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: fd2ef645d0f5ceb409e59e7b983ebf9e
+  hasSpawned: 0
 --- !u!1 &8877051639191427463
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +122,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a12db6706644708468865f6f2483eaff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

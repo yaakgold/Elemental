@@ -27,6 +27,8 @@ public class PlayerSelectUI : NetworkBehaviour
     [SyncVar]
     private ePlayerElement playerElement = ePlayerElement.NONE;
 
+    private int spawnNum = 0;
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -34,19 +36,13 @@ public class PlayerSelectUI : NetworkBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            if (!hasAuthority) return;
-
-            SpawnPlayer();
-        }
-        else
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             transform.SetParent(GameObject.FindGameObjectWithTag("PlayersList").transform);
 
             NetworkManager.singleton.GetComponent<SteamLobby>().players.Add(this);
 
-            if(!hasAuthority)
+            if (!hasAuthority)
             {
                 dropdown.value = (int)playerElement;
             }
@@ -69,29 +65,8 @@ public class PlayerSelectUI : NetworkBehaviour
     public void StartGame()
     {
         GameObject.FindGameObjectWithTag("LobbyUI").SetActive(false);
-
-        NetworkManager.singleton.ServerChangeScene("MainScene");
+        steamLobby.StartGame();
     }
-
-    #region Spawn Player
-    private void SpawnPlayer()
-    {
-        Vector3 spawnPos = GameObject.FindGameObjectsWithTag("SpawnPoint")[connectionToClient.connectionId].transform.position;
-
-        spawnChoice = NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice[connectionToClient.connectionId];
-
-        print(spawnChoice);
-        player = Instantiate(NetworkManager.singleton.spawnPrefabs[spawnChoice], spawnPos, Quaternion.identity);
-
-        CmdSpawnPlayer(connectionToClient.identity.connectionToClient);
-    }
-
-    [Command]
-    private void CmdSpawnPlayer(NetworkConnectionToClient conn = null)
-    {
-        NetworkServer.Spawn(player, conn);
-    }
-    #endregion
 
     #region Toggle Ready State
     public void ToggleReadyState()
@@ -130,13 +105,21 @@ public class PlayerSelectUI : NetworkBehaviour
     public void OnElementChange()
     {
         if (dropdown.value == (int)playerElement) return;
-        NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice[connectionToClient.connectionId] = dropdown.value - 1;
         CmdElementChange(dropdown.value);
     }
 
     [Command]
     private void CmdElementChange(int newValue)
     {
+        if(NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice.ContainsKey(connectionToClient.connectionId)) // = newValue - 1;
+        {
+            NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice[connectionToClient.connectionId] = newValue - 1;
+        }
+        else
+        {
+            NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice.Add(connectionToClient.connectionId, newValue - 1);
+        }
+
         RpcElementChange(newValue);
     }
 

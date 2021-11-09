@@ -6,13 +6,21 @@ using UnityEngine;
 
 public class ElemNetworkManager : NetworkManager
 {
-    [Client]
-    public override void OnClientSceneChanged(NetworkConnection conn)
+    public override void OnServerSceneChanged(string sceneName)
     {
-        base.OnClientSceneChanged(conn);
+        base.OnServerSceneChanged(sceneName);
 
-        print(conn.connectionId);
-        GameObject player = Instantiate(spawnPrefabs.Find(x => x.name.Contains("AirBender")), new Vector3(0, 100, 0), Quaternion.identity);
-        NetworkServer.Spawn(player, conn);
+        SteamLobby steamLobby = GetComponent<SteamLobby>();
+
+        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+        for (int i = 0; i < steamLobby.playerConnections.Count; i++)
+        {
+            int pChoice = steamLobby.playerElementChoice[steamLobby.playerConnections[i].connectionId];
+
+            GameObject obj = Instantiate(spawnPrefabs[pChoice], spawnPoints[i].transform.position, Quaternion.identity);
+
+            NetworkServer.Spawn(obj, steamLobby.playerConnections[i]);
+        }
     }
 }
