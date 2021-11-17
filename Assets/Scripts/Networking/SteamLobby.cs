@@ -11,6 +11,8 @@ public class SteamLobby : MonoBehaviour
 
     public GameObject mainMenu;
     public GameObject lobbyUI;
+    public GameObject worldSelectUI;
+    public GameObject joinLobbyUI;
 
     public List<PlayerSelectUI> players;
     public Dictionary<int, int> playerElementChoice;
@@ -45,6 +47,12 @@ public class SteamLobby : MonoBehaviour
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         lobbyJoinReq = Callback<GameLobbyJoinRequested_t>.Create(OnLobbyJoinRequested);
         lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+    }
+
+    public void SelectWorld()
+    {
+        worldSelectUI.SetActive(true);
+        worldSelectUI.GetComponent<WorldCreator>().ShowWorldList();
     }
 
     public void HostLobby()
@@ -82,6 +90,17 @@ public class SteamLobby : MonoBehaviour
         lobbyUI.SetActive(true);
     }
 
+    public void LoadSteamFriendsList()
+    {
+        joinLobbyUI.SetActive(true);
+        for (int i = 0; i < SteamFriends.GetFriendCount(EFriendFlags.k_EFriendFlagAll); i++)
+        {
+            CSteamID steamID = SteamFriends.GetFriendByIndex(i, EFriendFlags.k_EFriendFlagAll);
+
+            joinLobbyUI.GetComponent<FriendsList>().AddFriend(SteamFriends.GetFriendPersonaName(steamID));
+        }
+    }
+
     private void OnLobbyCreated(LobbyCreated_t callback)
     {
         if (callback.m_eResult != EResult.k_EResultOK)
@@ -96,7 +115,7 @@ public class SteamLobby : MonoBehaviour
         networkManager.StartHost();
 
         SteamMatchmaking.SetLobbyData(
-                new CSteamID(callback.m_ulSteamIDLobby),
+                LobbyID,
                 HOST_ADDRESS_KEY,
                 SteamUser.GetSteamID().ToString());
 

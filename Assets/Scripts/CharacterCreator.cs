@@ -22,6 +22,6 @@ public class CharacterCreator : MonoBehaviour
     {
         if (charName.text == "") return;
 
-        SaveSystem.SaveCharacter(charName.text, charElement.itemText.text);
+        //SaveSystem.SaveCharacter(charName.text, charElement.itemText.text);
     }
 }
