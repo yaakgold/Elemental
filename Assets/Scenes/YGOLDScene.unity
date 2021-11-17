@@ -2211,7 +2211,7 @@ MonoBehaviour:
   m_Content: {fileID: 31220827}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 2
+  m_MovementType: 0
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -6108,7 +6108,7 @@ MonoBehaviour:
   mainMenu: {fileID: 1740763297}
   lobbyUI: {fileID: 1464352852}
   worldSelectUI: {fileID: 639441558}
-  joinLobbyUI: {fileID: 0}
+  joinLobbyUI: {fileID: 1505053110}
   players: []
   playerUI: {fileID: 565549405635455205, guid: d2d2f5acb191bc44fb3151a8b086a5da, type: 3}
   networkManager: {fileID: 1542866075}
