@@ -504,12 +504,11 @@ GameObject:
   - component: {fileID: 3087733300671576664}
   - component: {fileID: 8951460368925958178}
   - component: {fileID: 2419002268974850276}
-  - component: {fileID: 5580640431901231634}
   - component: {fileID: 7397485788066862564}
   - component: {fileID: 2419002268974850277}
   m_Layer: 8
   m_Name: EnemyAI
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -577,30 +576,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 20
+  walkPointRange: 5
   timeBetweenAttacks: 2
-  sightRange: 10
-  attackRange: 5
+  sightRange: 20
+  attackRange: 10
   isInSight: 0
   isInAttackRange: 0
   eAbilities: 0
---- !u!114 &5580640431901231634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2419002268974850274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 909d917d73a63f940ac158d02e936645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pushLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  canPush: 0
-  strength: 1.1
 --- !u!114 &7397485788066862564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,8 +609,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 11
+  m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
