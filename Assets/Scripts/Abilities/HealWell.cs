@@ -21,7 +21,6 @@ public class HealWell : MonoBehaviour
                 other.gameObject.TryGetComponent<Health>(out Health health);
                 health.GetHit(-5);
                 timerCount = 0;
-                print(health.CurrentHealth);
             }
         }
     }

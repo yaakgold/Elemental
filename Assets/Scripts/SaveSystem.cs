@@ -5,24 +5,25 @@ using UnityEngine;
 
 public static class SaveSystem
 {
-    public static void SaveCharacter(string name, string element, Transform data = null)
+    #region World
+    public static void SaveWorld(string name, float completionPercentage = 0)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + $"/Characters/{name}.Elem";
+        string path = Application.persistentDataPath + $"/world_{name}.Elem";
 
         FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
 
-        CharacterData charData = new CharacterData(name, element);
+        WorldData worldData = new WorldData(name, completionPercentage);
 
-        formatter.Serialize(fs, charData);
+        formatter.Serialize(fs, worldData);
 
         fs.Close();
     }
 
-    public static CharacterData LoadCharacter(string name)
+    public static WorldData LoadWorld(string name)
     {
-        string path = Application.persistentDataPath + $"/Characters/{name}.Elem";
-        if(!File.Exists(path))
+        string path = name;
+        if (!File.Exists(path))
         {
             Debug.LogError("Save file not found in " + path);
 
@@ -32,19 +33,25 @@ public static class SaveSystem
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream fs = new FileStream(path, FileMode.Open);
 
-        CharacterData data = (CharacterData)formatter.Deserialize(fs);
+        WorldData data = (WorldData)formatter.Deserialize(fs);
 
         fs.Close();
 
         return data;
     }
 
-    public static List<CharacterData> LoadInAllCharacters()
+    public static List<WorldData> LoadInAllWorlds()
     {
-        List<CharacterData> cd = new List<CharacterData>();
+        List<WorldData> wd = new List<WorldData>();
 
+        string[] files = Directory.GetFiles(Application.persistentDataPath, "*.Elem");
 
+        foreach (string file in files)
+        {
+            wd.Add(LoadWorld(file));
+        }
 
-        return cd;
+        return wd;
     }
+    #endregion
 }

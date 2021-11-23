@@ -7,9 +7,6 @@ TagManager:
   - CinemachineTarget
   - PW - Prop
   - PW - Building
-  - Synty Tree
-  - Synty Medium Farm
-  - Synty Small Farm
   - PW - Nature
   - earthTest
   - Ground
@@ -17,7 +14,13 @@ TagManager:
   - LobbyUI
   - StartGameBtn
   - PlayersList
-  - LoadingUI
+  - LobbyUI
+  - SteamManager
+  - SpawnPoint
+  - CinemachineCam
+  - earthTest
+  - LevelWindow
+  - AbilityUI
   layers:
   - Default
   - TransparentFX

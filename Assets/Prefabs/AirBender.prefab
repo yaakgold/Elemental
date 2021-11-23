@@ -511,6 +511,10 @@ GameObject:
   - component: {fileID: 2125036125799975154}
   - component: {fileID: 2437566925647697026}
   - component: {fileID: -1807955926173539960}
+  - component: {fileID: -7843126642713042680}
+  - component: {fileID: 231626285182437528}
+  - component: {fileID: 3287955988620191018}
+  - component: {fileID: -1705309949753406611}
   m_Layer: 8
   m_Name: AirBender
   m_TagString: Player
@@ -566,8 +570,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8408898351996d48845a4898b3d15ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   ability1: {fileID: 11400000, guid: 800ac33624c2f8c46bd5849e2e11cf8e, type: 2}
   ability2: {fileID: 11400000, guid: 34653121d3a3b8f4d90c190c1f87044f, type: 2}
+  camFollow: {fileID: 8009054910723993042}
 --- !u!114 &-6440049096369765895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,6 +588,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  syncMode: 0
+  syncInterval: 0.1
   AirBall: {fileID: 925525802920415752, guid: bff64d66439629b45bb10055ff704fe7, type: 3}
   timer: 0
   tpc: {fileID: 2437566925647697029}
@@ -615,6 +624,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   MoveSpeed: 6
   SprintSpeed: 16.005
   RotationSmoothTime: 0.12
@@ -780,10 +791,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3692c61429fc0d44aa6283441ebf184b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  currentHealth: 0
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
   maxHealth: 100
+--- !u!114 &-7843126642713042680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437566925647697038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 3a124bddda7b24244a30b30b4e732beb
+  hasSpawned: 0
+--- !u!114 &231626285182437528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437566925647697038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &3287955988620191018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437566925647697038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 8968925581944378446}
+--- !u!114 &-1705309949753406611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437566925647697038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bacf54471bbb62543afbc38ea74bb67d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelWindow: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &2475435671582433490
 GameObject:
   m_ObjectHideFlags: 0
@@ -2140,7 +2230,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 43714b68324cc2c409d534d9874f2a2b, type: 2}
+  - {fileID: 2100000, guid: 4267753a2e8c60a48a8979d71b970321, type: 2}
   - {fileID: 2100000, guid: 766fd3ff04aab4745a764d33daac86fa, type: 2}
   - {fileID: 2100000, guid: 8b25e99361ac31d4e9ae83c46aee69ea, type: 2}
   m_StaticBatchInfo:
