@@ -1,0 +1,239 @@
+{
+    "type": "NodeCanvas.DialogueTrees.DialogueTree",
+    "nodes": [
+        {
+            "statement": {
+                "_text": "Hello how are you?"
+            },
+            "_actorName": "Other person",
+            "_actorParameterID": "a66bb6ac-470d-4d0f-ae72-ee03ce643c32",
+            "_position": {
+                "x": 342.0,
+                "y": 263.0
+            },
+            "$type": "NodeCanvas.DialogueTrees.StatementNode",
+            "$id": "0"
+        },
+        {
+            "saySelection": true,
+            "availableChoices": [
+                {
+                    "statement": {
+                        "_text": "Who are you?"
+                    }
+                },
+                {
+                    "statement": {
+                        "_text": "I'm angry"
+                    }
+                },
+                {
+                    "statement": {
+                        "_text": "I'm good"
+                    }
+                }
+            ],
+            "_actorName": "Player",
+            "_actorParameterID": "06d53870-53c1-4215-8d7d-80ea8c94fecb",
+            "_position": {
+                "x": 361.0,
+                "y": 368.0
+            },
+            "$type": "NodeCanvas.DialogueTrees.MultipleChoiceNode",
+            "$id": "1"
+        },
+        {
+            "statement": {
+                "_text": "I am your lord and saviour, Josh"
+            },
+            "_actorName": "Other person",
+            "_actorParameterID": "a66bb6ac-470d-4d0f-ae72-ee03ce643c32",
+            "_position": {
+                "x": 156.0,
+                "y": 597.0
+            },
+            "$type": "NodeCanvas.DialogueTrees.StatementNode",
+            "$id": "2"
+        },
+        {
+            "statement": {
+                "_text": "Sucks"
+            },
+            "_actorName": "Other person",
+            "_actorParameterID": "a66bb6ac-470d-4d0f-ae72-ee03ce643c32",
+            "_position": {
+                "x": 356.0,
+                "y": 597.0
+            },
+            "$type": "NodeCanvas.DialogueTrees.StatementNode",
+            "$id": "3"
+        },
+        {
+            "statement": {
+                "_text": "Why?"
+            },
+            "_actorName": "Other person",
+            "_actorParameterID": "a66bb6ac-470d-4d0f-ae72-ee03ce643c32",
+            "_position": {
+                "x": 479.0,
+                "y": 598.0
+            },
+            "$type": "NodeCanvas.DialogueTrees.StatementNode",
+            "$id": "4"
+        },
+        {
+            "saySelection": true,
+            "availableChoices": [
+                {
+                    "statement": {
+                        "_text": "IDK"
+                    }
+                },
+                {
+                    "statement": {
+                        "_text": "I'm talking to you"
+                    }
+                },
+                {
+                    "statement": {
+                        "_text": "SEX"
+                    }
+                }
+            ],
+            "_position": {
+                "x": 469.0,
+                "y": 693.0
+            },
+            "$type": "NodeCanvas.DialogueTrees.MultipleChoiceNode",
+            "$id": "5"
+        },
+        {
+            "statement": {
+                "_text": "Ok"
+            },
+            "_position": {
+                "x": 361.0,
+                "y": 912.0
+            },
+            "$type": "NodeCanvas.DialogueTrees.StatementNode",
+            "$id": "6"
+        },
+        {
+            "statement": {
+                "_text": "Ew"
+            },
+            "_position": {
+                "x": 484.6169,
+                "y": 909.6196
+            },
+            "$type": "NodeCanvas.DialogueTrees.StatementNode",
+            "$id": "7"
+        },
+        {
+            "statement": {
+                "_text": "Fair"
+            },
+            "_position": {
+                "x": 605.6169,
+                "y": 912.6196
+            },
+            "$type": "NodeCanvas.DialogueTrees.StatementNode",
+            "$id": "8"
+        }
+    ],
+    "connections": [
+        {
+            "_sourceNode": {
+                "$ref": "0"
+            },
+            "_targetNode": {
+                "$ref": "1"
+            },
+            "$type": "NodeCanvas.DialogueTrees.DTConnection"
+        },
+        {
+            "_sourceNode": {
+                "$ref": "1"
+            },
+            "_targetNode": {
+                "$ref": "2"
+            },
+            "$type": "NodeCanvas.DialogueTrees.DTConnection"
+        },
+        {
+            "_sourceNode": {
+                "$ref": "1"
+            },
+            "_targetNode": {
+                "$ref": "3"
+            },
+            "$type": "NodeCanvas.DialogueTrees.DTConnection"
+        },
+        {
+            "_sourceNode": {
+                "$ref": "1"
+            },
+            "_targetNode": {
+                "$ref": "4"
+            },
+            "$type": "NodeCanvas.DialogueTrees.DTConnection"
+        },
+        {
+            "_sourceNode": {
+                "$ref": "4"
+            },
+            "_targetNode": {
+                "$ref": "5"
+            },
+            "$type": "NodeCanvas.DialogueTrees.DTConnection"
+        },
+        {
+            "_sourceNode": {
+                "$ref": "5"
+            },
+            "_targetNode": {
+                "$ref": "6"
+            },
+            "$type": "NodeCanvas.DialogueTrees.DTConnection"
+        },
+        {
+            "_sourceNode": {
+                "$ref": "5"
+            },
+            "_targetNode": {
+                "$ref": "7"
+            },
+            "$type": "NodeCanvas.DialogueTrees.DTConnection"
+        },
+        {
+            "_sourceNode": {
+                "$ref": "5"
+            },
+            "_targetNode": {
+                "$ref": "8"
+            },
+            "$type": "NodeCanvas.DialogueTrees.DTConnection"
+        }
+    ],
+    "canvasGroups": [],
+    "localBlackboard": {
+        "_variables": {
+
+        }
+    },
+    "derivedData": {
+        "actorParameters": [
+            {
+                "_keyName": "Player",
+                "_id": "06d53870-53c1-4215-8d7d-80ea8c94fecb",
+                "_actorObject": 1
+            },
+            {
+                "_keyName": "Other person",
+                "_id": "a66bb6ac-470d-4d0f-ae72-ee03ce643c32",
+                "_actorObject": 2
+            }
+        ],
+        "$type": "NodeCanvas.DialogueTrees.DialogueTree+DerivedSerializationData"
+    }
+}
