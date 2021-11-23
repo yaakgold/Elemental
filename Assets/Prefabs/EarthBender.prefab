@@ -514,6 +514,7 @@ GameObject:
   - component: {fileID: 730511536030243962}
   - component: {fileID: 4432250604443005069}
   - component: {fileID: 7874546396465527066}
+  - component: {fileID: 6915902746216956271}
   m_Layer: 8
   m_Name: EarthBender
   m_TagString: Player
@@ -586,6 +587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26ab72a02b48794399cacb499ae4b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   power: 500
   range: 1
   wallSpeed: 2
@@ -789,6 +792,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3692c61429fc0d44aa6283441ebf184b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  currentHealth: 0
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -855,6 +861,20 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 0
   animator: {fileID: 8968925581944378446}
+--- !u!114 &6915902746216956271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437566925647697038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bacf54471bbb62543afbc38ea74bb67d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelWindow: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &2475435671582433490
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,9 @@ TagManager:
   - SteamManager
   - SpawnPoint
   - CinemachineCam
+  - earthTest
+  - LevelWindow
+  - AbilityUI
   layers:
   - Default
   - TransparentFX

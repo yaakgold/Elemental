@@ -514,6 +514,7 @@ GameObject:
   - component: {fileID: 7654522028600437313}
   - component: {fileID: 1443473259918031929}
   - component: {fileID: 2015831388859803702}
+  - component: {fileID: 6902297392898803605}
   m_Layer: 8
   m_Name: FireBender
   m_TagString: Player
@@ -586,6 +587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2544c89edffe6f44197591ecac979907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   speed: 1
   FireBall: {fileID: 925525802920415752, guid: ff2a8b4e2ff43b142a38a61eaff1c628, type: 3}
   Meteor: {fileID: 925525802920415752, guid: a953c8709fcb0354a9c8878473b9ade9, type: 3}
@@ -786,6 +789,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3692c61429fc0d44aa6283441ebf184b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  currentHealth: 0
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -852,6 +858,20 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 0
   animator: {fileID: 8968925581944378446}
+--- !u!114 &6902297392898803605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437566925647697038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bacf54471bbb62543afbc38ea74bb67d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelWindow: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &2475435671582433490
 GameObject:
   m_ObjectHideFlags: 0
