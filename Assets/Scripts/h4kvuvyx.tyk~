@@ -13,5 +13,8 @@ public class FriendsList : MonoBehaviour
     {
         GameObject btn = Instantiate(friendPref, contentHolder.transform);
         btn.GetComponent<PlayerInfoDisplay>().Setup(_name, image, friendID);
+        //btn.GetComponent<Button>().onClick.AddListener(SelectWorld);
     }
+
+    //public void SelectWorld(int )
 }

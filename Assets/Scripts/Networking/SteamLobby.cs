@@ -99,14 +99,12 @@ public class SteamLobby : MonoBehaviour
 
             int imageId = SteamFriends.GetLargeFriendAvatar(steamID);
 
-            joinLobbyUI.GetComponent<FriendsList>().AddFriend(SteamFriends.GetFriendPersonaName(steamID), GetSteamImageAsText(imageId));
+            joinLobbyUI.GetComponent<FriendsList>().AddFriend(SteamFriends.GetFriendPersonaName(steamID), GetSteamImageAsText(imageId), steamID);
         }
     }
 
     private Texture2D GetSteamImageAsText(int id)
     {
-        //Check for imageId = -1 and if it is set the image to be a blank white image or something
-
         Texture2D texture = null;
 
         bool isValid = SteamUtils.GetImageSize(id, out uint width, out uint height);
@@ -147,6 +145,15 @@ public class SteamLobby : MonoBehaviour
                 SteamUser.GetSteamID().ToString());
 
         lobbyUI.SetActive(true);
+    }
+
+    public bool AttemptConnection(CSteamID friendID)
+    {
+        bool connected = false;
+
+        //SteamFriends.;
+
+        return connected;
     }
 
     private void OnLobbyJoinRequested(GameLobbyJoinRequested_t callback)
