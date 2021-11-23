@@ -8,6 +8,11 @@ TagManager:
   - PW - Prop
   - PW - Building
   - PW - Nature
+  - earthTest
+  - Ground
+  - SteamManager
+  - LobbyUI
+  - StartGameBtn
   - PlayersList
   - LobbyUI
   - SteamManager
@@ -23,8 +28,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - PlayerLayer
+  - GroundLayer
   - 
   - 
   - 

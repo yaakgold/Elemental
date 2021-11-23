@@ -587,9 +587,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2544c89edffe6f44197591ecac979907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 20
   syncMode: 0
   syncInterval: 0.1
-  speed: 1
   FireBall: {fileID: 925525802920415752, guid: ff2a8b4e2ff43b142a38a61eaff1c628, type: 3}
   Meteor: {fileID: 925525802920415752, guid: a953c8709fcb0354a9c8878473b9ade9, type: 3}
 --- !u!143 &2437566925647697028
