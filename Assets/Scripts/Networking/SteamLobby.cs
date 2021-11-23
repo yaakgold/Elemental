@@ -97,8 +97,35 @@ public class SteamLobby : MonoBehaviour
         {
             CSteamID steamID = SteamFriends.GetFriendByIndex(i, EFriendFlags.k_EFriendFlagAll);
 
-            joinLobbyUI.GetComponent<FriendsList>().AddFriend(SteamFriends.GetFriendPersonaName(steamID));
+            int imageId = SteamFriends.GetLargeFriendAvatar(steamID);
+
+            joinLobbyUI.GetComponent<FriendsList>().AddFriend(SteamFriends.GetFriendPersonaName(steamID), GetSteamImageAsText(imageId));
         }
+    }
+
+    private Texture2D GetSteamImageAsText(int id)
+    {
+        //Check for imageId = -1 and if it is set the image to be a blank white image or something
+
+        Texture2D texture = null;
+
+        bool isValid = SteamUtils.GetImageSize(id, out uint width, out uint height);
+
+        if(isValid)
+        {
+            byte[] image = new byte[width * height * 4];
+
+            isValid = SteamUtils.GetImageRGBA(id, image, (int)(width * height * 4));
+
+            if(isValid)
+            {
+                texture = new Texture2D((int)width, (int)height, TextureFormat.RGBA32, false, true);
+                texture.LoadRawTextureData(image);
+                texture.Apply();
+            }
+        }
+
+        return texture;
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback)

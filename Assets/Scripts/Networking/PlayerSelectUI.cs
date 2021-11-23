@@ -10,7 +10,6 @@ using System;
 public class PlayerSelectUI : NetworkBehaviour
 {
     public TMP_Text userName_txt;
-    public TMP_Dropdown dropdown;
     public GameObject readyToggleBtn;
     public Image background;
     public Button startButton;
@@ -42,17 +41,17 @@ public class PlayerSelectUI : NetworkBehaviour
 
             NetworkManager.singleton.GetComponent<SteamLobby>().players.Add(this);
 
-            if (!hasAuthority)
-            {
-                dropdown.value = (int)playerElement;
-            }
+            //if (!hasAuthority)
+            //{
+            //    dropdown.value = (int)playerElement;
+            //}
         }
 
     }
 
     public override void OnStartAuthority()
     {
-        dropdown.interactable = true;
+        //dropdown.interactable = true;
 
         readyToggleBtn.SetActive(true);
 
@@ -102,22 +101,23 @@ public class PlayerSelectUI : NetworkBehaviour
     #endregion
 
     #region Choose Element
-    public void OnElementChange()
+    public void OnElementChange(int val)
     {
-        if (dropdown.value == (int)playerElement) return;
-        CmdElementChange(dropdown.value);
+        if (val == (int)playerElement) return;
+        readyToggleBtn.GetComponent<Button>().interactable = true;
+        CmdElementChange(val);
     }
 
     [Command]
     private void CmdElementChange(int newValue)
     {
-        if(NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice.ContainsKey(connectionToClient.connectionId)) // = newValue - 1;
+        if(NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice.ContainsKey(connectionToClient.connectionId))
         {
-            NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice[connectionToClient.connectionId] = newValue - 1;
+            NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice[connectionToClient.connectionId] = newValue;
         }
         else
         {
-            NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice.Add(connectionToClient.connectionId, newValue - 1);
+            NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice.Add(connectionToClient.connectionId, newValue);
         }
 
         RpcElementChange(newValue);
@@ -127,17 +127,15 @@ public class PlayerSelectUI : NetworkBehaviour
     private void RpcElementChange(int newValue)
     {
         playerElement = (ePlayerElement)newValue;
-
-        dropdown.value = newValue;
     }
     #endregion
 
     public enum ePlayerElement
     {
-        NONE,
         AIR,
         EARTH,
         FIRE,
-        WATER
+        WATER,
+        NONE
     }
 }
