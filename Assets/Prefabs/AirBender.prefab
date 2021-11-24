@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 231626285182437528}
   - component: {fileID: 3287955988620191018}
   - component: {fileID: -1705309949753406611}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: AirBender
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -574,6 +574,8 @@ MonoBehaviour:
   syncInterval: 0.1
   ability1: {fileID: 11400000, guid: 800ac33624c2f8c46bd5849e2e11cf8e, type: 2}
   ability2: {fileID: 11400000, guid: 34653121d3a3b8f4d90c190c1f87044f, type: 2}
+  ability1UI: {fileID: 0}
+  ability2UI: {fileID: 0}
   camFollow: {fileID: 8009054910723993042}
 --- !u!114 &-6440049096369765895
 MonoBehaviour:
@@ -587,9 +589,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f1cddf081057e4892e22d8940a86d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
   syncMode: 0
   syncInterval: 0.1
+  speed: 20
   AirBall: {fileID: 925525802920415752, guid: bff64d66439629b45bb10055ff704fe7, type: 3}
   timer: 0
   tpc: {fileID: 2437566925647697029}

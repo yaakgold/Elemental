@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 4432250604443005069}
   - component: {fileID: 7874546396465527066}
   - component: {fileID: 6915902746216956271}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: EarthBender
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -574,6 +574,8 @@ MonoBehaviour:
   syncInterval: 0.1
   ability1: {fileID: 11400000, guid: fdcc7d0323eb4f3459182f3bbda31154, type: 2}
   ability2: {fileID: 11400000, guid: be7fe2fe27236574c9ffb256f3fbd0e1, type: 2}
+  ability1UI: {fileID: 0}
+  ability2UI: {fileID: 0}
   camFollow: {fileID: 8009054910723993042}
 --- !u!114 &7068573814542982378
 MonoBehaviour:

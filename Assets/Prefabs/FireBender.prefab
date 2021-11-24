@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 1443473259918031929}
   - component: {fileID: 2015831388859803702}
   - component: {fileID: 6902297392898803605}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: FireBender
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -574,6 +574,8 @@ MonoBehaviour:
   syncInterval: 0.1
   ability1: {fileID: 11400000, guid: 00f8c31fda6f9d74cab018ac44d2ac82, type: 2}
   ability2: {fileID: 11400000, guid: 7f12dbf0ddfd50345935cafca482a15c, type: 2}
+  ability1UI: {fileID: 0}
+  ability2UI: {fileID: 0}
   camFollow: {fileID: 8009054910723993042}
 --- !u!114 &9021337604888977140
 MonoBehaviour:
@@ -587,9 +589,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2544c89edffe6f44197591ecac979907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
   syncMode: 0
   syncInterval: 0.1
+  speed: 20
   FireBall: {fileID: 925525802920415752, guid: ff2a8b4e2ff43b142a38a61eaff1c628, type: 3}
   Meteor: {fileID: 925525802920415752, guid: a953c8709fcb0354a9c8878473b9ade9, type: 3}
 --- !u!143 &2437566925647697028

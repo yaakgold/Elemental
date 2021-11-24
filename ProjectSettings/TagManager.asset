@@ -21,6 +21,7 @@ TagManager:
   - earthTest
   - LevelWindow
   - AbilityUI
+  - Enemy
   layers:
   - Default
   - TransparentFX
