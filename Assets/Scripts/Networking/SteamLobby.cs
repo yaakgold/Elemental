@@ -11,15 +11,18 @@ public class SteamLobby : MonoBehaviour
 
     public GameObject mainMenu;
     public GameObject lobbyUI;
+    public GameObject worldSelectUI;
+    public GameObject joinLobbyUI;
 
     public List<PlayerSelectUI> players;
+    public Dictionary<int, int> playerElementChoice;
+    public List<NetworkConnection> playerConnections;
 
     public GameObject playerUI;
 
     protected Callback<LobbyCreated_t> lobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> lobbyJoinReq;
     protected Callback<LobbyEnter_t> lobbyEntered;
-    protected Callback<LobbyKicked_t> lobbyKicked;
 
     public NetworkManager networkManager;
     private const string HOST_ADDRESS_KEY = "HostAddress";
@@ -28,6 +31,9 @@ public class SteamLobby : MonoBehaviour
 
     private void Start()
     {
+        playerElementChoice = new Dictionary<int, int>();
+        playerConnections = new List<NetworkConnection>();
+
         if(networkManager == null)
         {
             return;
@@ -41,7 +47,12 @@ public class SteamLobby : MonoBehaviour
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         lobbyJoinReq = Callback<GameLobbyJoinRequested_t>.Create(OnLobbyJoinRequested);
         lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
-        lobbyKicked = Callback<LobbyKicked_t>.Create(OnLobbyKicked);
+    }
+
+    public void SelectWorld()
+    {
+        worldSelectUI.SetActive(true);
+        worldSelectUI.GetComponent<WorldCreator>().ShowWorldList();
     }
 
     public void HostLobby()
@@ -79,6 +90,42 @@ public class SteamLobby : MonoBehaviour
         lobbyUI.SetActive(true);
     }
 
+    public void LoadSteamFriendsList()
+    {
+        joinLobbyUI.SetActive(true);
+        for (int i = 0; i < SteamFriends.GetFriendCount(EFriendFlags.k_EFriendFlagAll); i++)
+        {
+            CSteamID steamID = SteamFriends.GetFriendByIndex(i, EFriendFlags.k_EFriendFlagAll);
+
+            int imageId = SteamFriends.GetLargeFriendAvatar(steamID);
+
+            joinLobbyUI.GetComponent<FriendsList>().AddFriend(SteamFriends.GetFriendPersonaName(steamID), GetSteamImageAsText(imageId), steamID);
+        }
+    }
+
+    private Texture2D GetSteamImageAsText(int id)
+    {
+        Texture2D texture = null;
+
+        bool isValid = SteamUtils.GetImageSize(id, out uint width, out uint height);
+
+        if(isValid)
+        {
+            byte[] image = new byte[width * height * 4];
+
+            isValid = SteamUtils.GetImageRGBA(id, image, (int)(width * height * 4));
+
+            if(isValid)
+            {
+                texture = new Texture2D((int)width, (int)height, TextureFormat.RGBA32, false, true);
+                texture.LoadRawTextureData(image);
+                texture.Apply();
+            }
+        }
+
+        return texture;
+    }
+
     private void OnLobbyCreated(LobbyCreated_t callback)
     {
         if (callback.m_eResult != EResult.k_EResultOK)
@@ -93,11 +140,20 @@ public class SteamLobby : MonoBehaviour
         networkManager.StartHost();
 
         SteamMatchmaking.SetLobbyData(
-                new CSteamID(callback.m_ulSteamIDLobby),
+                LobbyID,
                 HOST_ADDRESS_KEY,
                 SteamUser.GetSteamID().ToString());
 
         lobbyUI.SetActive(true);
+    }
+
+    public bool AttemptConnection(CSteamID friendID)
+    {
+        bool connected = false;
+
+        //SteamFriends.;
+
+        return connected;
     }
 
     private void OnLobbyJoinRequested(GameLobbyJoinRequested_t callback)
@@ -120,11 +176,13 @@ public class SteamLobby : MonoBehaviour
         lobbyUI.SetActive(true);
     }
 
-    private void OnLobbyKicked(LobbyKicked_t callback)
+    public void StartGame()
     {
-        networkManager.StopClient();
+        foreach (PlayerSelectUI player in players)
+        {
+            playerConnections.Add(player.connectionToClient);
+        }
 
-        mainMenu.SetActive(true);
-        lobbyUI.SetActive(false);
+        NetworkManager.singleton.ServerChangeScene("MainScene");
     }
 }

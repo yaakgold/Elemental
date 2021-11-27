@@ -45,7 +45,6 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectsWithTag("Player")[0].transform;
         agent = GetComponent<NavMeshAgent>();
         health = GetComponent<Health>();
 
@@ -56,6 +55,16 @@ public class EnemyAI : MonoBehaviour
     {
         isInSight = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         isInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
+
+        if(isInSight)
+        {
+            Physics.SphereCast(transform.position, sightRange, Vector3.up, out RaycastHit hit);
+            player = hit.transform;
+        }
+        else if(!isInAttackRange)
+        {
+            player = null;
+        }
 
         if (!isInSight && !isInAttackRange) Patroling();
         if (isInSight && !isInAttackRange) ChasePlayer();
@@ -94,11 +103,13 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
+        if (player == null) return;
         agent.SetDestination(player.position);
     }
 
     private void AttackPlayer()
     {
+        if (player == null) return;
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);

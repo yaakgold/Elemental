@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseAbility : MonoBehaviour
+public class BaseAbility : NetworkBehaviour
 {
     public int damage;
 

@@ -10,12 +10,15 @@ using System;
 public class PlayerSelectUI : NetworkBehaviour
 {
     public TMP_Text userName_txt;
-    public TMP_Dropdown dropdown;
     public GameObject readyToggleBtn;
     public Image background;
     public Button startButton;
 
     private SteamLobby steamLobby;
+
+    private GameObject player;
+    [SerializeField]
+    private int spawnChoice;
 
     [SyncVar]
     private bool readyState = false;
@@ -23,24 +26,32 @@ public class PlayerSelectUI : NetworkBehaviour
     [SyncVar]
     private ePlayerElement playerElement = ePlayerElement.NONE;
 
+    private int spawnNum = 0;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-            return;
-
-        transform.SetParent(GameObject.FindGameObjectWithTag("PlayersList").transform);
-
-        NetworkManager.singleton.GetComponent<SteamLobby>().players.Add(this);
-
-        if(!hasAuthority)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            dropdown.value = (int)playerElement;
+            transform.SetParent(GameObject.FindGameObjectWithTag("PlayersList").transform);
+
+            NetworkManager.singleton.GetComponent<SteamLobby>().players.Add(this);
+
+            //if (!hasAuthority)
+            //{
+            //    dropdown.value = (int)playerElement;
+            //}
         }
+
     }
 
     public override void OnStartAuthority()
     {
-        dropdown.interactable = true;
+        //dropdown.interactable = true;
 
         readyToggleBtn.SetActive(true);
 
@@ -53,8 +64,7 @@ public class PlayerSelectUI : NetworkBehaviour
     public void StartGame()
     {
         GameObject.FindGameObjectWithTag("LobbyUI").SetActive(false);
-
-        NetworkManager.singleton.ServerChangeScene("MainScene");
+        steamLobby.StartGame();
     }
 
     #region Toggle Ready State
@@ -91,29 +101,24 @@ public class PlayerSelectUI : NetworkBehaviour
     #endregion
 
     #region Choose Element
-    public void OnElementChange()
+    public void OnElementChange(int val)
     {
-        if (dropdown.value == (int)playerElement) return;
-
-        CmdElementChange(dropdown.value);
+        if (val == (int)playerElement) return;
+        readyToggleBtn.GetComponent<Button>().interactable = true;
+        CmdElementChange(val);
     }
 
     [Command]
     private void CmdElementChange(int newValue)
     {
-        //TODO: Check here to make sure that nobody else is using the currently selected element
-        //TODO: Change the way the player chooses their element so the server can verify if that element is available
-        //if(steamLobby == null)
-        //    steamLobby = NetworkManager.singleton.GetComponent<SteamLobby>();
-
-        //foreach (PlayerSelectUI player in steamLobby.players)
-        //{
-        //    if (player == this)
-        //        continue;
-
-        //    if (player.playerElement == playerElement)
-        //        return;
-        //}
+        if(NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice.ContainsKey(connectionToClient.connectionId))
+        {
+            NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice[connectionToClient.connectionId] = newValue;
+        }
+        else
+        {
+            NetworkManager.singleton.GetComponent<SteamLobby>().playerElementChoice.Add(connectionToClient.connectionId, newValue);
+        }
 
         RpcElementChange(newValue);
     }
@@ -122,17 +127,15 @@ public class PlayerSelectUI : NetworkBehaviour
     private void RpcElementChange(int newValue)
     {
         playerElement = (ePlayerElement)newValue;
-
-        dropdown.value = newValue;
     }
     #endregion
 
     public enum ePlayerElement
     {
-        NONE,
         AIR,
         EARTH,
         FIRE,
-        WATER
+        WATER,
+        NONE
     }
 }
