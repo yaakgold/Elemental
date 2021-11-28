@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI; 
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : NetworkBehaviour
 {
     public NavMeshAgent agent;
 
@@ -45,23 +46,27 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
+        if (!isServer) return;
         agent = GetComponent<NavMeshAgent>();
         health = GetComponent<Health>();
 
         health.OnDeath.AddListener(DED);
+
+        NetworkServer.Spawn(gameObject);
     }
 
     private void Update()
     {
+        if (!isServer) return;
+
         isInSight = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         isInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
         if(isInSight)
         {
-            Physics.SphereCast(transform.position, sightRange, Vector3.up, out RaycastHit hit);
-            player = hit.transform;
+            player = FindClosestPlayer();
         }
-        else if(!isInAttackRange)
+        else
         {
             player = null;
         }
@@ -71,6 +76,22 @@ public class EnemyAI : MonoBehaviour
         if (isInSight && isInAttackRange) AttackPlayer();
     }
 
+    private Transform FindClosestPlayer()
+    {
+        Transform p = ElemNetworkManager.playerObjs[0].transform;
+
+        for (int i = 0; i < ElemNetworkManager.playerObjs.Count; i++)
+        {
+            if(Mathf.Abs(Vector3.Distance(transform.position, p.position)) < Mathf.Abs(Vector3.Distance(transform.position, ElemNetworkManager.playerObjs[i].transform.position)))
+            {
+                p = ElemNetworkManager.playerObjs[0].transform;
+            }
+        }
+
+        return p;
+    }
+
+    [ClientRpc]
     private void Patroling()
     {
         if (!walkPointSet) Search();
@@ -88,8 +109,10 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    [ClientRpc]
     private void Search()
     {
+        agent.updateRotation = true;
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
@@ -101,18 +124,33 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    [ClientRpc]
     private void ChasePlayer()
     {
         if (player == null) return;
         agent.SetDestination(player.position);
     }
 
+    [ClientRpc]
+    private void RotateTowards(Transform target)
+    {
+        if (target == null) return;
+        Vector3 direction = (target.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));    // flattens the vector3
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 2);
+    }
+
+    [ClientRpc]
     private void AttackPlayer()
     {
-        if (player == null) return;
-        agent.SetDestination(transform.position);
+        if (player == null)
+        {
+            print("No player" + gameObject.name);
+            return;
+        }
 
-        transform.LookAt(player);
+        //agent.SetDestination(transform.position);
+        RotateTowards(player);
 
         if(!hasAttacked)
         {
@@ -147,14 +185,24 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    [ClientRpc]
     private void ResetAttack()
     {
         hasAttacked = false;
     }
 
+    [ClientRpc]
     private void DED()
     {
         Destroy(gameObject);
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1, 0, 0, .5f);
+        Gizmos.DrawSphere(transform.position, sightRange);
+
+        Gizmos.color = new Color(0, 1, 0, .5f);
+        Gizmos.DrawSphere(transform.position, attackRange);
+    }
 }

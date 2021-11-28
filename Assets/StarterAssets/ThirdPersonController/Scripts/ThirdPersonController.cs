@@ -112,6 +112,8 @@ namespace StarterAssets
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
+
+			Cursor.lockState = CursorLockMode.Locked;
 		}
 
 		private void Update()
@@ -164,7 +166,10 @@ namespace StarterAssets
 			_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
 			// Cinemachine will follow this target
-			CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
+			//CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
+
+			//Rotate player as well
+			transform.rotation = Quaternion.Euler(transform.rotation.x, _cinemachineTargetYaw, transform.rotation.z);
 		}
 
 		private void Move()

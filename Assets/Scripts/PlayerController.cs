@@ -31,6 +31,8 @@ public class PlayerController : NetworkBehaviour
 
         ability2UI.GetComponentInChildren<TMP_Text>().text = ability2.name;
         ability2UI.GetComponentInChildren<Image>().sprite = ability2.sprite;
+
+        ElemNetworkManager.playerObjs.Add(gameObject);
     }
 
     public void SetLvlSystemAnim(LevelAnimation lvlAnimation)

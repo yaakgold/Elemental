@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class ElemNetworkManager : NetworkManager
 {
+    public static List<GameObject> playerObjs = new List<GameObject>();
+
     public override void OnServerSceneChanged(string sceneName)
     {
         base.OnServerSceneChanged(sceneName);

@@ -46,6 +46,7 @@ public class MainMenu : MonoBehaviour
 
     public void BackToMainMenuScreen()
     {
+        if (!currentActivePanel) return;
         mainMenu.SetActive(true);
         currentActivePanel.SetActive(false);
         currentActivePanel = null;
