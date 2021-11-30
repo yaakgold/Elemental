@@ -106,12 +106,15 @@ namespace StarterAssets
 			_hasAnimator = TryGetComponent(out _animator);
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
+			print(_input);
 
 			AssignAnimationIDs();
 
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
+
+			Cursor.lockState = CursorLockMode.Locked;
 		}
 
 		private void Update()
@@ -128,7 +131,13 @@ namespace StarterAssets
 			CameraRotation();
 		}
 
-		private void AssignAnimationIDs()
+        public override void OnStartAuthority()
+        {
+            base.OnStartAuthority();
+
+			GetComponent<PlayerInput>().enabled = true;
+        }
+        private void AssignAnimationIDs()
 		{
 			_animIDSpeed = Animator.StringToHash("Speed");
 			_animIDGrounded = Animator.StringToHash("Grounded");
@@ -164,7 +173,10 @@ namespace StarterAssets
 			_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
 			// Cinemachine will follow this target
-			CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
+			//CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
+
+			//Rotate player as well
+			transform.rotation = Quaternion.Euler(transform.rotation.x, _cinemachineTargetYaw, transform.rotation.z);
 		}
 
 		private void Move()
