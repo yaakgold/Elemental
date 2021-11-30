@@ -71,6 +71,12 @@ public class EnemyAI : NetworkBehaviour
             player = null;
         }
 
+        CmdStateMachine();
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdStateMachine()
+    {
         if (!isInSight && !isInAttackRange) Patroling();
         if (isInSight && !isInAttackRange) ChasePlayer();
         if (isInSight && isInAttackRange) AttackPlayer();
@@ -94,7 +100,7 @@ public class EnemyAI : NetworkBehaviour
     [ClientRpc]
     private void Patroling()
     {
-        if (!walkPointSet) Search();
+        if (!walkPointSet) CmdCallSearch();
 
         if(walkPointSet)
         {
@@ -107,6 +113,12 @@ public class EnemyAI : NetworkBehaviour
         {
             walkPointSet = false;
         }
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdCallSearch()
+    {
+        Search();
     }
 
     [ClientRpc]
@@ -181,8 +193,14 @@ public class EnemyAI : NetworkBehaviour
             }
 
             hasAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            Invoke(nameof(CallResetAttack), timeBetweenAttacks);
         }
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CallResetAttack()
+    {
+        ResetAttack();
     }
 
     [ClientRpc]

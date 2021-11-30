@@ -178,6 +178,7 @@ public class SteamLobby : MonoBehaviour
 
     public void StartGame()
     {
+        print(players.Count);
         foreach (PlayerSelectUI player in players)
         {
             playerConnections.Add(player.connectionToClient);

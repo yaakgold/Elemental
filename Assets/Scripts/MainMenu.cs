@@ -14,6 +14,10 @@ public class MainMenu : MonoBehaviour
     public GameObject returnBtn;
 
     private GameObject currentActivePanel = null;
+
+    [SerializeField]
+    private Animator anim;
+
     public void OnCreateCharClick()
     {
         mainMenu.SetActive(false);
@@ -22,10 +26,13 @@ public class MainMenu : MonoBehaviour
 
     public void OnStartGameUI()
     {
+        //TODO: When the game is actually presented, get rid of the startGameUI panel, it is only needed right now for testing
+
         mainMenu.SetActive(false);
         startGameUI.SetActive(true);
         currentActivePanel = startGameUI;
         returnBtn.SetActive(true);
+        anim.SetTrigger("Fire");
     }
 
     public void OnControlsPanelUI()
@@ -34,6 +41,7 @@ public class MainMenu : MonoBehaviour
         controlsUI.SetActive(true);
         currentActivePanel = controlsUI;
         returnBtn.SetActive(true);
+        anim.SetTrigger("Earth");
     }
 
     public void OnCreditsPanelUI()
@@ -42,6 +50,7 @@ public class MainMenu : MonoBehaviour
         creditsUI.SetActive(true);
         currentActivePanel = creditsUI;
         returnBtn.SetActive(true);
+        anim.SetTrigger("Ice");
     }
 
     public void BackToMainMenuScreen()
@@ -51,6 +60,7 @@ public class MainMenu : MonoBehaviour
         currentActivePanel.SetActive(false);
         currentActivePanel = null;
         returnBtn.SetActive(false);
+        anim.SetTrigger("Return");
     }
 
     public void OnExitGame()

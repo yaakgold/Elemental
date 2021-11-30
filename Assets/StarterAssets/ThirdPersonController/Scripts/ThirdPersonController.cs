@@ -106,6 +106,7 @@ namespace StarterAssets
 			_hasAnimator = TryGetComponent(out _animator);
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
+			print(_input);
 
 			AssignAnimationIDs();
 
@@ -130,7 +131,13 @@ namespace StarterAssets
 			CameraRotation();
 		}
 
-		private void AssignAnimationIDs()
+        public override void OnStartAuthority()
+        {
+            base.OnStartAuthority();
+
+			GetComponent<PlayerInput>().enabled = true;
+        }
+        private void AssignAnimationIDs()
 		{
 			_animIDSpeed = Animator.StringToHash("Speed");
 			_animIDGrounded = Animator.StringToHash("Grounded");

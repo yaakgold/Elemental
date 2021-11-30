@@ -22,6 +22,7 @@ public class ElemNetworkManager : NetworkManager
 
             GameObject obj = Instantiate(spawnPrefabs[pChoice], spawnPoints[i].transform.position, Quaternion.identity);
 
+            print(steamLobby.playerConnections[i]);
             NetworkServer.Spawn(obj, steamLobby.playerConnections[i]);
         }
     }
