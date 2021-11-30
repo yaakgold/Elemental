@@ -10,7 +10,7 @@ public class LevelSystemSetup : MonoBehaviour
     private void Start()
     {
         //Set levelWindow and player
-        levelWindow = GameObject.FindGameObjectWithTag("LevelWindow").GetComponent<LevelWindow>();
+        levelWindow = GameObject.FindGameObjectWithTag("LevelWindow")?.GetComponent<LevelWindow>();
         player = GetComponent<PlayerController>();
 
         LevelSystem levelSystem = new LevelSystem();

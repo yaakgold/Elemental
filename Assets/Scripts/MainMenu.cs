@@ -2,11 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.InputSystem;
+
 public class MainMenu : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject charCreator;
     public GameObject startGameUI;
+    public GameObject controlsUI;
+    public GameObject creditsUI;
+    public GameObject returnBtn;
+
+    private GameObject currentActivePanel = null;
+
+    [SerializeField]
+    private Animator anim;
 
     public void OnCreateCharClick()
     {
@@ -16,7 +26,45 @@ public class MainMenu : MonoBehaviour
 
     public void OnStartGameUI()
     {
+        //TODO: When the game is actually presented, get rid of the startGameUI panel, it is only needed right now for testing
+
         mainMenu.SetActive(false);
         startGameUI.SetActive(true);
+        currentActivePanel = startGameUI;
+        returnBtn.SetActive(true);
+        anim.SetTrigger("Fire");
+    }
+
+    public void OnControlsPanelUI()
+    {
+        mainMenu.SetActive(false);
+        controlsUI.SetActive(true);
+        currentActivePanel = controlsUI;
+        returnBtn.SetActive(true);
+        anim.SetTrigger("Earth");
+    }
+
+    public void OnCreditsPanelUI()
+    {
+        mainMenu.SetActive(false);
+        creditsUI.SetActive(true);
+        currentActivePanel = creditsUI;
+        returnBtn.SetActive(true);
+        anim.SetTrigger("Ice");
+    }
+
+    public void BackToMainMenuScreen()
+    {
+        if (!currentActivePanel) return;
+        mainMenu.SetActive(true);
+        currentActivePanel.SetActive(false);
+        currentActivePanel = null;
+        returnBtn.SetActive(false);
+        anim.SetTrigger("Return");
+    }
+
+    public void OnExitGame()
+    {
+        Application.Quit();
     }
 }

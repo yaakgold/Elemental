@@ -15,13 +15,25 @@ public class PlayerController : NetworkBehaviour
     public GameObject ability2UI;
 
     [SerializeField]
-    private Transform camFollow;
+    private Transform camFollow = null;
 
+    private bool setupPlayer = false;
     private void Start()
     {
-        camFollow = GameObject.FindGameObjectWithTag("CinemachineTarget").transform;
-        GameObject.FindGameObjectWithTag("CinemachineCam").GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = camFollow;
+        
+    }
 
+    private void Update()
+    {
+        if (setupPlayer) return;
+        if (!hasAuthority)
+        {
+            enabled = false;
+            //GameObject.FindGameObjectWithTag("CinemachineCam").GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = null;
+            return;
+        }
+        GameObject.FindGameObjectWithTag("CinemachineCam").GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = camFollow;
+        
         //Setup Abilities
         ability1UI = GameObject.FindGameObjectsWithTag("AbilityUI")[0];
         ability2UI = GameObject.FindGameObjectsWithTag("AbilityUI")[1];
@@ -31,6 +43,10 @@ public class PlayerController : NetworkBehaviour
 
         ability2UI.GetComponentInChildren<TMP_Text>().text = ability2.name;
         ability2UI.GetComponentInChildren<Image>().sprite = ability2.sprite;
+
+        ElemNetworkManager.playerObjs.Add(gameObject);
+
+        setupPlayer = true;
     }
 
     public void SetLvlSystemAnim(LevelAnimation lvlAnimation)

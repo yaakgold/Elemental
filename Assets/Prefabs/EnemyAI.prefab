@@ -507,7 +507,9 @@ GameObject:
   - component: {fileID: 7397485788066862564}
   - component: {fileID: 2419002268974850277}
   - component: {fileID: 712368781961217476}
-  m_Layer: 8
+  - component: {fileID: 4261718637778141795}
+  - component: {fileID: 4469969155701954565}
+  m_Layer: 0
   m_Name: EnemyAI
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -561,6 +563,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94884acca70d9b04fbd1b77a96844b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   agent: {fileID: 2419002268974850277}
   player: {fileID: 0}
   FIREBALL: {fileID: 925525802920415752, guid: ff2a8b4e2ff43b142a38a61eaff1c628, type: 3}
@@ -577,7 +581,7 @@ MonoBehaviour:
     m_Bits: 64
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 0.5
   sightRange: 20
   attackRange: 10
   isInSight: 0
@@ -641,6 +645,51 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 74c8db26578695948ae583791bdc3d2d
   hasSpawned: 0
+--- !u!114 &4261718637778141795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2419002268974850274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &4469969155701954565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2419002268974850274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 8951460368925958178}
 --- !u!1 &2457694549198542014
 GameObject:
   m_ObjectHideFlags: 0
