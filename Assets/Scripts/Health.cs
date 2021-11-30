@@ -41,7 +41,7 @@ public class Health : NetworkBehaviour
         return amt;
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     private void CmdGetHit(int amt)
     {
         int cHealth = currentHealth;
@@ -53,5 +53,10 @@ public class Health : NetworkBehaviour
         {
             OnDeath?.Invoke();
         }
+    }
+
+    public int GetHealth()
+    {
+        return currentHealth;
     }
 }

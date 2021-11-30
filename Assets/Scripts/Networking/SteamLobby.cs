@@ -85,9 +85,14 @@ public class SteamLobby : MonoBehaviour
     {
         networkManager.networkAddress = "localhost";
         networkManager.StartClient();
-
+        
         mainMenu.SetActive(false);
         lobbyUI.SetActive(true);
+    }
+
+    public string GetSteamName()
+    {
+        return SteamFriends.GetPersonaName();
     }
 
     public void LoadSteamFriendsList()

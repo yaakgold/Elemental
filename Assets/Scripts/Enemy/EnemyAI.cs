@@ -8,6 +8,7 @@ public class EnemyAI : NetworkBehaviour
 {
     public NavMeshAgent agent;
 
+    [SyncVar]
     public Transform player;
 
     public GameObject FIREBALL;
@@ -36,6 +37,8 @@ public class EnemyAI : NetworkBehaviour
 
     public abilities eAbilities;
 
+    private Animator anim;
+
     public enum abilities
     {
         Earth,
@@ -49,6 +52,8 @@ public class EnemyAI : NetworkBehaviour
         if (!isServer) return;
         agent = GetComponent<NavMeshAgent>();
         health = GetComponent<Health>();
+        anim = GetComponentInChildren<Animator>();
+
 
         health.OnDeath.AddListener(DED);
 
@@ -64,7 +69,7 @@ public class EnemyAI : NetworkBehaviour
 
         if(isInSight)
         {
-            player = FindClosestPlayer();
+            CmdFindClosestPlayer();
         }
         else
         {
@@ -82,7 +87,8 @@ public class EnemyAI : NetworkBehaviour
         if (isInSight && isInAttackRange) AttackPlayer();
     }
 
-    private Transform FindClosestPlayer()
+    [Command(requiresAuthority = false)]
+    private void CmdFindClosestPlayer()
     {
         Transform p = ElemNetworkManager.playerObjs[0].transform;
 
@@ -94,7 +100,7 @@ public class EnemyAI : NetworkBehaviour
             }
         }
 
-        return p;
+        player =  p;
     }
 
     [ClientRpc]
@@ -105,6 +111,7 @@ public class EnemyAI : NetworkBehaviour
         if(walkPointSet)
         {
             agent.SetDestination(walkPoint);
+            anim.SetFloat("Movement", agent.speed);
         }
 
         Vector3 distance = transform.position - walkPoint;
@@ -139,7 +146,7 @@ public class EnemyAI : NetworkBehaviour
     [ClientRpc]
     private void ChasePlayer()
     {
-        if (player == null) return;
+        if (player == null || health.GetHealth() <= 0) return;
         agent.SetDestination(player.position);
     }
 
@@ -152,6 +159,12 @@ public class EnemyAI : NetworkBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 2);
     }
 
+    [Command(requiresAuthority = false)]
+    private void CmdRunRotTowards(Transform target)
+    {
+        RotateTowards(target);
+    }
+
     [ClientRpc]
     private void AttackPlayer()
     {
@@ -162,7 +175,7 @@ public class EnemyAI : NetworkBehaviour
         }
 
         //agent.SetDestination(transform.position);
-        RotateTowards(player);
+        CmdRunRotTowards(player);
 
         if(!hasAttacked)
         {
@@ -212,6 +225,7 @@ public class EnemyAI : NetworkBehaviour
     [ClientRpc]
     private void DED()
     {
+        GetComponentInParent<Spawner>().spawnEnemy = false;
         Destroy(gameObject);
     }
 

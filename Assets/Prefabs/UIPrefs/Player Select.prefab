@@ -762,7 +762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  userName_txt: {fileID: 0}
+  userName_txt: {fileID: 1181442124}
   readyToggleBtn: {fileID: 1359987820}
   background: {fileID: 1449582505987076814}
   startButton: {fileID: 997015588}

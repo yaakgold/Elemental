@@ -14,6 +14,9 @@ public class PlayerSelectUI : NetworkBehaviour
     public Image background;
     public Button startButton;
 
+    [SyncVar(hook = "SetName")]
+    public string steamName;
+
     private SteamLobby steamLobby;
 
     private GameObject player;
@@ -40,13 +43,24 @@ public class PlayerSelectUI : NetworkBehaviour
             transform.SetParent(GameObject.FindGameObjectWithTag("PlayersList").transform);
 
             NetworkManager.singleton.GetComponent<SteamLobby>().players.Add(this);
-
-            //if (!hasAuthority)
-            //{
-            //    dropdown.value = (int)playerElement;
-            //}
         }
 
+        if (hasAuthority)
+        {
+            steamLobby = NetworkManager.singleton.GetComponent<SteamLobby>();
+            CmdChangeSteamName(steamLobby.GetSteamName());
+        }
+    }
+
+    [Command]
+    private void CmdChangeSteamName(string newName)
+    {
+        steamName = newName;
+    }
+
+    private void SetName(string oldName, string newName)
+    {
+        userName_txt.text = newName;
     }
 
     public override void OnStartAuthority()
