@@ -547,7 +547,148 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage: '
+
+    Transform ''Left_Toes'' has been deleted
+
+    Transform
+    ''Left_Foot'' has been deleted
+
+    Transform ''Left_LowerLeg'' has been deleted
+
+    Transform
+    ''Left_UpperLeg'' has been deleted
+
+    Transform ''Right_Toes'' has been deleted
+
+    Transform
+    ''Right_Foot'' has been deleted
+
+    Transform ''Right_LowerLeg'' has been deleted
+
+    Transform
+    ''Right_UpperLeg'' has been deleted
+
+    Transform ''Left_IndexDistal'' has been
+    deleted
+
+    Transform ''Left_IndexIntermediate'' has been deleted
+
+    Transform
+    ''Left_IndexProximal'' has been deleted
+
+    Transform ''Left_MiddleDistal''
+    has been deleted
+
+    Transform ''Left_MiddleIntermediate'' has been deleted
+
+    Transform
+    ''Left_MiddleProximal'' has been deleted
+
+    Transform ''Left_PinkyDistal''
+    has been deleted
+
+    Transform ''Left_PinkyIntermediate'' has been deleted
+
+    Transform
+    ''Left_PinkyProximal'' has been deleted
+
+    Transform ''Left_RingDistal'' has
+    been deleted
+
+    Transform ''Left_RingIntermediate'' has been deleted
+
+    Transform
+    ''Left_RingProximal'' has been deleted
+
+    Transform ''Left_ThumbDistal'' has
+    been deleted
+
+    Transform ''Left_ThumbIntermediate'' has been deleted
+
+    Transform
+    ''Left_ThumbProximal'' has been deleted
+
+    Transform ''Left_Hand'' has been
+    deleted
+
+    Transform ''Left_LowerArm'' has been deleted
+
+    Transform ''Left_UpperArm''
+    has been deleted
+
+    Transform ''Left_Shoulder'' has been deleted
+
+    Transform
+    ''Jaw'' has been deleted
+
+    Transform ''Head'' has been deleted
+
+    Transform
+    ''Neck'' has been deleted
+
+    Transform ''Right_IndexDistal'' has been deleted
+
+    Transform
+    ''Right_IndexIntermediate'' has been deleted
+
+    Transform ''Right_IndexProximal''
+    has been deleted
+
+    Transform ''Right_MiddleDistal'' has been deleted
+
+    Transform
+    ''Right_MiddleIntermediate'' has been deleted
+
+    Transform ''Right_MiddleProximal''
+    has been deleted
+
+    Transform ''Right_PinkyDistal'' has been deleted
+
+    Transform
+    ''Right_PinkyIntermediate'' has been deleted
+
+    Transform ''Right_PinkyProximal''
+    has been deleted
+
+    Transform ''Right_RingDistal'' has been deleted
+
+    Transform
+    ''Right_RingIntermediate'' has been deleted
+
+    Transform ''Right_RingProximal''
+    has been deleted
+
+    Transform ''Right_ThumbDistal'' has been deleted
+
+    Transform
+    ''Right_ThumbIntermediate'' has been deleted
+
+    Transform ''Right_ThumbProximal''
+    has been deleted
+
+    Transform ''Right_Hand'' has been deleted
+
+    Transform
+    ''Right_LowerArm'' has been deleted
+
+    Transform ''Right_UpperArm'' has been
+    deleted
+
+    Transform ''Right_Shoulder'' has been deleted
+
+    Transform ''UpperChest''
+    has been deleted
+
+    Transform ''Chest'' has been deleted
+
+    Transform ''Spine''
+    has been deleted
+
+    Transform ''Hips'' has been deleted
+
+    Transform ''Skeleton''
+    has been deleted'
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
