@@ -13,9 +13,9 @@ public class LevelWindow : MonoBehaviour
     private LevelSystem levelSystem;
     private LevelAnimation levelAnimation;
 
-    private void Awake()
+    private void Start()
     {
-        levelText = transform.Find("Level").GetComponent<TMP_Text>();
+        levelText = transform.GetComponentInChildren<TMP_Text>();
         experienceBar = transform.Find("ExperienceBar").Find("Fill").GetComponent<Image>();
 
         transform.Find("ExpButton").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExp(500);

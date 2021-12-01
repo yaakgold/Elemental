@@ -16,15 +16,41 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField]
     private Transform camFollow = null;
+    [SerializeField]
+    private GameObject playerUIPref;
 
     private bool setupPlayer = false;
+    private bool setupHealth = false;
+
     private void Start()
     {
-        
+        if (GameManager.Instance == null) return;
+        var go = Instantiate(playerUIPref, GameManager.Instance.playerHealthPanel.transform);
+        if (hasAuthority)
+            go.transform.parent.SetAsFirstSibling();
+        else
+            go.transform.parent.SetAsLastSibling();
+
+        GetComponent<Health>().healthBar = go.GetComponentsInChildren<Image>()[1];
+        go.GetComponentInChildren<TMP_Text>().text = name;
+        setupHealth = true;
     }
 
     private void Update()
     {
+        if(!setupHealth && GameManager.Instance != null)
+        {
+            var go = Instantiate(playerUIPref, GameManager.Instance.playerHealthPanel.transform);
+            if (hasAuthority)
+                go.transform.parent.SetAsFirstSibling();
+            else
+                go.transform.parent.SetAsLastSibling();
+
+            GetComponent<Health>().healthBar = go.GetComponentsInChildren<Image>()[1];
+            go.GetComponentInChildren<TMP_Text>().text = name;
+            setupHealth = true;
+        }
+
         if (setupPlayer) return;
         if (!hasAuthority)
         {

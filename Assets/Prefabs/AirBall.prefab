@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  damage: 1000
+  damage: 10
 --- !u!114 &-7355391380994172548
 MonoBehaviour:
   m_ObjectHideFlags: 0

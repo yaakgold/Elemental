@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Health : NetworkBehaviour
 {
     #region Public Props
-    [SerializeField, SyncVar]
+    [SerializeField, SyncVar(hook = "UpdateUI")]
     private int currentHealth;
     #endregion
 
     #region Public Vars
     public UnityEvent OnDeath = new UnityEvent();
+    public Image healthBar;
     #endregion
 
     #region Private Vars
@@ -24,6 +26,7 @@ public class Health : NetworkBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        currentHealth -= Random.Range(25, 95);
     }
     #endregion
 
@@ -58,5 +61,11 @@ public class Health : NetworkBehaviour
     public int GetHealth()
     {
         return currentHealth;
+    }
+
+    private void UpdateUI(int oldHealth, int newHealth)
+    {
+        if (healthBar == null) return;
+        healthBar.fillAmount = (float)newHealth / maxHealth;
     }
 }
