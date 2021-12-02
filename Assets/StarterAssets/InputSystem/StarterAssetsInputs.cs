@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
@@ -16,14 +17,22 @@ namespace StarterAssets
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
-#if !UNITY_IOS || !UNITY_ANDROID
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
-#endif
 
-#if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
+		private GameObject pauseScreen;
+		private InputActionMap playerInput;
+
+        private void Start()
+        {
+			pauseScreen = GameObject.FindGameObjectWithTag("PauseScreen");
+			pauseScreen.SetActive(false);
+
+			playerInput = GetComponent<PlayerInput>().currentActionMap;
+		}
+
+        public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
 		}
@@ -45,10 +54,28 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
-#else
-	// old input sys if we do decide to have it (most likely wont)...
-#endif
 
+		public void OnPauseToggle(InputValue value)
+        {
+			GameManager.Instance.OnPauseGame(gameObject);
+        }
+
+		public void PauseToggle()
+        {
+			cursorInputForLook = !cursorInputForLook;
+			if (cursorInputForLook)
+			{
+				playerInput.Enable();
+			}
+			else
+			{
+				playerInput.Disable();
+			}
+
+			cursorLocked = !cursorLocked;
+			Cursor.lockState = cursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
+			pauseScreen.SetActive(!pauseScreen.activeSelf);
+		}
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
@@ -69,21 +96,6 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
-
-#if !UNITY_IOS || !UNITY_ANDROID
-
-        /*private void OnApplicationFocus(bool hasFocus)
-        {
-            SetCursorState(cursorLocked);
-        }
-
-        private void SetCursorState(bool newState)
-        {
-            Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
-        }*/
-
-#endif
-
     }
 	
 }

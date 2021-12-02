@@ -577,6 +577,7 @@ MonoBehaviour:
   ability1UI: {fileID: 0}
   ability2UI: {fileID: 0}
   camFollow: {fileID: 8009054910723993042}
+  playerUIPref: {fileID: 2613646004980937775, guid: 37489d06564473d4f953010d635948f5, type: 3}
 --- !u!114 &7068573814542982378
 MonoBehaviour:
   m_ObjectHideFlags: 0

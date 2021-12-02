@@ -10,6 +10,12 @@ public class WorldCreator : MonoBehaviour
     public GameObject contentHolder;
     public GameObject worldSelectPref;
     public TMP_InputField worldName;
+    public GameObject createNewWorldButton;
+
+    private void Update()
+    {
+        createNewWorldButton.SetActive(contentHolder.transform.childCount < 3);
+    }
 
     public void ShowWorldCreator()
     {
@@ -19,6 +25,11 @@ public class WorldCreator : MonoBehaviour
 
     public void ShowWorldList()
     {
+        for (int i = 0; i < contentHolder.transform.childCount; i++)
+        {
+            Destroy(contentHolder.transform.GetChild(i).gameObject);
+        }
+
         worldsList.SetActive(true);
         worldCreator.SetActive(false);
 
@@ -26,17 +37,23 @@ public class WorldCreator : MonoBehaviour
 
         foreach (var world in SaveSystem.LoadInAllWorlds())
         {
-            Instantiate(worldSelectPref, contentHolder.transform)
-                .GetComponent<WorldSelector>().Setup(world.worldName, world.completionPercentage);
+            var btn = Instantiate(worldSelectPref, contentHolder.transform);
+            btn.GetComponent<WorldSelector>().Setup(world.worldName, world.completionPercentage);
         }
-    }
+    }   
 
     public void CreateWorld()
     {
         //TODO: Save off the world here
-        SaveSystem.SaveWorld(worldName.text, 0);
+        if (worldName.text == "") return;
+        SaveSystem.SaveWorld(worldName.text, 0, new SpawnObj[0]);
 
 
         ShowWorldList();
+    }
+
+    private void OnDisable()
+    {
+        
     }
 }

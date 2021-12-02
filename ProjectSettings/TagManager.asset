@@ -22,6 +22,8 @@ TagManager:
   - LevelWindow
   - AbilityUI
   - Enemy
+  - Spawner
+  - PauseScreen
   layers:
   - Default
   - TransparentFX
