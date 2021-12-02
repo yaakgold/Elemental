@@ -40,7 +40,7 @@ public class PlayerController : NetworkBehaviour
         go.GetComponentInChildren<TMP_Text>().text = name;
         setupHealth = true;
 
-        if(isServer && isLocalPlayer)
+        if(isServer && hasAuthority)
         {
             print(name);
             GameManager.Instance.SpawnEnemies();
