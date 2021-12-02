@@ -13,6 +13,10 @@ public class PlayerSelectUI : NetworkBehaviour
     public GameObject readyToggleBtn;
     public Image background;
     public Button startButton;
+    public Button[] buttons;
+
+    [SyncVar(hook = "SetName")]
+    public string steamName;
 
     private SteamLobby steamLobby;
 
@@ -40,13 +44,24 @@ public class PlayerSelectUI : NetworkBehaviour
             transform.SetParent(GameObject.FindGameObjectWithTag("PlayersList").transform);
 
             NetworkManager.singleton.GetComponent<SteamLobby>().players.Add(this);
-
-            //if (!hasAuthority)
-            //{
-            //    dropdown.value = (int)playerElement;
-            //}
         }
 
+        if (hasAuthority)
+        {
+            steamLobby = NetworkManager.singleton.GetComponent<SteamLobby>();
+            CmdChangeSteamName(steamLobby.GetSteamName());
+        }
+    }
+
+    [Command]
+    private void CmdChangeSteamName(string newName)
+    {
+        steamName = newName;
+    }
+
+    private void SetName(string oldName, string newName)
+    {
+        userName_txt.text = newName;
     }
 
     public override void OnStartAuthority()
@@ -58,6 +73,11 @@ public class PlayerSelectUI : NetworkBehaviour
         if(isServer)
         {
             startButton.gameObject.SetActive(true);
+        }
+
+        foreach (var button in buttons)
+        {
+            button.interactable = true;
         }
     }
 
@@ -84,12 +104,22 @@ public class PlayerSelectUI : NetworkBehaviour
     {
         readyState = !readyState;
 
-        background.color = readyState ? Color.green : Color.red;
+        readyToggleBtn.GetComponent<Image>().color = readyState ? Color.green : Color.white;
 
         if (!isServer) return;
 
         if (steamLobby == null)
             steamLobby = NetworkManager.singleton.GetComponent<SteamLobby>();
+
+        startButton.interactable = false;
+
+        if(isLocalPlayer)
+        {
+            foreach (var button in buttons)
+            {
+                button.interactable = !readyState;
+            }
+        }
 
         foreach (PlayerSelectUI player in steamLobby.players)
         {
@@ -127,6 +157,31 @@ public class PlayerSelectUI : NetworkBehaviour
     private void RpcElementChange(int newValue)
     {
         playerElement = (ePlayerElement)newValue;
+
+        foreach (var button in buttons)
+        {
+            button.GetComponent<Image>().color = Color.white;
+        }
+
+        buttons[newValue].GetComponent<Image>().color = buttons[newValue].colors.highlightedColor;
+
+        switch (playerElement)
+        {
+            case ePlayerElement.AIR:
+                userName_txt.color = Color.yellow;
+                break;
+            case ePlayerElement.EARTH:
+                userName_txt.color = Color.green;
+                break;
+            case ePlayerElement.FIRE:
+                userName_txt.color = Color.red;
+                break;
+            case ePlayerElement.WATER:
+                userName_txt.color = Color.cyan;
+                break;
+            default:
+                break;
+        }
     }
     #endregion
 

@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class MainMenu : MonoBehaviour
     public GameObject creditsUI;
     public GameObject returnBtn;
 
+
     private GameObject currentActivePanel = null;
 
     [SerializeField]
@@ -26,11 +28,10 @@ public class MainMenu : MonoBehaviour
 
     public void OnStartGameUI()
     {
-        //TODO: When the game is actually presented, get rid of the startGameUI panel, it is only needed right now for testing
-
         mainMenu.SetActive(false);
-        startGameUI.SetActive(true);
-        currentActivePanel = startGameUI;
+        //startGameUI.SetActive(true);
+        NetworkManager.singleton.GetComponent<SteamLobby>().SelectWorld();
+        currentActivePanel = NetworkManager.singleton.GetComponent<SteamLobby>().worldSelectUI;
         returnBtn.SetActive(true);
         anim.SetTrigger("Fire");
     }
