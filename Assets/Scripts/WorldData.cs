@@ -7,10 +7,17 @@ public class WorldData
 {
     public string worldName;
     public float completionPercentage;
+    public SpawnObj[] spawnObjs;
 
-    public WorldData(string _name, float compPercent = 0)
+    public WorldData()
+    {
+
+    }
+
+    public WorldData(string _name, float compPercent, SpawnObj[] _spawnObjs)
     {
         worldName = _name;
         completionPercentage = compPercent;
+        spawnObjs = _spawnObjs;
     }
 }

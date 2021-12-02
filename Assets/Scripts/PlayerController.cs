@@ -34,6 +34,12 @@ public class PlayerController : NetworkBehaviour
         GetComponent<Health>().healthBar = go.GetComponentsInChildren<Image>()[1];
         go.GetComponentInChildren<TMP_Text>().text = name;
         setupHealth = true;
+
+        if(isServer)
+        {
+            GameManager.Instance.SpawnEnemies();
+            GameManager.Instance.exitAndSaveBtn.SetActive(true);
+        }
     }
 
     private void Update()

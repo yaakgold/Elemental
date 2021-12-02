@@ -19,6 +19,7 @@ public class SteamLobby : MonoBehaviour
     public List<NetworkConnection> playerConnections;
 
     public GameObject playerUI;
+    public WorldData worldData = new WorldData();
 
     protected Callback<LobbyCreated_t> lobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> lobbyJoinReq;
@@ -79,6 +80,8 @@ public class SteamLobby : MonoBehaviour
             lobbyUI.SetActive(true);
             networkManager.StartHost();
         }
+
+        //StartGame();
     }
 
     public void JoinLobby()
@@ -183,11 +186,12 @@ public class SteamLobby : MonoBehaviour
 
     public void StartGame()
     {
-        print(players.Count);
         foreach (PlayerSelectUI player in players)
         {
             playerConnections.Add(player.connectionToClient);
         }
+
+        worldData = SaveSystem.LoadWorld(Application.persistentDataPath + $"/world_{worldData.worldName}.Elem");
 
         NetworkManager.singleton.ServerChangeScene("MainScene");
     }

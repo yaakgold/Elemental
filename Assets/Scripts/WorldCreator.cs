@@ -26,17 +26,25 @@ public class WorldCreator : MonoBehaviour
 
         foreach (var world in SaveSystem.LoadInAllWorlds())
         {
-            Instantiate(worldSelectPref, contentHolder.transform)
-                .GetComponent<WorldSelector>().Setup(world.worldName, world.completionPercentage);
+            var btn = Instantiate(worldSelectPref, contentHolder.transform);
+            btn.GetComponent<WorldSelector>().Setup(world.worldName, world.completionPercentage);
         }
-    }
+    }   
 
     public void CreateWorld()
     {
         //TODO: Save off the world here
-        SaveSystem.SaveWorld(worldName.text, 0);
+        SaveSystem.SaveWorld(worldName.text, 0, new SpawnObj[0]);
 
 
         ShowWorldList();
+    }
+
+    private void OnDisable()
+    {
+        for (int i = 0; i < contentHolder.transform.childCount; i++)
+        {
+            Destroy(contentHolder.transform.GetChild(i).gameObject);
+        }
     }
 }
