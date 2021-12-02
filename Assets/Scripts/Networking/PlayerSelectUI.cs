@@ -13,6 +13,7 @@ public class PlayerSelectUI : NetworkBehaviour
     public GameObject readyToggleBtn;
     public Image background;
     public Button startButton;
+    public Button[] buttons;
 
     [SyncVar(hook = "SetName")]
     public string steamName;
@@ -73,6 +74,11 @@ public class PlayerSelectUI : NetworkBehaviour
         {
             startButton.gameObject.SetActive(true);
         }
+
+        foreach (var button in buttons)
+        {
+            button.interactable = true;
+        }
     }
 
     public void StartGame()
@@ -98,12 +104,22 @@ public class PlayerSelectUI : NetworkBehaviour
     {
         readyState = !readyState;
 
-        background.color = readyState ? Color.green : Color.red;
+        readyToggleBtn.GetComponent<Image>().color = readyState ? Color.green : Color.white;
 
         if (!isServer) return;
 
         if (steamLobby == null)
             steamLobby = NetworkManager.singleton.GetComponent<SteamLobby>();
+
+        startButton.interactable = false;
+
+        if(isLocalPlayer)
+        {
+            foreach (var button in buttons)
+            {
+                button.interactable = !readyState;
+            }
+        }
 
         foreach (PlayerSelectUI player in steamLobby.players)
         {
@@ -141,6 +157,31 @@ public class PlayerSelectUI : NetworkBehaviour
     private void RpcElementChange(int newValue)
     {
         playerElement = (ePlayerElement)newValue;
+
+        foreach (var button in buttons)
+        {
+            button.GetComponent<Image>().color = Color.white;
+        }
+
+        buttons[newValue].GetComponent<Image>().color = buttons[newValue].colors.highlightedColor;
+
+        switch (playerElement)
+        {
+            case ePlayerElement.AIR:
+                userName_txt.color = Color.yellow;
+                break;
+            case ePlayerElement.EARTH:
+                userName_txt.color = Color.green;
+                break;
+            case ePlayerElement.FIRE:
+                userName_txt.color = Color.red;
+                break;
+            case ePlayerElement.WATER:
+                userName_txt.color = Color.cyan;
+                break;
+            default:
+                break;
+        }
     }
     #endregion
 
