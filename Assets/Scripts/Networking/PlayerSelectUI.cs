@@ -106,14 +106,8 @@ public class PlayerSelectUI : NetworkBehaviour
 
         readyToggleBtn.GetComponent<Image>().color = readyState ? Color.green : Color.white;
 
-        if (!isServer) return;
-
-        if (steamLobby == null)
-            steamLobby = NetworkManager.singleton.GetComponent<SteamLobby>();
-
-        startButton.interactable = false;
-
-        if(isLocalPlayer)
+        print(isLocalPlayer);
+        if (isLocalPlayer)
         {
             foreach (var button in buttons)
             {
@@ -121,12 +115,22 @@ public class PlayerSelectUI : NetworkBehaviour
             }
         }
 
+        #region Serve-Side Checking
+
+        if (!isServer) return;
+
+        if (steamLobby == null)
+            steamLobby = NetworkManager.singleton.GetComponent<SteamLobby>();
+
+        startButton.interactable = false;
+
         foreach (PlayerSelectUI player in steamLobby.players)
         {
             if (!player.readyState) return;
         }
 
         startButton.interactable = true;
+        #endregion
     }
     #endregion
 
