@@ -23,6 +23,7 @@ public class ElemNetworkManager : NetworkManager
             GameObject obj = Instantiate(spawnPrefabs[pChoice], spawnPoints[i].transform.position, Quaternion.identity);
 
             obj.name = steamLobby.players[i].steamName;
+            obj.GetComponent<PlayerController>().steamName = obj.name;
             NetworkServer.Spawn(obj, steamLobby.playerConnections[i]);
         }
     }

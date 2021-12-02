@@ -14,6 +14,9 @@ public class PlayerController : NetworkBehaviour
     public GameObject ability1UI;
     public GameObject ability2UI;
 
+    [SyncVar]
+    public string steamName;
+
     [SerializeField]
     private Transform camFollow = null;
     [SerializeField]
@@ -24,6 +27,8 @@ public class PlayerController : NetworkBehaviour
 
     private void Start()
     {
+        name = steamName;
+
         if (GameManager.Instance == null) return;
         var go = Instantiate(playerUIPref, GameManager.Instance.playerHealthPanel.transform);
         if (hasAuthority)
@@ -35,8 +40,9 @@ public class PlayerController : NetworkBehaviour
         go.GetComponentInChildren<TMP_Text>().text = name;
         setupHealth = true;
 
-        if(isServer)
+        if(isServer && isLocalPlayer)
         {
+            print(name);
             GameManager.Instance.SpawnEnemies();
             GameManager.Instance.exitAndSaveBtn.SetActive(true);
         }

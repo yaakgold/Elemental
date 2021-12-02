@@ -1,6 +1,7 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI; 
 
@@ -10,6 +11,8 @@ public class EnemyAI : NetworkBehaviour
 
     [SyncVar]
     public Transform player;
+    [SyncVar]
+    public int spawnerId;
 
     public GameObject FIREBALL;
     public GameObject AIRBALL;
@@ -49,7 +52,11 @@ public class EnemyAI : NetworkBehaviour
 
     private void Start()
     {
-        if (!isServer) return;
+        if (!isServer)
+        {
+            return;
+        }
+        GetComponent<NavMeshAgent>().enabled = true;
         agent = GetComponent<NavMeshAgent>();
         health = GetComponent<Health>();
         anim = GetComponentInChildren<Animator>();
@@ -62,7 +69,18 @@ public class EnemyAI : NetworkBehaviour
 
     private void Update()
     {
-        if (!isServer) return;
+        if (!isServer)
+        {
+            if (transform.parent == null)
+            {
+                GameObject go = GameObject.FindGameObjectsWithTag("Spawner").First(x => x.GetComponent<Spawner>().id == spawnerId);
+                if(go)
+                {
+                    transform.SetParent(go.transform);
+                }
+            }
+            return;
+        }
 
         isInSight = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         isInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
@@ -82,9 +100,9 @@ public class EnemyAI : NetworkBehaviour
     [Command(requiresAuthority = false)]
     private void CmdStateMachine()
     {
-        if (!isInSight && !isInAttackRange) Patroling();
-        if (isInSight && !isInAttackRange) ChasePlayer();
-        if (isInSight && isInAttackRange) AttackPlayer();
+        if (!isInSight && !isInAttackRange) CmdPatroling();
+        if (isInSight && !isInAttackRange) CmdChasePlayer();
+        if (isInSight && isInAttackRange) CmdAttackPlayer();
     }
 
     [Command(requiresAuthority = false)]
@@ -103,8 +121,8 @@ public class EnemyAI : NetworkBehaviour
         player =  p;
     }
 
-    [ClientRpc]
-    private void Patroling()
+    [Command(requiresAuthority = false)]
+    private void CmdPatroling()
     {
         if (!walkPointSet) CmdCallSearch();
 
@@ -125,11 +143,11 @@ public class EnemyAI : NetworkBehaviour
     [Command(requiresAuthority = false)]
     private void CmdCallSearch()
     {
-        Search();
+        CmdSearch();
     }
 
-    [ClientRpc]
-    private void Search()
+    [Command(requiresAuthority = false)]
+    private void CmdSearch()
     {
         agent.updateRotation = true;
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
@@ -143,14 +161,14 @@ public class EnemyAI : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    private void ChasePlayer()
+    [Command(requiresAuthority = false)]
+    private void CmdChasePlayer()
     {
         if (player == null || health.GetHealth() <= 0) return;
         agent.SetDestination(player.position);
     }
 
-    [ClientRpc]
+    [Command(requiresAuthority = false)]
     private void RotateTowards(Transform target)
     {
         if (target == null) return;
@@ -165,8 +183,8 @@ public class EnemyAI : NetworkBehaviour
         RotateTowards(target);
     }
 
-    [ClientRpc]
-    private void AttackPlayer()
+    [Command(requiresAuthority = false)]
+    private void CmdAttackPlayer()
     {
         if (player == null)
         {
@@ -213,11 +231,11 @@ public class EnemyAI : NetworkBehaviour
     [Command(requiresAuthority = false)]
     private void CallResetAttack()
     {
-        ResetAttack();
+        CmdResetAttack();
     }
 
-    [ClientRpc]
-    private void ResetAttack()
+    [Command(requiresAuthority = false)]
+    private void CmdResetAttack()
     {
         hasAttacked = false;
     }
@@ -229,12 +247,12 @@ public class EnemyAI : NetworkBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(1, 0, 0, .5f);
-        Gizmos.DrawSphere(transform.position, sightRange);
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = new Color(1, 0, 0, .5f);
+    //    Gizmos.DrawSphere(transform.position, sightRange);
 
-        Gizmos.color = new Color(0, 1, 0, .5f);
-        Gizmos.DrawSphere(transform.position, attackRange);
-    }
+    //    Gizmos.color = new Color(0, 1, 0, .5f);
+    //    Gizmos.DrawSphere(transform.position, attackRange);
+    //}
 }

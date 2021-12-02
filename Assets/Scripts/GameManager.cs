@@ -39,7 +39,7 @@ public class GameManager : NetworkBehaviour
     {
         foreach (var spawner in spawners)
         {
-            spawner.CmdSpawn();
+            spawner.SpawnEnemy();
         }
     }
 
