@@ -62,7 +62,7 @@ public class GameManager : NetworkBehaviour
             NetworkManager.singleton.StopClient();
 
         //Destroy(NetworkManager.singleton.gameObject);
-        SceneManager.LoadScene(0);
+        Application.Quit();
     }
 
     public void OnSaveGame()

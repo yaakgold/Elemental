@@ -26,7 +26,6 @@ public class Health : NetworkBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
-        currentHealth -= Random.Range(25, 95);
     }
     #endregion
 
