@@ -592,7 +592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  speed: 20
+  speed: 30
   AirBall: {fileID: 925525802920415752, guid: bff64d66439629b45bb10055ff704fe7, type: 3}
   timer: 0
   tpc: {fileID: 2437566925647697029}
@@ -800,6 +800,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  healthBar: {fileID: 0}
   maxHealth: 100
 --- !u!114 &-7843126642713042680
 MonoBehaviour:
