@@ -38,6 +38,8 @@ public class PlayerController : NetworkBehaviour
 
         GetComponent<Health>().healthBar = go.GetComponentsInChildren<Image>()[1];
         go.GetComponentInChildren<TMP_Text>().text = name;
+        if(hasAuthority)
+            GetComponent<Health>().OnDeath.AddListener(Death);
         setupHealth = true;
 
         if(isServer && hasAuthority)
@@ -60,6 +62,8 @@ public class PlayerController : NetworkBehaviour
 
             GetComponent<Health>().healthBar = go.GetComponentsInChildren<Image>()[1];
             go.GetComponentInChildren<TMP_Text>().text = name;
+            if (hasAuthority)
+                GetComponent<Health>().OnDeath.AddListener(Death);
             setupHealth = true;
         }
 
@@ -98,5 +102,32 @@ public class PlayerController : NetworkBehaviour
     {
         //Implement level up ding or particle effect.
         print("Level Up");
+    }
+
+    public void Death()
+    {
+        //Lower exp level
+        //Do animation
+        //After anim teleport player to spawnPosition or something like that
+        CmdMovePlayer();
+
+        //Reset health
+        GetComponent<Health>().ResetHealth();
+        print("I'M DEAD");
+    }
+
+    [Command]
+    private void CmdMovePlayer()
+    {
+        MovePlayer();
+    }
+
+    [ClientRpc]
+    private void MovePlayer()
+    {
+        print(ElemNetworkManager.spawnPoints.Length);
+        GetComponent<CharacterController>().enabled = false;
+        transform.position = ElemNetworkManager.spawnPoints[Random.Range(0, 4)].transform.position;
+        GetComponent<CharacterController>().enabled = true;
     }
 }

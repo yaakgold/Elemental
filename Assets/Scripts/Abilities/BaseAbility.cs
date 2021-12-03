@@ -12,6 +12,7 @@ public class BaseAbility : NetworkBehaviour
     float time;
     float speed;
     Vector3 endPosition;
+    bool isPlayer = true;
 
     private void Update()
     {
@@ -36,23 +37,39 @@ public class BaseAbility : NetworkBehaviour
         }
     }
 
-    public void AbilityInitial(float speed, Vector3 endPosition)
+    public void AbilityInitial(float speed, Vector3 endPosition, bool player)
     {
         this.speed = speed;
         this.endPosition = endPosition;
 
         isMovingUp = true;
 
-        Destroy(this.gameObject, 2f);
+        Destroy(this.gameObject, 5f);
+
+        isPlayer = player;
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Enemy")
+        print(other.gameObject.name + " " + isPlayer);
+        if(isPlayer)
         {
-            other.gameObject.TryGetComponent<Health>(out Health health);
-            health.GetHit(damage);
+            if (other.gameObject.tag == "Enemy")
+            {
+                other.gameObject.TryGetComponent<Health>(out Health health);
+                health.GetHit(damage);
+            }
         }
+        else
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                other.gameObject.TryGetComponent<Health>(out Health health);
+                health.GetHit(damage);
+            }
+        }
+
+        Destroy(gameObject);
     }
 
 }

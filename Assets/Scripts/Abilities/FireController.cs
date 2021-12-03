@@ -25,9 +25,9 @@ public class FireController : NetworkBehaviour
     [Command]
     private void CmdAbility1()
     {
-        GameObject fireBall = Instantiate(FireBall, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+        GameObject fireBall = Instantiate(FireBall, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-        fireBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+        fireBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), true);
 
         NetworkServer.Spawn(fireBall);
     }
@@ -46,7 +46,7 @@ public class FireController : NetworkBehaviour
     {
         GameObject meteor = Instantiate(Meteor, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
 
-        meteor.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+        meteor.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2), true);
 
         NetworkServer.Spawn(meteor);
     }

@@ -8,13 +8,15 @@ public class ElemNetworkManager : NetworkManager
 {
     public static List<GameObject> playerObjs = new List<GameObject>();
 
+    public static GameObject[] spawnPoints;
+
     public override void OnServerSceneChanged(string sceneName)
     {
         base.OnServerSceneChanged(sceneName);
 
         SteamLobby steamLobby = GetComponent<SteamLobby>();
 
-        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
         for (int i = 0; i < steamLobby.playerConnections.Count; i++)
         {

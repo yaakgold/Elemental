@@ -32,9 +32,9 @@ public class EarthController : NetworkBehaviour
     [Command]
     private void CmdAbility1()
     {
-        GameObject rock = Instantiate(Rock, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+        GameObject rock = Instantiate(Rock, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-        rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+        rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), true);
 
         NetworkServer.Spawn(rock);
     }

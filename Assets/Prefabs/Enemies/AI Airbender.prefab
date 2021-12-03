@@ -1699,6 +1699,7 @@ MonoBehaviour:
   syncInterval: 0.1
   agent: {fileID: 4699522044935933139}
   player: {fileID: 0}
+  spawnerId: 0
   FIREBALL: {fileID: 925525802920415752, guid: ff2a8b4e2ff43b142a38a61eaff1c628, type: 3}
   AIRBALL: {fileID: 925525802920415752, guid: bff64d66439629b45bb10055ff704fe7, type: 3}
   WATERBALL: {fileID: 925525802920415752, guid: 66daa5a72509e3841bb9423c22a12d3c, type: 3}
@@ -1851,7 +1852,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!1 &4733656140192209180
 GameObject:

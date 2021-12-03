@@ -64,7 +64,7 @@ public class EnemyAI : NetworkBehaviour
 
         health.OnDeath.AddListener(DED);
 
-        NetworkServer.Spawn(gameObject);
+        GameManager.Instance.enemies.Add(gameObject);
     }
 
     private void Update()
@@ -200,28 +200,30 @@ public class EnemyAI : NetworkBehaviour
             switch (eAbilities)
             {
                 case abilities.Earth:
-                    GameObject rock = Instantiate(ROCKBALL, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+                    GameObject rock = Instantiate(ROCKBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+                    rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false);
                     break;
                 case abilities.Fire:
-                    GameObject fireball = Instantiate(FIREBALL, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+                    GameObject fireball = Instantiate(FIREBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    fireball.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+                    fireball.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false);
                     break;
                 case abilities.Air:
-                    GameObject airBall = Instantiate(AIRBALL, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+                    GameObject airBall = Instantiate(AIRBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+                    airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false);
                     break;
                 case abilities.Water:
-                    GameObject whip = Instantiate(WATERBALL, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+                    GameObject whip = Instantiate(WATERBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+                    whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false);
                     break;
                 default:
                     break;
             }
+
+            anim.SetTrigger("Attack");
 
             hasAttacked = true;
             Invoke(nameof(CallResetAttack), timeBetweenAttacks);
@@ -243,16 +245,13 @@ public class EnemyAI : NetworkBehaviour
     [ClientRpc]
     private void DED()
     {
+        int i = Random.Range(1, 3);
         GetComponentInParent<Spawner>().spawnEnemy = false;
-        Destroy(gameObject);
+        anim.SetTrigger("Death" + i);
+        anim.SetBool("IsAlive", false);
+        agent.enabled = false;
+
+        GameManager.Instance.RemoveEnemyFromList(gameObject);
+        Destroy(gameObject, 2);
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = new Color(1, 0, 0, .5f);
-    //    Gizmos.DrawSphere(transform.position, sightRange);
-
-    //    Gizmos.color = new Color(0, 1, 0, .5f);
-    //    Gizmos.DrawSphere(transform.position, attackRange);
-    //}
 }

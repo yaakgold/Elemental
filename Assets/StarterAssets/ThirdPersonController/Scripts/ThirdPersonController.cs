@@ -101,6 +101,11 @@ namespace StarterAssets
 			}
 		}
 
+		public float GetSpeed()
+        {
+			return _speed;
+        }
+
 		private void Start()
 		{
 			_hasAnimator = TryGetComponent(out _animator);

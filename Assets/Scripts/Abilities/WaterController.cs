@@ -25,9 +25,9 @@ public class WaterController : NetworkBehaviour
     [Command]
     private void CmdAbility1()
     {
-        GameObject whip = Instantiate(Whip, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+        GameObject whip = Instantiate(Whip, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-        whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+        whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), true);
 
         NetworkServer.Spawn(whip);
     }

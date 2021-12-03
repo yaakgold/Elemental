@@ -46,9 +46,9 @@ public class AirController : NetworkBehaviour
     [Command]
     private void CmdAbility1()
     {
-        GameObject airBall = Instantiate(AirBall, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+        GameObject airBall = Instantiate(AirBall, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-        airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+        airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up * 1.5f) + (transform.forward * 4), true);
 
         NetworkServer.Spawn(airBall);
     }
@@ -57,7 +57,7 @@ public class AirController : NetworkBehaviour
     #region Ability2
     public void OnAbility2()
     {
-        if (!isLocalPlayer) return;
+        if (!hasAuthority) return;
 
         CmdCallAbility2();
     }

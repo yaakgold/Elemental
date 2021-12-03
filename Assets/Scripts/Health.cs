@@ -67,4 +67,9 @@ public class Health : NetworkBehaviour
         if (healthBar == null) return;
         healthBar.fillAmount = (float)newHealth / maxHealth;
     }
+
+    public void ResetHealth()
+    {
+        CmdGetHit(-maxHealth);
+    }
 }
