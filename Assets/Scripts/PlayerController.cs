@@ -14,6 +14,9 @@ public class PlayerController : NetworkBehaviour
     public GameObject ability1UI;
     public GameObject ability2UI;
 
+    [HideInInspector]
+    public Image ability1UITimer, ability2UITimer;
+
     [SyncVar]
     public string steamName;
 
@@ -24,6 +27,7 @@ public class PlayerController : NetworkBehaviour
 
     private bool setupPlayer = false;
     private bool setupHealth = false;
+    private bool setupLevel = false;
 
     private void Start()
     {
@@ -52,6 +56,14 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
+        if(setupLevel && ability2UITimer)
+        {
+            if (GetLevel() < ability2.LvlNeeded)
+            {
+                ability2UITimer.enabled = true;
+            }
+        }
+
         if(!setupHealth && GameManager.Instance != null)
         {
             var go = Instantiate(playerUIPref, GameManager.Instance.playerHealthPanel.transform);
@@ -81,10 +93,14 @@ public class PlayerController : NetworkBehaviour
         ability2UI = GameObject.FindGameObjectsWithTag("AbilityUI")[1];
 
         ability1UI.GetComponentInChildren<TMP_Text>().text = ability1.name;
-        ability1UI.GetComponentInChildren<Image>().sprite = ability1.sprite;
+        ability1UI.GetComponentsInChildren<Image>()[1].sprite = ability1.sprite;
+        ability1UI.GetComponentsInChildren<Image>()[2].sprite = ability1.sprite;
+        ability1UITimer = ability1UI.GetComponentsInChildren<Image>()[2];
 
         ability2UI.GetComponentInChildren<TMP_Text>().text = ability2.name;
-        ability2UI.GetComponentInChildren<Image>().sprite = ability2.sprite;
+        ability2UI.GetComponentsInChildren<Image>()[1].sprite = ability2.sprite;
+        ability2UI.GetComponentsInChildren<Image>()[2].sprite = ability2.sprite;
+        ability2UITimer = ability2UI.GetComponentsInChildren<Image>()[2];
 
         ElemNetworkManager.playerObjs.Add(gameObject);
 
@@ -96,12 +112,19 @@ public class PlayerController : NetworkBehaviour
         this.lvlAnimation = lvlAnimation;
 
         lvlAnimation.OnLvlChange += LvlSystem_OnLvlChange;
+
+        setupLevel = true;
     }
 
     private void LvlSystem_OnLvlChange(object sender, System.EventArgs e)
     {
         //Implement level up ding or particle effect.
         print("Level Up");
+    }
+
+    public int GetLevel()
+    {
+        return lvlAnimation.GetLevelNumber();
     }
 
     public void Death()

@@ -21,6 +21,9 @@ public class AirController : NetworkBehaviour
 
     public float moveSpeed = 2;
 
+    private bool ability1Cooldown = false;
+    private bool ability2Cooldown = false;
+
     private void Update()
     {
         if (!hasAuthority) return;
@@ -46,6 +49,13 @@ public class AirController : NetworkBehaviour
     [Command]
     private void CmdAbility1()
     {
+        if (GetComponent<PlayerController>().GetLevel() < GetComponent<PlayerController>().ability1.LvlNeeded) return;
+
+        if (ability1Cooldown) return;
+
+        ability1Cooldown = true;
+        StartCoroutine(AbilityTimer(GetComponent<PlayerController>().ability1.coolDownTime, true));
+
         GameObject airBall = Instantiate(AirBall, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
         airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up * 1.5f) + (transform.forward * 4), true);
@@ -65,6 +75,13 @@ public class AirController : NetworkBehaviour
     [Command]
     private void CmdCallAbility2()
     {
+        if (GetComponent<PlayerController>().GetLevel() < GetComponent<PlayerController>().ability2.LvlNeeded) return;
+
+        if (ability2Cooldown) return;
+
+        ability2Cooldown = true;
+        StartCoroutine(AbilityTimer(GetComponent<PlayerController>().ability2.coolDownTime, false));
+        
         RpcCallAbility2();
     }
 
@@ -91,4 +108,38 @@ public class AirController : NetworkBehaviour
         isAbility2 = false;
     }
     #endregion
+
+    private IEnumerator AbilityTimer(float seconds, bool isAbility1)
+    {
+        float normalizedTime = 1;
+
+        if (isAbility1)
+            GetComponent<PlayerController>().ability1UITimer.enabled = true;
+        else
+            GetComponent<PlayerController>().ability2UITimer.enabled = true;
+
+        while (normalizedTime >= 0f)
+        {
+            if(isAbility1)
+                GetComponent<PlayerController>().ability1UITimer.fillAmount = normalizedTime;
+            else
+                GetComponent<PlayerController>().ability2UITimer.fillAmount = normalizedTime;
+
+            normalizedTime -= Time.deltaTime / seconds;
+            yield return null;
+        }
+
+        if (isAbility1)
+        {
+            ability1Cooldown = false;
+            GetComponent<PlayerController>().ability1UITimer.fillAmount = 1;
+            GetComponent<PlayerController>().ability1UITimer.enabled = false;
+        }
+        else
+        {
+            ability2Cooldown = false;
+            GetComponent<PlayerController>().ability2UITimer.fillAmount = 1;
+            GetComponent<PlayerController>().ability2UITimer.enabled = false;
+        }
+    }
 }

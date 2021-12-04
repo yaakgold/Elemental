@@ -58,6 +58,7 @@ public class BaseAbility : NetworkBehaviour
             {
                 other.gameObject.TryGetComponent<Health>(out Health health);
                 health.GetHit(damage);
+                Destroy(gameObject);
             }
         }
         else
@@ -66,10 +67,9 @@ public class BaseAbility : NetworkBehaviour
             {
                 other.gameObject.TryGetComponent<Health>(out Health health);
                 health.GetHit(damage);
+                Destroy(gameObject);
             }
         }
-
-        Destroy(gameObject);
     }
 
 }
