@@ -13,6 +13,7 @@ public class LevelSystem
     public event EventHandler OnExpChange;
     public event EventHandler OnLvlChange;
 
+    private int pureExp;
 
     public LevelSystem()
     {
@@ -24,6 +25,7 @@ public class LevelSystem
     {
         if(!IsMaxLvl())
         {
+            pureExp += xp;
             experience += xp;
             while(!IsMaxLvl() && experience >= GetExpNextLvl(level))
             {
@@ -56,6 +58,11 @@ public class LevelSystem
     public int GetExp()
     {
         return experience;
+    }
+
+    public int GetPureExp()
+    {
+        return pureExp;
     }
 
     public int GetExpNextLvl(int level)

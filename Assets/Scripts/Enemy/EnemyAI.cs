@@ -7,6 +7,8 @@ using UnityEngine.AI;
 
 public class EnemyAI : NetworkBehaviour
 {
+    public int expAmount;
+
     public NavMeshAgent agent;
 
     [SyncVar]
@@ -39,6 +41,8 @@ public class EnemyAI : NetworkBehaviour
     public bool isInAttackRange;
 
     public abilities eAbilities;
+
+    public GameObject lastBlow;
 
     private Animator anim;
 
@@ -202,22 +206,22 @@ public class EnemyAI : NetworkBehaviour
                 case abilities.Earth:
                     GameObject rock = Instantiate(ROCKBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false);
+                    rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     break;
                 case abilities.Fire:
                     GameObject fireball = Instantiate(FIREBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    fireball.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false);
+                    fireball.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     break;
                 case abilities.Air:
                     GameObject airBall = Instantiate(AIRBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false);
+                    airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     break;
                 case abilities.Water:
                     GameObject whip = Instantiate(WATERBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false);
+                    whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     break;
                 default:
                     break;
@@ -245,11 +249,19 @@ public class EnemyAI : NetworkBehaviour
     [ClientRpc]
     private void DED()
     {
+        GetComponent<Collider>().enabled = false;
+
         int i = Random.Range(1, 3);
         GetComponentInParent<Spawner>().spawnEnemy = false;
         anim.SetTrigger("Death" + i);
         anim.SetBool("IsAlive", false);
         agent.enabled = false;
+
+        if (lastBlow == null) return;
+        if(lastBlow.TryGetComponent(out PlayerController pc))
+        {
+            pc.AddExp(expAmount);
+        }
 
         GameManager.Instance.RemoveEnemyFromList(gameObject);
         Destroy(gameObject, 2);

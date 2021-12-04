@@ -37,7 +37,7 @@ public class FireController : NetworkBehaviour
 
         GameObject fireBall = Instantiate(FireBall, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-        fireBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), true);
+        fireBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), true, gameObject);
 
         NetworkServer.Spawn(fireBall);
     }
@@ -63,7 +63,7 @@ public class FireController : NetworkBehaviour
 
         GameObject meteor = Instantiate(Meteor, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
 
-        meteor.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2), true);
+        meteor.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2), true, gameObject);
 
         NetworkServer.Spawn(meteor);
     }
@@ -71,17 +71,35 @@ public class FireController : NetworkBehaviour
 
     private IEnumerator AbilityTimer(float seconds, bool isAbility1)
     {
-        float normalizedTime = 0;
-        while (normalizedTime <= 1f)
+        float normalizedTime = 1;
+
+        if (isAbility1)
+            GetComponent<PlayerController>().ability1UITimer.enabled = true;
+        else
+            GetComponent<PlayerController>().ability2UITimer.enabled = true;
+
+        while (normalizedTime >= 0f)
         {
-            //countdownImage.fillAmount = normalizedTime;
-            normalizedTime += Time.deltaTime / seconds;
+            if (isAbility1)
+                GetComponent<PlayerController>().ability1UITimer.fillAmount = normalizedTime;
+            else
+                GetComponent<PlayerController>().ability2UITimer.fillAmount = normalizedTime;
+
+            normalizedTime -= Time.deltaTime / seconds;
             yield return null;
         }
 
         if (isAbility1)
+        {
             ability1Cooldown = false;
+            GetComponent<PlayerController>().ability1UITimer.fillAmount = 1;
+            GetComponent<PlayerController>().ability1UITimer.enabled = false;
+        }
         else
+        {
             ability2Cooldown = false;
+            GetComponent<PlayerController>().ability2UITimer.fillAmount = 1;
+            GetComponent<PlayerController>().ability2UITimer.enabled = false;
+        }
     }
 }

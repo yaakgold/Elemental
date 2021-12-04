@@ -1697,6 +1697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  expAmount: 500
   agent: {fileID: 4699522044935933139}
   player: {fileID: 0}
   spawnerId: 0
@@ -1720,6 +1721,7 @@ MonoBehaviour:
   isInSight: 0
   isInAttackRange: 0
   eAbilities: 2
+  lastBlow: {fileID: 0}
 --- !u!114 &433240535204100562
 MonoBehaviour:
   m_ObjectHideFlags: 0

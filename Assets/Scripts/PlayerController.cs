@@ -1,6 +1,7 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -52,6 +53,8 @@ public class PlayerController : NetworkBehaviour
             GameManager.Instance.SpawnEnemies();
             GameManager.Instance.exitAndSaveBtn.SetActive(true);
         }
+
+        GameManager.Instance.playerObjs.Add(gameObject);
     }
 
     private void Update()
@@ -62,6 +65,7 @@ public class PlayerController : NetworkBehaviour
             {
                 ability2UITimer.enabled = true;
             }
+            setupLevel = false;
         }
 
         if(!setupHealth && GameManager.Instance != null)
@@ -113,6 +117,9 @@ public class PlayerController : NetworkBehaviour
 
         lvlAnimation.OnLvlChange += LvlSystem_OnLvlChange;
 
+        if(GameManager.Instance.worldData.players.Where(x => x.playerName == name).Count() > 0)
+            CmdAddExp(GameManager.Instance.worldData.players.First(x => x.playerName == name).playerExp);
+
         setupLevel = true;
     }
 
@@ -125,6 +132,23 @@ public class PlayerController : NetworkBehaviour
     public int GetLevel()
     {
         return lvlAnimation.GetLevelNumber();
+    }
+
+    public int GetTotalExp()
+    {
+        return lvlAnimation.lvlSystem.GetPureExp();
+    }
+
+    [Command]
+    public void CmdAddExp(int amt)
+    {
+        AddExp(amt);
+    }
+
+    [ClientRpc]
+    public void AddExp(int amt)
+    {
+        lvlAnimation.lvlSystem.AddExp(amt);
     }
 
     public void Death()

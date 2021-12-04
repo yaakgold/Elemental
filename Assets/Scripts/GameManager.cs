@@ -28,6 +28,7 @@ public class GameManager : NetworkBehaviour
 
     public List<GameObject> enemies = new List<GameObject>();
     public List<Spawner> spawners = new List<Spawner>();
+    public List<GameObject> playerObjs = new List<GameObject>();
     public WorldData worldData;
 
     public GameObject playerHealthPanel;
@@ -43,7 +44,6 @@ public class GameManager : NetworkBehaviour
     {
         worldData = NetworkManager.singleton.GetComponent<SteamLobby>().worldData;
         completionPercentage = worldData.completionPercentage;
-        print(worldData.completionPercentage);
         UpdateEnemyUI();
     }
 
@@ -86,7 +86,14 @@ public class GameManager : NetworkBehaviour
             spawnObjs[i] = new SpawnObj(spawners[i].id, spawners[i].spawnEnemy);
         }
 
-        SaveSystem.SaveWorld(worldData.worldName, completionPercentage, spawnObjs);
+        PlayerDictionary[] players = new PlayerDictionary[playerObjs.Count];
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i] = new PlayerDictionary(playerObjs[i].name, playerObjs[i].GetComponent<PlayerController>().GetTotalExp());
+        }
+
+        SaveSystem.SaveWorld(worldData.worldName, completionPercentage, spawnObjs, players);
     }
 
     public void RemoveEnemyFromList(GameObject enemy)

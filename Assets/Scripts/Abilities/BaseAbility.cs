@@ -14,6 +14,8 @@ public class BaseAbility : NetworkBehaviour
     Vector3 endPosition;
     bool isPlayer = true;
 
+    private GameObject owner;
+
     private void Update()
     {
         if(isForward)
@@ -37,7 +39,7 @@ public class BaseAbility : NetworkBehaviour
         }
     }
 
-    public void AbilityInitial(float speed, Vector3 endPosition, bool player)
+    public void AbilityInitial(float speed, Vector3 endPosition, bool player, GameObject ownerName)
     {
         this.speed = speed;
         this.endPosition = endPosition;
@@ -47,6 +49,10 @@ public class BaseAbility : NetworkBehaviour
         Destroy(this.gameObject, 5f);
 
         isPlayer = player;
+
+        if (ownerName == null) return;
+
+        owner = ownerName;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -56,8 +62,17 @@ public class BaseAbility : NetworkBehaviour
         {
             if (other.gameObject.tag == "Enemy")
             {
-                other.gameObject.TryGetComponent<Health>(out Health health);
-                health.GetHit(damage);
+                if(other.gameObject.TryGetComponent(out Health health))
+                {
+                    health.GetHit(damage);
+                }
+
+                if(other.gameObject.TryGetComponent(out EnemyAI enemy))
+                {
+                    print(owner);
+                    enemy.lastBlow = owner;
+                }
+
                 Destroy(gameObject);
             }
         }
@@ -65,8 +80,10 @@ public class BaseAbility : NetworkBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
-                other.gameObject.TryGetComponent<Health>(out Health health);
-                health.GetHit(damage);
+                if(other.gameObject.TryGetComponent(out Health health))
+                {
+                    health.GetHit(damage);
+                }
                 Destroy(gameObject);
             }
         }

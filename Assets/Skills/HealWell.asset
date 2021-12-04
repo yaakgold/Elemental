@@ -16,4 +16,5 @@ MonoBehaviour:
   Description: Heal Well
   sprite: {fileID: 21300000, guid: c3aab7237df394c4890e647a4ae580ea, type: 3}
   LvlNeeded: 5
+  coolDownTime: 1
   fightingStyle: 1

@@ -58,7 +58,7 @@ public class AirController : NetworkBehaviour
 
         GameObject airBall = Instantiate(AirBall, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-        airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up * 1.5f) + (transform.forward * 4), true);
+        airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up * 1.5f) + (transform.forward * 4), true, gameObject);
 
         NetworkServer.Spawn(airBall);
     }
