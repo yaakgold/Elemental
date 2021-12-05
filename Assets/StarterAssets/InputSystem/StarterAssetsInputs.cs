@@ -26,7 +26,7 @@ namespace StarterAssets
 
         private void Start()
         {
-			pauseScreen = GameObject.FindGameObjectWithTag("PauseScreen");
+			pauseScreen = GameManager.Instance.pauseScreen;
 			pauseScreen.SetActive(false);
 
 			playerInput = GetComponent<PlayerInput>().currentActionMap;

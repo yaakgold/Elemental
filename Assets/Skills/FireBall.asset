@@ -15,5 +15,6 @@ MonoBehaviour:
   ability: {fileID: 925525802920415752, guid: ff2a8b4e2ff43b142a38a61eaff1c628, type: 3}
   Description: 
   sprite: {fileID: 21300000, guid: cdec13907ffc75749ab2ed436bec6b14, type: 3}
-  LvlNeeded: 1
+  LvlNeeded: 0
+  coolDownTime: 0.1
   fightingStyle: 2

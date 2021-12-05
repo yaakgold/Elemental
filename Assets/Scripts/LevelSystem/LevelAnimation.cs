@@ -6,7 +6,7 @@ using CodeMonkey.Utils;
 
 public class LevelAnimation
 {
-    private LevelSystem lvlSystem;
+    public LevelSystem lvlSystem;
     private bool isAnimating;
     private int level;
     private int experience;

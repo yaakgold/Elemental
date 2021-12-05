@@ -22,13 +22,21 @@ public class Spawner : NetworkBehaviour
             spawnEnemy = true;
     }
 
-    [Command(requiresAuthority = false)]
-    public void CmdSpawn()
+    public void SpawnEnemy()
     {
+
         if(spawnEnemy)
         {
-            NetworkServer.Spawn(Instantiate(enemyToSpawn, transform.position, transform.rotation, transform));
+            CmdSpawnEnemy();
         }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdSpawnEnemy()
+    {
+        var go = Instantiate(enemyToSpawn, transform.position, transform.rotation, transform);
+        go.GetComponent<EnemyAI>().spawnerId = id;
+        NetworkServer.Spawn(go);
     }
 }
 
@@ -37,6 +45,11 @@ public class SpawnObj
 {
     public int id;
     public bool spawnEnemy;
+
+    public SpawnObj()
+    {
+
+    }
 
     public SpawnObj(int _id, bool _spawnEnemy)
     {
