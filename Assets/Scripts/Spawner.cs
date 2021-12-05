@@ -37,7 +37,6 @@ public class Spawner : NetworkBehaviour
         var go = Instantiate(enemyToSpawn, transform.position, transform.rotation, transform);
         go.GetComponent<EnemyAI>().spawnerId = id;
         NetworkServer.Spawn(go);
-        GameManager.Instance.CmdAddEnemy(go);
     }
 }
 

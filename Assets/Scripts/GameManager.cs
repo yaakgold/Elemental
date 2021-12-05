@@ -124,41 +124,51 @@ public class GameManager : NetworkBehaviour
     {
         if (isServer)
         {
-            CmdRemoveEnemy(enemy);
+            CmdRemoveEnemy(enemy.GetComponent<NetworkIdentity>().netId);
         }
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdRemoveEnemy(GameObject enemy)
+    public void CmdRemoveEnemy(uint netId)
     {
-        RemoveEnemyRpc(enemy);
+        RemoveEnemyRpc(netId);
         completionPercentage = (1 - ((float)enemies.Count / spawners.Count)) * 100;
         UpdateEnemyUI();
     }
 
     [ClientRpc]
-    private void RemoveEnemyRpc(GameObject enemy)
+    private void RemoveEnemyRpc(uint netId)
     {
-        if(!isServer)
+        enemies.Remove(enemies.Find(x => x.GetComponent<NetworkIdentity>().netId == netId));
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdAddEnemy(uint netId)
+    {
+        AddEnemyRpc(netId);
+
+        completionPercentage = (1 - ((float)enemies.Count / spawners.Count)) * 100;
+        UpdateEnemyUI();
+    }
+
+    [ClientRpc]
+    private void AddEnemyRpc(uint netId)
+    {
+        print(enemies);
+        print(GameObject.FindGameObjectsWithTag("Enemy").Length);
+        GameObject go = GameObject.FindGameObjectsWithTag("Enemy").FirstOrDefault(x =>
         {
-            //enemies.RemoveAt(0);
+            if (x.TryGetComponent(out NetworkIdentity ident))
+            {
+                return ident.netId == netId;
+            }
+            return false;
+        });
+
+        if(go)
+        {
+            enemies.Add(go);
         }
-        enemies.Remove(enemy);
-    }
-
-    [Command(requiresAuthority = false)]
-    public void CmdAddEnemy(GameObject enemy)
-    {
-        AddEnemyRpc(enemy);
-
-        completionPercentage = (1 - ((float)enemies.Count / spawners.Count)) * 100;
-        UpdateEnemyUI();
-    }
-
-    [ClientRpc]
-    private void AddEnemyRpc(GameObject enemy)
-    {
-        enemies.Add(enemy);
     }
 
     [ClientRpc]

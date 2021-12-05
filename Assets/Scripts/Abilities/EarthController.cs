@@ -42,6 +42,17 @@ public class EarthController : NetworkBehaviour
         ability1Cooldown = true;
         CallTimer(GetComponent<PlayerController>().ability1.coolDownTime, true);
 
+        AttackAnim(0);
+    }
+
+    public void ActivateAbility1()
+    {
+        CmdSpawnAbility1();
+    }
+
+    [Command]
+    private void CmdSpawnAbility1()
+    {
         GameObject rock = Instantiate(Rock, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
         rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), true, gameObject);
@@ -60,11 +71,16 @@ public class EarthController : NetworkBehaviour
         RaycastHit hit;
         Physics.Raycast(ray, out hit);
 
-        CmdWallStart(hit.point, position);
+        position = hit.point;
+        startPosition = position;
+
+        CmdWallStart();
     }
 
+    private Vector3 position, startPosition;
+
     [Command]
-    public void CmdWallStart(Vector3 position, Vector3 startPosition)
+    public void CmdWallStart()
     {
         if (GetComponent<PlayerController>().GetLevel() < GetComponent<PlayerController>().ability2.LvlNeeded) return;
 
@@ -73,6 +89,17 @@ public class EarthController : NetworkBehaviour
         ability2Cooldown = true;
         CallTimer(GetComponent<PlayerController>().ability2.coolDownTime, false);
 
+        AttackAnim(1);
+    }
+
+    public void ActivateAbility2()
+    {
+        CmdSpawnAbility();
+    }
+
+    [Command]
+    private void CmdSpawnAbility()
+    {
         Vector3 lookPosition = this.gameObject.transform.position;
         lookPosition.y += 4;
 
@@ -83,6 +110,13 @@ public class EarthController : NetworkBehaviour
         NetworkServer.Spawn(earthWall);
     }
     #endregion
+
+    [ClientRpc]
+    private void AttackAnim(int type)
+    {
+        GetComponent<Animator>().SetTrigger("Attack");
+        GetComponent<Animator>().SetFloat("AttackType", type);
+    }
 
     public void Wall(Vector3 position, Vector3 lookPosition)
     {

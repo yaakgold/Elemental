@@ -56,6 +56,17 @@ public class AirController : NetworkBehaviour
         ability1Cooldown = true;
         CallTimer(GetComponent<PlayerController>().ability1.coolDownTime, true);
 
+        AttackAnim(0);
+    }
+
+    public void ActivateAbility1()
+    {
+        CmdSpawnAbility();
+    }
+
+    [Command]
+    private void CmdSpawnAbility()
+    {
         GameObject airBall = Instantiate(AirBall, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
         airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up * 1.5f) + (transform.forward * 4), true, gameObject);
@@ -81,7 +92,7 @@ public class AirController : NetworkBehaviour
 
         ability2Cooldown = true;
         CallTimer(GetComponent<PlayerController>().ability2.coolDownTime, false);
-        
+
         RpcCallAbility2();
     }
 
@@ -107,7 +118,19 @@ public class AirController : NetworkBehaviour
         timer = 0;
         isAbility2 = false;
     }
+
+    public void ActivateAbility2()
+    {
+
+    }
     #endregion
+
+    [ClientRpc]
+    private void AttackAnim(int type)
+    {
+        GetComponent<Animator>().SetTrigger("Attack");
+        GetComponent<Animator>().SetFloat("AttackType", type);
+    }
 
     [ClientRpc]
     private void CallTimer(float seconds, bool isAbility1)

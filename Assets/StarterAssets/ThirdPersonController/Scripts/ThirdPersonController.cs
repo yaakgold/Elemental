@@ -34,7 +34,7 @@ namespace StarterAssets
 
 		[Space(10)]
 		[Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-		public float JumpTimeout = 0.50f;
+		public float JumpTimeout = 0.750f;
 		[Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
 		public float FallTimeout = 0.15f;
 
@@ -159,7 +159,7 @@ namespace StarterAssets
 			// update animator if using character
 			if (_hasAnimator)
 			{
-				_animator.SetBool(_animIDGrounded, Grounded);
+				//_animator.SetBool(_animIDGrounded, Grounded);
 			}
 		}
 
@@ -245,9 +245,19 @@ namespace StarterAssets
 			// update animator if using character
 			if (_hasAnimator)
 			{
-				_animator.SetFloat(_animIDSpeed, _animationBlend);
-				_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+				//_animator.SetFloat(_animIDSpeed, _animationBlend);
+				//_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+				_animator.SetFloat("hSpeed", targetDirection.x * _speed);
+				_animator.SetFloat("vSpeed", targetDirection.z * _speed);
+				_animator.SetFloat("absSpeed", Mathf.Abs(targetDirection.z * _speed));
 			}
+		}
+
+		public void SetJump()
+        {
+			print("Hello");
+			// the square root of H * -2 * G = how much velocity needed to reach desired height
+			_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 		}
 
 		private void JumpAndGravity()
@@ -260,8 +270,8 @@ namespace StarterAssets
 				// update animator if using character
 				if (_hasAnimator)
 				{
-					_animator.SetBool(_animIDJump, false);
-					_animator.SetBool(_animIDFreeFall, false);
+					//_animator.SetBool(_animIDJump, false);
+					//_animator.SetBool(_animIDFreeFall, false);
 				}
 
 				// stop our velocity dropping infinitely when grounded
@@ -273,13 +283,12 @@ namespace StarterAssets
 				// Jump
 				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 				{
-					// the square root of H * -2 * G = how much velocity needed to reach desired height
-					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-
 					// update animator if using character
 					if (_hasAnimator)
 					{
-						_animator.SetBool(_animIDJump, true);
+						//_animator.SetBool(_animIDJump, true);
+						_animator.SetTrigger("Jump");
+						_input.jump = false;
 					}
 				}
 
@@ -291,22 +300,22 @@ namespace StarterAssets
 			}
 			else
 			{
-				// reset the jump timeout timer
+				//// reset the jump timeout timer
 				_jumpTimeoutDelta = JumpTimeout;
 
-				// fall timeout
-				if (_fallTimeoutDelta >= 0.0f)
-				{
-					_fallTimeoutDelta -= Time.deltaTime;
-				}
-				else
-				{
-					// update animator if using character
-					if (_hasAnimator)
-					{
-						_animator.SetBool(_animIDFreeFall, true);
-					}
-				}
+				//// fall timeout
+				//if (_fallTimeoutDelta >= 0.0f)
+				//{
+				//	_fallTimeoutDelta -= Time.deltaTime;
+				//}
+				//else
+				//{
+				//	// update animator if using character
+				//	if (_hasAnimator)
+				//	{
+				//		//_animator.SetBool(_animIDFreeFall, true);
+				//	}
+				//}
 
 				// if we are not grounded, do not jump
 				_input.jump = false;
@@ -326,16 +335,16 @@ namespace StarterAssets
 			return Mathf.Clamp(lfAngle, lfMin, lfMax);
 		}
 
-		private void OnDrawGizmosSelected()
-		{
-			Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-			Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+		//private void OnDrawGizmosSelected()
+		//{
+		//	Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+		//	Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-			if (Grounded) Gizmos.color = transparentGreen;
-			else Gizmos.color = transparentRed;
+		//	if (Grounded) Gizmos.color = transparentGreen;
+		//	else Gizmos.color = transparentRed;
 			
-			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
-			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
-		}
+		//	// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
+		//	Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
+		//}
 	}
 }

@@ -72,6 +72,14 @@ public class EnemyAI : NetworkBehaviour
 
     private void Update()
     {
+        if(!GameManager.Instance.enemies.Contains(gameObject))
+        {
+            if(NetworkServer.spawned.TryGetValue(netId, out NetworkIdentity ident))
+            {
+                GameManager.Instance.CmdAddEnemy(netId);
+            }
+        }
+
         if (!isServer)
         {
             if (transform.parent == null)
