@@ -37,6 +37,7 @@ public class Spawner : NetworkBehaviour
         var go = Instantiate(enemyToSpawn, transform.position, transform.rotation, transform);
         go.GetComponent<EnemyAI>().spawnerId = id;
         NetworkServer.Spawn(go);
+        GameManager.Instance.CmdAddEnemy(go);
     }
 }
 
@@ -45,6 +46,11 @@ public class SpawnObj
 {
     public int id;
     public bool spawnEnemy;
+
+    public SpawnObj()
+    {
+
+    }
 
     public SpawnObj(int _id, bool _spawnEnemy)
     {

@@ -16,5 +16,5 @@ MonoBehaviour:
   Description: RockWall
   sprite: {fileID: 21300000, guid: 14a0f66a7be165c4ba476e3d7c40e390, type: 3}
   LvlNeeded: 5
-  coolDownTime: 1
+  coolDownTime: 0.1
   fightingStyle: 3

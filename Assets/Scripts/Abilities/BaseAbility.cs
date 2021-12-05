@@ -55,23 +55,37 @@ public class BaseAbility : NetworkBehaviour
         owner = ownerName;
     }
 
+    [Command(requiresAuthority = false)]
+    private void CmdDamageEnemy(GameObject other)
+    {
+        if (other.TryGetComponent(out Health health))
+        {
+            health.GetHit(damage);
+        }
+
+        if (other.TryGetComponent(out EnemyAI enemy))
+        {
+            print(owner);
+            enemy.lastBlow = owner;
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdDamagePlayer(GameObject other)
+    {
+        if (other.TryGetComponent(out Health health))
+        {
+            health.GetHit(damage);
+        }
+    }
+
     private void OnCollisionEnter(Collision other)
     {
-        print(other.gameObject.name + " " + isPlayer);
         if(isPlayer)
         {
             if (other.gameObject.tag == "Enemy")
             {
-                if(other.gameObject.TryGetComponent(out Health health))
-                {
-                    health.GetHit(damage);
-                }
-
-                if(other.gameObject.TryGetComponent(out EnemyAI enemy))
-                {
-                    print(owner);
-                    enemy.lastBlow = owner;
-                }
+                CmdDamageEnemy(other.gameObject);
 
                 Destroy(gameObject);
             }
@@ -80,10 +94,7 @@ public class BaseAbility : NetworkBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
-                if(other.gameObject.TryGetComponent(out Health health))
-                {
-                    health.GetHit(damage);
-                }
+                CmdDamagePlayer(other.gameObject);
                 Destroy(gameObject);
             }
         }

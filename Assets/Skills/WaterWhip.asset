@@ -16,5 +16,5 @@ MonoBehaviour:
   Description: RickThrow
   sprite: {fileID: 21300000, guid: 51dcbb3542a768b49ac5942bd2a0c8bb, type: 3}
   LvlNeeded: 0
-  coolDownTime: 1
+  coolDownTime: 0.1
   fightingStyle: 1

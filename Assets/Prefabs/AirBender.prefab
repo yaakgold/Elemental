@@ -578,6 +578,8 @@ MonoBehaviour:
   ability2: {fileID: 11400000, guid: 34653121d3a3b8f4d90c190c1f87044f, type: 2}
   ability1UI: {fileID: 0}
   ability2UI: {fileID: 0}
+  ability1UITimer: {fileID: 0}
+  ability2UITimer: {fileID: 0}
   steamName: 
   camFollow: {fileID: 8009054910723993042}
   playerUIPref: {fileID: 2613646004980937775, guid: 37489d06564473d4f953010d635948f5, type: 3}
@@ -865,7 +867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
+  clientAuthority: 1
   animator: {fileID: 8968925581944378446}
 --- !u!114 &-1705309949753406611
 MonoBehaviour:
@@ -908,9 +910,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.2675848
-  m_Height: 1.7871143
+  m_Height: 1.7686036
   m_Direction: 1
-  m_Center: {x: -0.013172269, y: 0.93393177, z: 0}
+  m_Center: {x: -0.013172269, y: 0.9431871, z: 0}
 --- !u!1 &2475435671582433490
 GameObject:
   m_ObjectHideFlags: 0

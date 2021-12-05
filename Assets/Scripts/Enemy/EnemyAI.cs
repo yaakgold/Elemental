@@ -60,15 +60,14 @@ public class EnemyAI : NetworkBehaviour
         {
             return;
         }
+
         GetComponent<NavMeshAgent>().enabled = true;
         agent = GetComponent<NavMeshAgent>();
         health = GetComponent<Health>();
         anim = GetComponentInChildren<Animator>();
 
 
-        health.OnDeath.AddListener(DED);
-
-        GameManager.Instance.enemies.Add(gameObject);
+        health.OnDeath.AddListener(CmdDED);
     }
 
     private void Update()
@@ -82,6 +81,15 @@ public class EnemyAI : NetworkBehaviour
                 {
                     transform.SetParent(go.transform);
                 }
+
+                health = GetComponent<Health>();
+                anim = GetComponentInChildren<Animator>();
+            }
+
+            if(agent == null)
+            {
+                GetComponent<NavMeshAgent>().enabled = true;
+                agent = GetComponent<NavMeshAgent>();
             }
             return;
         }
@@ -104,9 +112,9 @@ public class EnemyAI : NetworkBehaviour
     [Command(requiresAuthority = false)]
     private void CmdStateMachine()
     {
-        if (!isInSight && !isInAttackRange) CmdPatroling();
-        if (isInSight && !isInAttackRange) CmdChasePlayer();
-        if (isInSight && isInAttackRange) CmdAttackPlayer();
+        if (!isInSight && !isInAttackRange) Patroling();
+        if (isInSight && !isInAttackRange) ChasePlayer();
+        if (isInSight && isInAttackRange) AttackPlayer();
     }
 
     [Command(requiresAuthority = false)]
@@ -125,12 +133,12 @@ public class EnemyAI : NetworkBehaviour
         player =  p;
     }
 
-    [Command(requiresAuthority = false)]
-    private void CmdPatroling()
+    [ClientRpc]
+    private void Patroling()
     {
         if (!walkPointSet) CmdCallSearch();
 
-        if(walkPointSet)
+        if(agent.isOnNavMesh && walkPointSet)
         {
             agent.SetDestination(walkPoint);
             anim.SetFloat("Movement", agent.speed);
@@ -147,11 +155,11 @@ public class EnemyAI : NetworkBehaviour
     [Command(requiresAuthority = false)]
     private void CmdCallSearch()
     {
-        CmdSearch();
+        Search();
     }
 
-    [Command(requiresAuthority = false)]
-    private void CmdSearch()
+    [ClientRpc]
+    private void Search()
     {
         agent.updateRotation = true;
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
@@ -165,14 +173,14 @@ public class EnemyAI : NetworkBehaviour
         }
     }
 
-    [Command(requiresAuthority = false)]
-    private void CmdChasePlayer()
+    [ClientRpc]
+    private void ChasePlayer()
     {
-        if (player == null || health.GetHealth() <= 0) return;
+        if (!agent.isActiveAndEnabled || !agent.isOnNavMesh || player == null || health.GetHealth() <= 0) return;
         agent.SetDestination(player.position);
     }
 
-    [Command(requiresAuthority = false)]
+    [ClientRpc]
     private void RotateTowards(Transform target)
     {
         if (target == null) return;
@@ -187,8 +195,8 @@ public class EnemyAI : NetworkBehaviour
         RotateTowards(target);
     }
 
-    [Command(requiresAuthority = false)]
-    private void CmdAttackPlayer()
+    [ClientRpc]
+    private void AttackPlayer()
     {
         if (player == null)
         {
@@ -237,17 +245,17 @@ public class EnemyAI : NetworkBehaviour
     [Command(requiresAuthority = false)]
     private void CallResetAttack()
     {
-        CmdResetAttack();
+        ResetAttack();
     }
 
-    [Command(requiresAuthority = false)]
-    private void CmdResetAttack()
+    [ClientRpc]
+    private void ResetAttack()
     {
         hasAttacked = false;
     }
 
-    [ClientRpc]
-    private void DED()
+    [Command(requiresAuthority = false)]
+    private void CmdDED()
     {
         GetComponent<Collider>().enabled = false;
 

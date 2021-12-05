@@ -33,7 +33,7 @@ public class WaterController : NetworkBehaviour
         if (ability1Cooldown) return;
 
         ability1Cooldown = true;
-        StartCoroutine(AbilityTimer(GetComponent<PlayerController>().ability1.coolDownTime, true));
+        CallTimer(GetComponent<PlayerController>().ability1.coolDownTime, true);
 
         GameObject whip = Instantiate(Whip, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
@@ -59,7 +59,7 @@ public class WaterController : NetworkBehaviour
         if (ability2Cooldown) return;
 
         ability2Cooldown = true;
-        StartCoroutine(AbilityTimer(GetComponent<PlayerController>().ability2.coolDownTime, false));
+        CallTimer(GetComponent<PlayerController>().ability2.coolDownTime, false);
 
         GameObject healWell = Instantiate(HealWell, transform.position + (transform.up * 0.1f) + (transform.forward * 3), transform.rotation) as GameObject;
 
@@ -67,37 +67,56 @@ public class WaterController : NetworkBehaviour
     }
     #endregion
 
+    [ClientRpc]
+    private void CallTimer(float seconds, bool isAbility1)
+    {
+        StartCoroutine(AbilityTimer(seconds, isAbility1));
+    }
+
     private IEnumerator AbilityTimer(float seconds, bool isAbility1)
     {
         float normalizedTime = 1;
 
-        if (isAbility1)
-            GetComponent<PlayerController>().ability1UITimer.enabled = true;
-        else
-            GetComponent<PlayerController>().ability2UITimer.enabled = true;
+        if (TryGetComponent(out PlayerController pc) && pc.enabled)
+        {
+            if (isAbility1)
+                pc.ability1UITimer.enabled = true;
+            else
+                pc.ability2UITimer.enabled = true;
+        }
 
         while (normalizedTime >= 0f)
         {
-            if (isAbility1)
-                GetComponent<PlayerController>().ability1UITimer.fillAmount = normalizedTime;
-            else
-                GetComponent<PlayerController>().ability2UITimer.fillAmount = normalizedTime;
+            if (TryGetComponent(out PlayerController pc2) && pc2.enabled)
+            {
+                if (isAbility1)
+                    pc2.ability1UITimer.fillAmount = normalizedTime;
+                else
+                    pc2.ability2UITimer.fillAmount = normalizedTime;
+            }
 
             normalizedTime -= Time.deltaTime / seconds;
+            //print(normalizedTime);
             yield return null;
         }
 
         if (isAbility1)
         {
             ability1Cooldown = false;
-            GetComponent<PlayerController>().ability1UITimer.fillAmount = 1;
-            GetComponent<PlayerController>().ability1UITimer.enabled = false;
+            if (GetComponent<PlayerController>().enabled)
+            {
+                GetComponent<PlayerController>().ability1UITimer.fillAmount = 1;
+                GetComponent<PlayerController>().ability1UITimer.enabled = false;
+            }
         }
         else
         {
             ability2Cooldown = false;
-            GetComponent<PlayerController>().ability2UITimer.fillAmount = 1;
-            GetComponent<PlayerController>().ability2UITimer.enabled = false;
+            if (GetComponent<PlayerController>().enabled)
+            {
+                GetComponent<PlayerController>().ability2UITimer.fillAmount = 1;
+                GetComponent<PlayerController>().ability2UITimer.enabled = false;
+            }
         }
     }
 }

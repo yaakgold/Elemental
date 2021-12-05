@@ -117,10 +117,12 @@ public class PlayerController : NetworkBehaviour
 
         lvlAnimation.OnLvlChange += LvlSystem_OnLvlChange;
 
+        setupLevel = true;
+
+        if (!hasAuthority || GameManager.Instance.worldData == null) return;
         if(GameManager.Instance.worldData.players.Where(x => x.playerName == name).Count() > 0)
             CmdAddExp(GameManager.Instance.worldData.players.First(x => x.playerName == name).playerExp);
 
-        setupLevel = true;
     }
 
     private void LvlSystem_OnLvlChange(object sender, System.EventArgs e)
@@ -169,7 +171,7 @@ public class PlayerController : NetworkBehaviour
         MovePlayer();
     }
 
-    [ClientRpc]
+    //[ClientRpc]
     private void MovePlayer()
     {
         print(ElemNetworkManager.spawnPoints.Length);

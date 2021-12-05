@@ -26,14 +26,17 @@ public class GameManager : NetworkBehaviour
 
     #endregion
 
+    [SyncVar]
     public List<GameObject> enemies = new List<GameObject>();
     public List<Spawner> spawners = new List<Spawner>();
     public List<GameObject> playerObjs = new List<GameObject>();
+    [SyncVar]
     public WorldData worldData;
 
     public GameObject playerHealthPanel;
     public GameObject pauseScreen;
     public GameObject exitAndSaveBtn;
+    [SyncVar]
     public float completionPercentage = 0;
 
     public TMP_Text enemiesLeftTxt;
@@ -41,6 +44,27 @@ public class GameManager : NetworkBehaviour
     private GameObject currentPlayer;
 
     private void Start()
+    {
+        if(isServer)
+            CmdSetWorldData();
+    }
+
+    private void Update()
+    {
+        if(!isServer)
+        {
+            CmdCallUpdate();
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdCallUpdate()
+    {
+        UpdateEnemyUI();
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdSetWorldData()
     {
         worldData = NetworkManager.singleton.GetComponent<SteamLobby>().worldData;
         completionPercentage = worldData.completionPercentage;
@@ -98,13 +122,49 @@ public class GameManager : NetworkBehaviour
 
     public void RemoveEnemyFromList(GameObject enemy)
     {
-        enemies.Remove(enemy);
+        if (isServer)
+        {
+            CmdRemoveEnemy(enemy);
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveEnemy(GameObject enemy)
+    {
+        RemoveEnemyRpc(enemy);
         completionPercentage = (1 - ((float)enemies.Count / spawners.Count)) * 100;
         UpdateEnemyUI();
     }
 
+    [ClientRpc]
+    private void RemoveEnemyRpc(GameObject enemy)
+    {
+        if(!isServer)
+        {
+            //enemies.RemoveAt(0);
+        }
+        enemies.Remove(enemy);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdAddEnemy(GameObject enemy)
+    {
+        AddEnemyRpc(enemy);
+
+        completionPercentage = (1 - ((float)enemies.Count / spawners.Count)) * 100;
+        UpdateEnemyUI();
+    }
+
+    [ClientRpc]
+    private void AddEnemyRpc(GameObject enemy)
+    {
+        enemies.Add(enemy);
+    }
+
+    [ClientRpc]
     public void UpdateEnemyUI()
     {
+        completionPercentage = (1 - ((float)enemies.Count / spawners.Count)) * 100;
         enemiesLeftTxt.text = $"{completionPercentage}% ENEMIES DEFEATED";
     }
 }
