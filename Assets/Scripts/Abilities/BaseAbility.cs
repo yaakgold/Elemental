@@ -12,6 +12,9 @@ public class BaseAbility : NetworkBehaviour
     float time;
     float speed;
     Vector3 endPosition;
+    bool isPlayer = true;
+
+    private GameObject owner;
 
     private void Update()
     {
@@ -36,22 +39,64 @@ public class BaseAbility : NetworkBehaviour
         }
     }
 
-    public void AbilityInitial(float speed, Vector3 endPosition)
+    public void AbilityInitial(float speed, Vector3 endPosition, bool player, GameObject ownerName)
     {
         this.speed = speed;
         this.endPosition = endPosition;
 
         isMovingUp = true;
 
-        Destroy(this.gameObject, 2f);
+        Destroy(this.gameObject, 5f);
+
+        isPlayer = player;
+
+        if (ownerName == null) return;
+
+        owner = ownerName;
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdDamageEnemy(GameObject other)
+    {
+        if (other.TryGetComponent(out Health health))
+        {
+            health.GetHit(damage);
+        }
+
+        if (other.TryGetComponent(out EnemyAI enemy))
+        {
+            print(owner);
+            enemy.lastBlow = owner;
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdDamagePlayer(GameObject other)
+    {
+        if (other.TryGetComponent(out Health health))
+        {
+            health.GetHit(damage);
+        }
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if(isPlayer)
         {
-            other.gameObject.TryGetComponent<Health>(out Health health);
-            health.GetHit(damage);
+            if (other.gameObject.tag == "Enemy")
+            {
+                CmdDamageEnemy(other.gameObject);
+
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                CmdDamagePlayer(other.gameObject);
+                Destroy(gameObject);
+            }
         }
     }
 

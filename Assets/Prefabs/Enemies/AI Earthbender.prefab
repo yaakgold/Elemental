@@ -1656,7 +1656,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4264633901420179300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 292.092, y: 19.5, z: -110.74}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 77002807194920054}
@@ -1677,8 +1677,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  expAmount: 500
   agent: {fileID: 4264633901420179299}
   player: {fileID: 0}
+  spawnerId: 0
   FIREBALL: {fileID: 925525802920415752, guid: ff2a8b4e2ff43b142a38a61eaff1c628, type: 3}
   AIRBALL: {fileID: 925525802920415752, guid: bff64d66439629b45bb10055ff704fe7, type: 3}
   WATERBALL: {fileID: 925525802920415752, guid: 66daa5a72509e3841bb9423c22a12d3c, type: 3}
@@ -1699,6 +1701,7 @@ MonoBehaviour:
   isInSight: 0
   isInAttackRange: 0
   eAbilities: 0
+  lastBlow: {fileID: 0}
 --- !u!114 &8940813414303341154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1717,6 +1720,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  healthBar: {fileID: 0}
   maxHealth: 100
 --- !u!195 &4264633901420179299
 NavMeshAgent:
@@ -1725,7 +1729,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4264633901420179300}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 11
@@ -1800,7 +1804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
+  clientAuthority: 1
   animator: {fileID: 6337054446617525772}
 --- !u!136 &997771477684125477
 CapsuleCollider:
@@ -1830,7 +1834,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!1 &4298220455975336620
 GameObject:

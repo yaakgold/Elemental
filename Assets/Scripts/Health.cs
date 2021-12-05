@@ -26,7 +26,6 @@ public class Health : NetworkBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
-        currentHealth -= Random.Range(25, 95);
     }
     #endregion
 
@@ -67,5 +66,10 @@ public class Health : NetworkBehaviour
     {
         if (healthBar == null) return;
         healthBar.fillAmount = (float)newHealth / maxHealth;
+    }
+
+    public void ResetHealth()
+    {
+        CmdGetHit(-maxHealth);
     }
 }
