@@ -10,6 +10,7 @@ public class Abilities : ScriptableObject
     public string Description;
     public Sprite sprite;
     public int LvlNeeded;
+    public float coolDownTime;
 
     public enum FightingStyles
     {

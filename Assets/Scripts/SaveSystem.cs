@@ -6,14 +6,14 @@ using UnityEngine;
 public static class SaveSystem
 {
     #region World
-    public static void SaveWorld(string name, float completionPercentage, SpawnObj[] spawnObjs)
+    public static void SaveWorld(string name, float completionPercentage, SpawnObj[] spawnObjs, PlayerDictionary[] players)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + $"/world_{name}.Elem";
 
         FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
 
-        WorldData worldData = new WorldData(name, completionPercentage, spawnObjs);
+        WorldData worldData = new WorldData(name, completionPercentage, spawnObjs, players);
 
         formatter.Serialize(fs, worldData);
 

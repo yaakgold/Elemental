@@ -16182,7 +16182,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843577556932848376}
   serializedVersion: 7
-  lengthInSec: 12.62
+  lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -16257,7 +16257,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -16425,9 +16425,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 1
-      minScalar: 1
+      minMaxState: 3
+      scalar: 0.2
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -16478,7 +16478,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -16531,7 +16531,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -16584,9 +16584,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      minMaxState: 3
+      scalar: -0.2617994
+      minScalar: 0.2617994
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -16637,9 +16637,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      minMaxState: 3
+      scalar: -0.2617994
+      minScalar: 0.2617994
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -16690,9 +16690,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotation:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      minMaxState: 3
+      scalar: -6.283185
+      minScalar: 6.283185
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -16744,7 +16744,7 @@ ParticleSystem:
     randomizeRotationDirection: 0
     maxNumParticles: 1000
     size3D: 0
-    rotation3D: 0
+    rotation3D: 1
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
@@ -16877,7 +16877,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 0}
+    m_Texture: {fileID: 2800000, guid: 1756ddba8e78e834085e8fe44a4710ef, type: 3}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -20900,7 +20900,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: -6527670528093515950, guid: f712806514868e54699156ec05dcb749, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20921,7 +20921,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 4
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -20941,7 +20941,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: 26e172513b362cc42b8bc9221d77ac12, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -22400,6 +22400,7 @@ GameObject:
   - component: {fileID: 843577557100725192}
   - component: {fileID: 843577557100725193}
   - component: {fileID: 843577557100725198}
+  - component: {fileID: 843577558221252939}
   m_Layer: 7
   m_Name: Vase1
   m_TagString: Untagged
@@ -22489,6 +22490,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &843577558221252939
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843577557100725199}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 48bbe660a0a790347aef5be18b4719a5, type: 3}
 --- !u!1 &843577557107673134
 GameObject:
   m_ObjectHideFlags: 0
@@ -23076,6 +23091,7 @@ GameObject:
   - component: {fileID: 843577557143808256}
   - component: {fileID: 843577557143808257}
   - component: {fileID: 843577557143808262}
+  - component: {fileID: 843577558221252936}
   m_Layer: 7
   m_Name: Column3
   m_TagString: Untagged
@@ -23165,6 +23181,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &843577558221252936
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843577557143808263}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 0985464a874c7e8439981ceff3e0c533, type: 3}
 --- !u!1 &843577557144863349
 GameObject:
   m_ObjectHideFlags: 0
@@ -23258,6 +23288,7 @@ GameObject:
   - component: {fileID: 843577557214581455}
   - component: {fileID: 843577557214581452}
   - component: {fileID: 843577557214581453}
+  - component: {fileID: 843577558221252933}
   m_Layer: 7
   m_Name: Vase2
   m_TagString: Untagged
@@ -23347,6 +23378,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &843577558221252933
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843577557214581458}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: a67b15dc61e84a64b80015c4ff435cd2, type: 3}
 --- !u!1 &843577557226515581
 GameObject:
   m_ObjectHideFlags: 0
@@ -25370,6 +25415,7 @@ GameObject:
   - component: {fileID: 843577557427509083}
   - component: {fileID: 843577557427509080}
   - component: {fileID: 843577557427509081}
+  - component: {fileID: 843577558221252938}
   m_Layer: 7
   m_Name: Column1 (1)
   m_TagString: Untagged
@@ -25459,6 +25505,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &843577558221252938
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843577557427509086}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 57fe0f4c1b5b39e48872443ab041c899, type: 3}
 --- !u!1 &843577557433153450
 GameObject:
   m_ObjectHideFlags: 0
@@ -28491,6 +28551,7 @@ GameObject:
   - component: {fileID: 843577557854335135}
   - component: {fileID: 843577557854335132}
   - component: {fileID: 843577557854335133}
+  - component: {fileID: 843577558221252937}
   m_Layer: 7
   m_Name: Column1
   m_TagString: Untagged
@@ -28580,6 +28641,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &843577558221252937
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843577557854335138}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 57fe0f4c1b5b39e48872443ab041c899, type: 3}
 --- !u!1 &843577557862925456
 GameObject:
   m_ObjectHideFlags: 0
@@ -30499,6 +30574,7 @@ GameObject:
   - component: {fileID: 843577558159505546}
   - component: {fileID: 843577558159505547}
   - component: {fileID: 843577558159505544}
+  - component: {fileID: 843577558221252934}
   m_Layer: 7
   m_Name: BrokenColumn
   m_TagString: Untagged
@@ -30588,6 +30664,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &843577558221252934
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843577558159505545}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: e73c92511cda8604cb267b7c7c9d4855, type: 3}
 --- !u!1 &843577558168033861
 GameObject:
   m_ObjectHideFlags: 0
@@ -30801,7 +30891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &843577558170665078
 Transform:
   m_ObjectHideFlags: 0
@@ -37326,6 +37416,7 @@ GameObject:
   - component: {fileID: 843577558422217464}
   - component: {fileID: 843577558422217465}
   - component: {fileID: 843577558422217470}
+  - component: {fileID: 843577558221252935}
   m_Layer: 7
   m_Name: MiniTemple
   m_TagString: Untagged
@@ -37415,6 +37506,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &843577558221252935
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843577558422217471}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 188bd73939d97494194d3673528311a6, type: 3}
 --- !u!1 &843577558470010374
 GameObject:
   m_ObjectHideFlags: 0

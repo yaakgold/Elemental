@@ -1,15 +1,20 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI; 
 
 public class EnemyAI : NetworkBehaviour
 {
+    public int expAmount;
+
     public NavMeshAgent agent;
 
     [SyncVar]
     public Transform player;
+    [SyncVar]
+    public int spawnerId;
 
     public GameObject FIREBALL;
     public GameObject AIRBALL;
@@ -37,6 +42,8 @@ public class EnemyAI : NetworkBehaviour
 
     public abilities eAbilities;
 
+    public GameObject lastBlow;
+
     private Animator anim;
 
     public enum abilities
@@ -49,20 +56,51 @@ public class EnemyAI : NetworkBehaviour
 
     private void Start()
     {
-        if (!isServer) return;
+        if (!isServer)
+        {
+            return;
+        }
+
+        GetComponent<NavMeshAgent>().enabled = true;
         agent = GetComponent<NavMeshAgent>();
         health = GetComponent<Health>();
         anim = GetComponentInChildren<Animator>();
 
 
-        health.OnDeath.AddListener(DED);
-
-        NetworkServer.Spawn(gameObject);
+        health.OnDeath.AddListener(CmdDED);
     }
 
     private void Update()
     {
-        if (!isServer) return;
+        if(!GameManager.Instance.enemies.Contains(gameObject))
+        {
+            if(NetworkServer.spawned.TryGetValue(netId, out NetworkIdentity ident))
+            {
+                GameManager.Instance.CmdAddEnemy(netId);
+            }
+        }
+
+        if (!isServer)
+        {
+            if (transform.parent == null)
+            {
+                GameObject go = GameObject.FindGameObjectsWithTag("Spawner").First(x => x.GetComponent<Spawner>().id == spawnerId);
+                if(go)
+                {
+                    transform.SetParent(go.transform);
+                }
+
+                health = GetComponent<Health>();
+                anim = GetComponentInChildren<Animator>();
+            }
+
+            if(agent == null)
+            {
+                GetComponent<NavMeshAgent>().enabled = true;
+                agent = GetComponent<NavMeshAgent>();
+            }
+            return;
+        }
 
         isInSight = Physics.CheckSphere(transform.position, sightRange, playerLayer);
         isInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
@@ -108,7 +146,7 @@ public class EnemyAI : NetworkBehaviour
     {
         if (!walkPointSet) CmdCallSearch();
 
-        if(walkPointSet)
+        if(agent.isOnNavMesh && walkPointSet)
         {
             agent.SetDestination(walkPoint);
             anim.SetFloat("Movement", agent.speed);
@@ -146,7 +184,7 @@ public class EnemyAI : NetworkBehaviour
     [ClientRpc]
     private void ChasePlayer()
     {
-        if (player == null || health.GetHealth() <= 0) return;
+        if (!agent.isActiveAndEnabled || !agent.isOnNavMesh || player == null || health.GetHealth() <= 0) return;
         agent.SetDestination(player.position);
     }
 
@@ -182,28 +220,30 @@ public class EnemyAI : NetworkBehaviour
             switch (eAbilities)
             {
                 case abilities.Earth:
-                    GameObject rock = Instantiate(ROCKBALL, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+                    GameObject rock = Instantiate(ROCKBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+                    rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     break;
                 case abilities.Fire:
-                    GameObject fireball = Instantiate(FIREBALL, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+                    GameObject fireball = Instantiate(FIREBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    fireball.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+                    fireball.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     break;
                 case abilities.Air:
-                    GameObject airBall = Instantiate(AIRBALL, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+                    GameObject airBall = Instantiate(AIRBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+                    airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     break;
                 case abilities.Water:
-                    GameObject whip = Instantiate(WATERBALL, transform.position + (-transform.up * 2) + (transform.forward * 2), transform.rotation) as GameObject;
+                    GameObject whip = Instantiate(WATERBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
-                    whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 2));
+                    whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     break;
                 default:
                     break;
             }
+
+            anim.SetTrigger("Attack");
 
             hasAttacked = true;
             Invoke(nameof(CallResetAttack), timeBetweenAttacks);
@@ -222,19 +262,24 @@ public class EnemyAI : NetworkBehaviour
         hasAttacked = false;
     }
 
-    [ClientRpc]
-    private void DED()
+    [Command(requiresAuthority = false)]
+    private void CmdDED()
     {
+        GetComponent<Collider>().enabled = false;
+
+        int i = Random.Range(1, 3);
         GetComponentInParent<Spawner>().spawnEnemy = false;
-        Destroy(gameObject);
-    }
+        anim.SetTrigger("Death" + i);
+        anim.SetBool("IsAlive", false);
+        agent.enabled = false;
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(1, 0, 0, .5f);
-        Gizmos.DrawSphere(transform.position, sightRange);
+        if (lastBlow == null) return;
+        if(lastBlow.TryGetComponent(out PlayerController pc))
+        {
+            pc.AddExp(expAmount);
+        }
 
-        Gizmos.color = new Color(0, 1, 0, .5f);
-        Gizmos.DrawSphere(transform.position, attackRange);
+        GameManager.Instance.RemoveEnemyFromList(gameObject);
+        Destroy(gameObject, 2);
     }
 }

@@ -46,7 +46,7 @@ public class WorldCreator : MonoBehaviour
     {
         //TODO: Save off the world here
         if (worldName.text == "") return;
-        SaveSystem.SaveWorld(worldName.text, 0, new SpawnObj[0]);
+        SaveSystem.SaveWorld(worldName.text, 0, new SpawnObj[0], new PlayerDictionary[0]);
 
 
         ShowWorldList();
