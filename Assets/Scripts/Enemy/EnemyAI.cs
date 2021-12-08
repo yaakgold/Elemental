@@ -76,7 +76,7 @@ public class EnemyAI : NetworkBehaviour
         {
             if(NetworkServer.spawned.TryGetValue(netId, out NetworkIdentity ident))
             {
-                GameManager.Instance.CmdAddEnemy(netId);
+                GameManager.Instance.CmdAddEnemy(ident);
             }
         }
 
@@ -120,6 +120,7 @@ public class EnemyAI : NetworkBehaviour
     [Command(requiresAuthority = false)]
     private void CmdStateMachine()
     {
+        if (health.GetHealth() <= 0) return;
         if (!isInSight && !isInAttackRange) Patroling();
         if (isInSight && !isInAttackRange) ChasePlayer();
         if (isInSight && isInAttackRange) AttackPlayer();
@@ -224,24 +225,28 @@ public class EnemyAI : NetworkBehaviour
 
                     rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     AudioManager.Instance.Play("Nature Spell 17", transform.position);
+                    NetworkServer.Spawn(rock);
                     break;
                 case abilities.Fire:
                     GameObject fireball = Instantiate(FIREBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
                     fireball.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     AudioManager.Instance.Play("Fire Spelll 26", transform.position);
+                    NetworkServer.Spawn(fireball);
                     break;
                 case abilities.Air:
                     GameObject airBall = Instantiate(AIRBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
                     airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     AudioManager.Instance.Play("Wind Spell 9", transform.position);
+                    NetworkServer.Spawn(airBall);
                     break;
                 case abilities.Water:
                     GameObject whip = Instantiate(WATERBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
                     whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
                     AudioManager.Instance.Play("Ice Spelll 28", transform.position);
+                    NetworkServer.Spawn(whip);
                     break;
                 default:
                     break;
@@ -277,20 +282,15 @@ public class EnemyAI : NetworkBehaviour
         anim.SetBool("IsAlive", false);
         agent.enabled = false;
 
-        if (lastBlow == null) return;
-        if(lastBlow.TryGetComponent(out PlayerController pc))
-        {
-            pc.AddExp(expAmount);
-        }
-
-        GameManager.Instance.RemoveEnemyFromList(gameObject);
-        PlayAudio();
-        Destroy(gameObject, 2);
+        GameManager.Instance.RemoveEnemyFromList(netIdentity);
+        PlayAudioAndDie();
     }
 
     [ClientRpc]
-    private void PlayAudio()
+    private void PlayAudioAndDie()
     {
         AudioManager.Instance.Play("Large Creature 13 - Long 2", transform.position);
+        Destroy(gameObject, 2);
+
     }
 }

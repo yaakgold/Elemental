@@ -96,12 +96,12 @@ public class PlayerController : NetworkBehaviour
         ability1UI = GameObject.FindGameObjectsWithTag("AbilityUI")[0];
         ability2UI = GameObject.FindGameObjectsWithTag("AbilityUI")[1];
 
-        ability1UI.GetComponentInChildren<TMP_Text>().text = ability1.name;
+        ability1UI.GetComponentInChildren<TMP_Text>().text = ability1.Description;
         ability1UI.GetComponentsInChildren<Image>()[1].sprite = ability1.sprite;
         ability1UI.GetComponentsInChildren<Image>()[2].sprite = ability1.sprite;
         ability1UITimer = ability1UI.GetComponentsInChildren<Image>()[2];
 
-        ability2UI.GetComponentInChildren<TMP_Text>().text = ability2.name;
+        ability2UI.GetComponentInChildren<TMP_Text>().text = ability2.Description;
         ability2UI.GetComponentsInChildren<Image>()[1].sprite = ability2.sprite;
         ability2UI.GetComponentsInChildren<Image>()[2].sprite = ability2.sprite;
         ability2UITimer = ability2UI.GetComponentsInChildren<Image>()[2];

@@ -115,6 +115,8 @@ public class PlayerSelectUI : NetworkBehaviour
             }
         }
 
+        userName_txt.color = readyState ? Color.green : Color.red;
+
         #region Serve-Side Checking
 
         if (!isServer) return;
@@ -168,24 +170,6 @@ public class PlayerSelectUI : NetworkBehaviour
         }
 
         buttons[newValue].GetComponent<Image>().color = buttons[newValue].colors.highlightedColor;
-
-        switch (playerElement)
-        {
-            case ePlayerElement.AIR:
-                userName_txt.color = Color.yellow;
-                break;
-            case ePlayerElement.EARTH:
-                userName_txt.color = Color.green;
-                break;
-            case ePlayerElement.FIRE:
-                userName_txt.color = Color.red;
-                break;
-            case ePlayerElement.WATER:
-                userName_txt.color = Color.cyan;
-                break;
-            default:
-                break;
-        }
     }
     #endregion
 

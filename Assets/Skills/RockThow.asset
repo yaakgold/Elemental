@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RockThow
   m_EditorClassIdentifier: 
   ability: {fileID: 925525802920415752, guid: e55736d9b4cbd654b9cdfb241acd07ad, type: 3}
-  Description: RickThrow
+  Description: Rock Throw
   sprite: {fileID: 21300000, guid: 406984ac0d0fc2c4bbaf906048f7c43e, type: 3}
   LvlNeeded: 0
   coolDownTime: 0.1

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RockWall
   m_EditorClassIdentifier: 
   ability: {fileID: 159250494586355408, guid: c8e7335510194f14bb72a4800e4baf0a, type: 3}
-  Description: RockWall
+  Description: Rock Wall
   sprite: {fileID: 21300000, guid: 14a0f66a7be165c4ba476e3d7c40e390, type: 3}
   LvlNeeded: 5
   coolDownTime: 0.1

@@ -1721,7 +1721,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   healthBar: {fileID: 0}
-  maxHealth: 100
+  maxHealth: 1
 --- !u!195 &4264633901420179299
 NavMeshAgent:
   m_ObjectHideFlags: 0

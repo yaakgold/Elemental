@@ -56,27 +56,31 @@ public class BaseAbility : NetworkBehaviour
     }
 
     [Command(requiresAuthority = false)]
-    private void CmdDamageEnemy(GameObject other)
+    private void CmdDamageEnemy(NetworkIdentity other)
     {
+        if (other.TryGetComponent(out EnemyAI enemy))
+        {
+            enemy.lastBlow = owner;
+        }
+
         if (other.TryGetComponent(out Health health))
         {
             health.GetHit(damage);
         }
 
-        if (other.TryGetComponent(out EnemyAI enemy))
-        {
-            print(owner);
-            enemy.lastBlow = owner;
-        }
+        Destroy(gameObject);
     }
 
     [Command(requiresAuthority = false)]
-    private void CmdDamagePlayer(GameObject other)
+    private void CmdDamagePlayer(NetworkIdentity other)
     {
+        print("It made it here!");
         if (other.TryGetComponent(out Health health))
         {
             health.GetHit(damage);
         }
+
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -85,20 +89,27 @@ public class BaseAbility : NetworkBehaviour
         {
             if (other.gameObject.tag == "Enemy")
             {
-                CmdDamageEnemy(other.gameObject);
+                CmdDamageEnemy(other.gameObject.GetComponent<NetworkIdentity>());
 
                 AudioManager.Instance.Play("Growl 4_5", transform.position);
-
-                Destroy(gameObject);
             }
         }
         else
         {
+            print("dshklfsdhjkfgldshjklfgsfdjhklgdshjgklfsdghjlksdfghdajlfgd sfdljkgfsdhjklgdsf");
             if (other.gameObject.tag == "Player")
             {
-                CmdDamagePlayer(other.gameObject);
+                if (!other.gameObject) return;
+                print(other.gameObject.name);
+                if(other.gameObject.TryGetComponent(out NetworkIdentity netIdent))
+                {
+                    CmdDamagePlayer(netIdent);
+                }
+                else
+                {
+                    print("It did not work");
+                }
                 AudioManager.Instance.Play("Shield Metal 7_3", transform.position);
-                Destroy(gameObject);
             }
         }
     }
