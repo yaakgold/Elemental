@@ -35,11 +35,46 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Play("Loop 2 Primal Combat", transform);
+    }
+
+    private void Update()
+    {
+        
+    }
+
     public void UpdateSoundValues()
     {
         foreach (Sound sound in sounds)
         {
             sound.Update();
+        }
+    }
+
+    public void Play(string name, Transform parent)
+    {
+        if (!Array.Exists(sounds, x => x.name == name))
+        {
+            print(name);
+            return;
+        }
+
+        Sound sound = Array.Find(sounds, x => x.name == name);
+        if (sound.name == name)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).name == name)
+                {
+                    transform.GetChild(i).transform.SetParent(parent);
+                    transform.GetChild(i).transform.localPosition = Vector3.zero;
+                }
+            }
+
+            if (!sound.source.isPlaying)
+                sound.source.Play();
         }
     }
 
