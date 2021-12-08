@@ -64,6 +64,39 @@ public class MainMenu : MonoBehaviour
         anim.SetTrigger("Return");
     }
 
+    public void OnMasterChange(float value)
+    {
+        foreach (var sound in AudioManager.Instance.sounds)
+        {
+            sound.vol = value / 100;
+            sound.Update();
+        }
+    }
+
+    public void OnSFXChange(float value)
+    {
+        foreach (var sound in AudioManager.Instance.sounds)
+        {
+            if(sound.isSFX)
+            {
+                sound.vol = value / 100;
+                sound.Update();
+            }
+        }
+    }
+
+    public void OnMusicChange(float value)
+    {
+        foreach (var sound in AudioManager.Instance.sounds)
+        {
+            if(!sound.isSFX)
+            {
+                sound.vol = value / 100;
+                sound.Update();
+            }
+        }
+    }
+
     public void OnExitGame()
     {
         Application.Quit();

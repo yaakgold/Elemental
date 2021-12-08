@@ -57,6 +57,8 @@ public class AirController : NetworkBehaviour
         CallTimer(GetComponent<PlayerController>().ability1.coolDownTime, true);
 
         AttackAnim(0);
+
+        PlayAudio("Wind Spell 9");
     }
 
     public void ActivateAbility1()
@@ -94,6 +96,7 @@ public class AirController : NetworkBehaviour
         CallTimer(GetComponent<PlayerController>().ability2.coolDownTime, false);
 
         RpcCallAbility2();
+        PlayAudio("Positive Effect 14");
     }
 
     [ClientRpc]
@@ -124,6 +127,12 @@ public class AirController : NetworkBehaviour
 
     }
     #endregion
+
+    [ClientRpc]
+    private void PlayAudio(string audioName)
+    {
+        AudioManager.Instance.Play(audioName, transform.position);
+    }
 
     [ClientRpc]
     private void AttackAnim(int type)

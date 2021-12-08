@@ -20,6 +20,7 @@ public class HealWell : MonoBehaviour
             {
                 other.gameObject.TryGetComponent<Health>(out Health health);
                 health.GetHit(-5);
+                AudioManager.Instance.Play("Positive Effect 15", transform.position);
                 timerCount = 0;
             }
         }

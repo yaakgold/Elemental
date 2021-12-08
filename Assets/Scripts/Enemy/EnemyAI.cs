@@ -223,21 +223,25 @@ public class EnemyAI : NetworkBehaviour
                     GameObject rock = Instantiate(ROCKBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
                     rock.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
+                    AudioManager.Instance.Play("Nature Spell 17", transform.position);
                     break;
                 case abilities.Fire:
                     GameObject fireball = Instantiate(FIREBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
                     fireball.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
+                    AudioManager.Instance.Play("Fire Spelll 26", transform.position);
                     break;
                 case abilities.Air:
                     GameObject airBall = Instantiate(AIRBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
                     airBall.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
+                    AudioManager.Instance.Play("Wind Spell 9", transform.position);
                     break;
                 case abilities.Water:
                     GameObject whip = Instantiate(WATERBALL, transform.position + (-transform.up * 2) + (transform.forward * 4), transform.rotation) as GameObject;
 
                     whip.GetComponent<BaseAbility>().AbilityInitial(speed, transform.position + (transform.up) + (transform.forward * 4), false, null);
+                    AudioManager.Instance.Play("Ice Spelll 28", transform.position);
                     break;
                 default:
                     break;
@@ -280,6 +284,13 @@ public class EnemyAI : NetworkBehaviour
         }
 
         GameManager.Instance.RemoveEnemyFromList(gameObject);
+        PlayAudio();
         Destroy(gameObject, 2);
+    }
+
+    [ClientRpc]
+    private void PlayAudio()
+    {
+        AudioManager.Instance.Play("Large Creature 13 - Long 2", transform.position);
     }
 }

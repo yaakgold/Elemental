@@ -36,6 +36,7 @@ public class FireController : NetworkBehaviour
         CallTimer(GetComponent<PlayerController>().ability1.coolDownTime, true);
 
         AttackAnim(0);
+        PlayAudio("Fire Spelll 26");
     }
 
     public void ActivateAbility1()
@@ -73,6 +74,7 @@ public class FireController : NetworkBehaviour
         CallTimer(GetComponent<PlayerController>().ability2.coolDownTime, false);
 
         AttackAnim(1);
+        PlayAudio("Fire Spelll 22");
     }
 
     public void ActivateAbility2()
@@ -90,6 +92,12 @@ public class FireController : NetworkBehaviour
         NetworkServer.Spawn(meteor);
     }
     #endregion
+
+    [ClientRpc]
+    private void PlayAudio(string audioName)
+    {
+        AudioManager.Instance.Play(audioName, transform.position);
+    }
 
     [ClientRpc]
     private void AttackAnim(int type)

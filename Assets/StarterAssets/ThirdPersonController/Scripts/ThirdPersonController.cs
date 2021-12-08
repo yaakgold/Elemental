@@ -177,7 +177,7 @@ namespace StarterAssets
 			_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
 			// Cinemachine will follow this target
-			//CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
+			CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
 
 			//Rotate player as well
 			transform.rotation = Quaternion.Euler(transform.rotation.x, _cinemachineTargetYaw, transform.rotation.z);

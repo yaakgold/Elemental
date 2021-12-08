@@ -43,6 +43,7 @@ public class EarthController : NetworkBehaviour
         CallTimer(GetComponent<PlayerController>().ability1.coolDownTime, true);
 
         AttackAnim(0);
+        PlayAudio("Nature Spell 17");
     }
 
     public void ActivateAbility1()
@@ -90,6 +91,7 @@ public class EarthController : NetworkBehaviour
         CallTimer(GetComponent<PlayerController>().ability2.coolDownTime, false);
 
         AttackAnim(1);
+        PlayAudio("Nature Spell 19");
     }
 
     public void ActivateAbility2()
@@ -110,6 +112,12 @@ public class EarthController : NetworkBehaviour
         NetworkServer.Spawn(earthWall);
     }
     #endregion
+
+    [ClientRpc]
+    private void PlayAudio(string audioName)
+    {
+        AudioManager.Instance.Play(audioName, transform.position);
+    }
 
     [ClientRpc]
     private void AttackAnim(int type)

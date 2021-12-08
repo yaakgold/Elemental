@@ -55,6 +55,19 @@ public class Health : NetworkBehaviour
         {
             OnDeath?.Invoke();
         }
+        else
+        {
+            GetHitAudio();
+        }
+    }
+
+    [ClientRpc]
+    private void GetHitAudio()
+    {
+        if (TryGetComponent(out PlayerController pc))
+        {
+            //Play audio here
+        }
     }
 
     public int GetHealth()

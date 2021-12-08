@@ -156,13 +156,14 @@ public class PlayerController : NetworkBehaviour
     public void Death()
     {
         //Lower exp level
+        AddExp(-100);
         //Do animation
+        GetComponent<Animator>().SetTrigger("Death");
         //After anim teleport player to spawnPosition or something like that
         CmdMovePlayer();
 
         //Reset health
         GetComponent<Health>().ResetHealth();
-        print("I'M DEAD");
     }
 
     [Command]

@@ -24,6 +24,7 @@ TagManager:
   - Enemy
   - Spawner
   - PauseScreen
+  - Canvas
   layers:
   - Default
   - TransparentFX

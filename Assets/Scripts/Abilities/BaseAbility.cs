@@ -87,6 +87,8 @@ public class BaseAbility : NetworkBehaviour
             {
                 CmdDamageEnemy(other.gameObject);
 
+                AudioManager.Instance.Play("Growl 4_5", transform.position);
+
                 Destroy(gameObject);
             }
         }
@@ -95,6 +97,7 @@ public class BaseAbility : NetworkBehaviour
             if (other.gameObject.tag == "Player")
             {
                 CmdDamagePlayer(other.gameObject);
+                AudioManager.Instance.Play("Shield Metal 7_3", transform.position);
                 Destroy(gameObject);
             }
         }

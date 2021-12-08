@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 997015590}
   - component: {fileID: 997015589}
   - component: {fileID: 997015588}
+  - component: {fileID: 361019020880537327}
   m_Layer: 5
   m_Name: btn_StartGame
   m_TagString: Untagged
@@ -267,6 +268,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &361019020880537327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997015586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c18f3f707ca9104cb46a62db64f7e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1181442122
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +426,7 @@ GameObject:
   - component: {fileID: 1359987824}
   - component: {fileID: 1359987823}
   - component: {fileID: 1359987822}
+  - component: {fileID: 3439227367763602102}
   m_Layer: 5
   m_Name: btn_Ready
   m_TagString: Untagged
@@ -534,6 +548,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3439227367763602102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359987820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c18f3f707ca9104cb46a62db64f7e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1912728612
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +828,7 @@ GameObject:
   - component: {fileID: 5887087982776714834}
   - component: {fileID: 1312147573365964064}
   - component: {fileID: 6575068112065891007}
+  - component: {fileID: 3517319491782844395}
   m_Layer: 5
   m_Name: Water
   m_TagString: Untagged
@@ -923,6 +950,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3517319491782844395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605023258820621275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c18f3f707ca9104cb46a62db64f7e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1452907339436661260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,6 +1242,7 @@ GameObject:
   - component: {fileID: 1183467328187380238}
   - component: {fileID: 7002740739167803655}
   - component: {fileID: 5796720207776955795}
+  - component: {fileID: 8307087140684817677}
   m_Layer: 5
   m_Name: Earth
   m_TagString: Untagged
@@ -1324,6 +1364,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8307087140684817677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952006106403119401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c18f3f707ca9104cb46a62db64f7e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4258900177249844161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,6 +1388,7 @@ GameObject:
   - component: {fileID: 3146355126239240918}
   - component: {fileID: 9198064408198349294}
   - component: {fileID: 8991543119855174409}
+  - component: {fileID: 2821426250922559825}
   m_Layer: 5
   m_Name: Fire
   m_TagString: Untagged
@@ -1457,6 +1510,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2821426250922559825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4258900177249844161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c18f3f707ca9104cb46a62db64f7e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4880103414305493865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,6 +2012,7 @@ GameObject:
   - component: {fileID: 5794073120932597868}
   - component: {fileID: 5148367853383623259}
   - component: {fileID: 1671542813153636655}
+  - component: {fileID: 2709793993464576143}
   m_Layer: 5
   m_Name: Air
   m_TagString: Untagged
@@ -2068,3 +2134,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2709793993464576143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8803742081168419071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c18f3f707ca9104cb46a62db64f7e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

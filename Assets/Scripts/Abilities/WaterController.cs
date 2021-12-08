@@ -36,6 +36,7 @@ public class WaterController : NetworkBehaviour
         CallTimer(GetComponent<PlayerController>().ability1.coolDownTime, true);
 
         AttackAnim(0);
+        PlayAudio("Ice Spelll 28");
     }
 
     public void ActivateAbility1()
@@ -88,6 +89,12 @@ public class WaterController : NetworkBehaviour
         NetworkServer.Spawn(healWell);
     }
     #endregion
+
+    [ClientRpc]
+    private void PlayAudio(string audioName)
+    {
+        AudioManager.Instance.Play(audioName, transform.position);
+    }
 
     [ClientRpc]
     private void AttackAnim(int type)
